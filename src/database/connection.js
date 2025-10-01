@@ -5,34 +5,60 @@ require('dotenv').config();
 // PostgreSQL connection
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL || `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+    ssl: process.env.NODE_ENV === 'production' ? {
+        rejectUnauthorized: false
+    } : false,
     max: 20,
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000,
+    connectionTimeoutMillis: 10000,
 });
 
-// Redis connection
-let redisClient;
-if (process.env.REDIS_URL) {
-    redisClient = redis.createClient({
-        url: process.env.REDIS_URL
-    });
+// Redis connection (optional)
+let redisClient = null;
+let redisConnected = false;
+
+if (process.env.REDIS_URL || process.env.REDIS_HOST) {
+    try {
+        if (process.env.REDIS_URL) {
+            redisClient = redis.createClient({
+                url: process.env.REDIS_URL
+            });
+        } else {
+            redisClient = redis.createClient({
+                host: process.env.REDIS_HOST || 'localhost',
+                port: process.env.REDIS_PORT || 6379
+            });
+        }
+
+        redisClient.on('error', (err) => {
+            console.error('Redis Client Error:', err);
+            redisConnected = false;
+        });
+
+        redisClient.on('connect', () => {
+            console.log('✅ Connected to Redis');
+            redisConnected = true;
+        });
+
+        // Initialize Redis connection with timeout
+        Promise.race([
+            redisClient.connect(),
+            new Promise((_, reject) => 
+                setTimeout(() => reject(new Error('Redis connection timeout')), 5000)
+            )
+        ]).catch((err) => {
+            console.warn('⚠️ Redis connection failed, continuing without Redis:', err.message);
+            redisClient = null;
+            redisConnected = false;
+        });
+    } catch (error) {
+        console.warn('⚠️ Failed to initialize Redis client:', error.message);
+        redisClient = null;
+        redisConnected = false;
+    }
 } else {
-    redisClient = redis.createClient({
-        host: process.env.REDIS_HOST || 'localhost',
-        port: process.env.REDIS_PORT || 6379
-    });
+    console.log('ℹ️ Redis not configured, running without Redis');
 }
-
-redisClient.on('error', (err) => {
-    console.error('Redis Client Error:', err);
-});
-
-redisClient.on('connect', () => {
-    console.log('✅ Connected to Redis');
-});
-
-// Initialize Redis connection
-redisClient.connect().catch(console.error);
 
 // Database helper functions
 const db = {
@@ -51,9 +77,13 @@ const db = {
     
     getClient: () => pool,
     
-    // Redis helper functions
+    // Redis helper functions (with fallback to no-op if Redis unavailable)
     redis: {
         get: async (key) => {
+            if (!redisClient || !redisConnected) {
+                console.warn('Redis not available, skipping GET operation');
+                return null;
+            }
             try {
                 const value = await redisClient.get(key);
                 return value ? JSON.parse(value) : null;
@@ -64,6 +94,10 @@ const db = {
         },
         
         set: async (key, value, expireSeconds = null) => {
+            if (!redisClient || !redisConnected) {
+                console.warn('Redis not available, skipping SET operation');
+                return false;
+            }
             try {
                 const stringValue = JSON.stringify(value);
                 if (expireSeconds) {
@@ -79,6 +113,10 @@ const db = {
         },
         
         del: async (key) => {
+            if (!redisClient || !redisConnected) {
+                console.warn('Redis not available, skipping DEL operation');
+                return false;
+            }
             try {
                 await redisClient.del(key);
                 return true;
@@ -89,6 +127,10 @@ const db = {
         },
         
         exists: async (key) => {
+            if (!redisClient || !redisConnected) {
+                console.warn('Redis not available, skipping EXISTS operation');
+                return false;
+            }
             try {
                 const result = await redisClient.exists(key);
                 return result === 1;
@@ -96,7 +138,9 @@ const db = {
                 console.error('Redis EXISTS error:', error);
                 return false;
             }
-        }
+        },
+        
+        isConnected: () => redisConnected
     }
 };
 

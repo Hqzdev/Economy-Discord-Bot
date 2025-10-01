@@ -1,4 +1,4 @@
-const { db } = require('../database/connection');
+const { dbAdapter: db } = require('../database/dbAdapter');
 
 class Auction {
     constructor(data) {

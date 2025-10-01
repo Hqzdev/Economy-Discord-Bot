@@ -9,7 +9,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setTitle('🏪 Рынок ролевого проекта')
             .setDescription('Добро пожаловать на рынок! Выберите действие:')
-            .setColor(0x00ff00)
+            .setColor(0x303135)
             .setTimestamp();
 
         const row = new ActionRowBuilder()

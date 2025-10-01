@@ -5,7 +5,7 @@ class EmbedUtils {
         return new EmbedBuilder()
             .setTitle('🏪 Рынок ролевого проекта')
             .setDescription('Добро пожаловать на рынок! Выберите действие:')
-            .setColor(0x00ff00)
+            .setColor(0x303135)
             .setTimestamp()
             .setFooter({ text: 'Используйте кнопки ниже для навигации' });
     }
@@ -13,7 +13,7 @@ class EmbedUtils {
     static createItemEmbed(item, sellerName = null) {
         const embed = new EmbedBuilder()
             .setTitle(`📦 ${item.title}`)
-            .setColor(0x0099ff)
+            .setColor(0x303135)
             .setTimestamp()
             .addFields(
                 { name: '💰 Цена', value: `${item.price} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
@@ -40,7 +40,7 @@ class EmbedUtils {
         return new EmbedBuilder()
             .setTitle('🤝 Новая сделка')
             .setDescription(`**Товар:** ${item.title}`)
-            .setColor(0x0099ff)
+            .setColor(0x303135)
             .setTimestamp()
             .addFields(
                 { name: '💰 Цена', value: `${deal.price} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
@@ -60,7 +60,7 @@ class EmbedUtils {
         return new EmbedBuilder()
             .setTitle(`🔨 Аукцион: ${item.title}`)
             .setDescription(item.description || '')
-            .setColor(0xff9900)
+            .setColor(0x303135)
             .setTimestamp()
             .addFields(
                 { name: '💰 Минимальная ставка', value: `${auction.minBid} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
@@ -73,7 +73,7 @@ class EmbedUtils {
     static createStatsEmbed(stats) {
         return new EmbedBuilder()
             .setTitle('📊 Статистика рынка')
-            .setColor(0x9932cc)
+            .setColor(0x303135)
             .setTimestamp()
             .addFields(
                 { name: '📦 Активных лотов', value: stats.active_items?.toString() || '0', inline: true },
@@ -89,7 +89,7 @@ class EmbedUtils {
         return new EmbedBuilder()
             .setTitle('❌ Ошибка')
             .setDescription(message)
-            .setColor(0xff0000)
+            .setColor(0x303135)
             .setTimestamp();
     }
     
@@ -97,7 +97,7 @@ class EmbedUtils {
         return new EmbedBuilder()
             .setTitle('✅ Успешно')
             .setDescription(message)
-            .setColor(0x00ff00)
+            .setColor(0x303135)
             .setTimestamp();
     }
     
@@ -105,7 +105,7 @@ class EmbedUtils {
         return new EmbedBuilder()
             .setTitle('⚠️ Предупреждение')
             .setDescription(message)
-            .setColor(0xffaa00)
+            .setColor(0x303135)
             .setTimestamp();
     }
 }
