@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "deploy": "node src/deploy-commands.js",
+    "deploy": "node deploy-commands.js",
     "test": "jest",
     "migrate": "node src/database/migrate.js",
     "seed": "node src/database/seed.js"

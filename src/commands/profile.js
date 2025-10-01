@@ -1,4 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const User = require('../models/User');
+const Deal = require('../models/Deal');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,22 +16,16 @@ module.exports = {
         const isOwnProfile = targetUser.id === interaction.user.id;
 
         try {
-            // Заглушка данных профиля
-            const mockProfile = {
-                userId: targetUser.id,
-                username: targetUser.username,
-                avatar: targetUser.displayAvatarURL(),
-                joinDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 дней назад
-                reputation: 85,
-                totalSales: 42,
-                totalPurchases: 28,
-                activeDeals: 3,
-                completedDeals: 70,
-                canceledDeals: 2,
-                totalVolume: 125000,
-                favoriteCategory: 'Оружие',
-                achievements: ['Надежный торговец', 'Активный покупатель', 'Быстрый продавец']
-            };
+            // Get user from database
+            let user = await User.findByDiscordId(targetUser.id);
+            if (!user) {
+                user = await User.create(targetUser.id, targetUser.username, []);
+            }
+
+            // Get deal statistics
+            const dealStats = await getDealStats(targetUser.id);
+
+            const totalBalance = user.cash + user.bank;
 
             const embed = new EmbedBuilder()
                 .setTitle(`👤 Профиль ${targetUser.username}`)
@@ -38,35 +34,19 @@ module.exports = {
                 .setColor(0x303135)
                 .setTimestamp()
                 .addFields(
-                    { name: '📊 Репутация', value: `${mockProfile.reputation}/100`, inline: true },
-                    { name: '📅 Дата регистрации', value: `<t:${Math.floor(mockProfile.joinDate.getTime() / 1000)}:d>`, inline: true },
-                    { name: '🏆 Любимая категория', value: mockProfile.favoriteCategory, inline: true },
-                    { name: '💰 Продано товаров', value: mockProfile.totalSales.toString(), inline: true },
-                    { name: '🛒 Куплено товаров', value: mockProfile.totalPurchases.toString(), inline: true },
-                    { name: '🤝 Активных сделок', value: mockProfile.activeDeals.toString(), inline: true },
-                    { name: '✅ Завершенных сделок', value: mockProfile.completedDeals.toString(), inline: true },
-                    { name: '❌ Отмененных сделок', value: mockProfile.canceledDeals.toString(), inline: true },
-                    { name: '💎 Общий оборот', value: `${mockProfile.totalVolume.toLocaleString()} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true }
+                    { name: '💰 Кэш', value: `${user.cash} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
+                    { name: '🏦 Банк', value: `${user.bank} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
+                    { name: '💎 Всего', value: `${totalBalance} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
+                    { name: '🤝 Активных сделок', value: dealStats.active.toString(), inline: true },
+                    { name: '✅ Завершённых', value: dealStats.completed.toString(), inline: true },
+                    { name: '❌ Отменённых', value: dealStats.canceled.toString(), inline: true }
                 );
-
-            // Добавляем достижения
-            if (mockProfile.achievements.length > 0) {
-                embed.addFields({
-                    name: '🏆 Достижения',
-                    value: mockProfile.achievements.map(achievement => `• ${achievement}`).join('\n'),
-                    inline: false
-                });
-            }
 
             // Кнопки для управления профилем
             const buttons = [];
             
             if (isOwnProfile) {
                 buttons.push(
-                    new ButtonBuilder()
-                        .setCustomId('profile_edit')
-                        .setLabel('✏️ Редактировать')
-                        .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
                         .setCustomId('profile_settings')
                         .setLabel('⚙️ Настройки')
@@ -78,10 +58,6 @@ module.exports = {
                 new ButtonBuilder()
                     .setCustomId(`profile_deals_${targetUser.id}`)
                     .setLabel('📋 Сделки')
-                    .setStyle(ButtonStyle.Secondary),
-                new ButtonBuilder()
-                    .setCustomId(`profile_reputation_${targetUser.id}`)
-                    .setLabel('⭐ Репутация')
                     .setStyle(ButtonStyle.Secondary)
             );
 
@@ -101,3 +77,32 @@ module.exports = {
         }
     }
 };
+
+// Helper function to get deal statistics
+async function getDealStats(userId) {
+    try {
+        const query = `
+            SELECT 
+                COUNT(CASE WHEN status = 'active' THEN 1 END) as active,
+                COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed,
+                COUNT(CASE WHEN status = 'canceled' THEN 1 END) as canceled
+            FROM deals
+            WHERE buyer_id = $1 OR seller_id = $1
+        `;
+        const { dbAdapter } = require('../database/dbAdapter');
+        const result = await dbAdapter.query(query, [userId]);
+        
+        if (result.rows && result.rows.length > 0) {
+            return {
+                active: parseInt(result.rows[0].active) || 0,
+                completed: parseInt(result.rows[0].completed) || 0,
+                canceled: parseInt(result.rows[0].canceled) || 0
+            };
+        }
+        
+        return { active: 0, completed: 0, canceled: 0 };
+    } catch (error) {
+        console.error('Error getting deal stats:', error);
+        return { active: 0, completed: 0, canceled: 0 };
+    }
+}

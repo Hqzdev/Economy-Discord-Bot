@@ -7,7 +7,7 @@ yarn-error.log*
 
 # Environment variables
 .env
-.env_backup
+.env.backup
 .env.local
 .env.development.local
 .env.test.local

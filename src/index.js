@@ -164,6 +164,32 @@ async function handleButton(interaction) {
 async function handleModal(interaction) {
     if (interaction.customId === 'sell_item_modal') {
         await handleSellItem(interaction);
+    } else if (interaction.customId === 'profile_settings_modal') {
+        await handleProfileSettingsSave(interaction);
+    }
+}
+
+async function handleProfileSettingsSave(interaction) {
+    try {
+        const bio = interaction.fields.getTextInputValue('profile_bio') || '';
+        const location = interaction.fields.getTextInputValue('profile_location') || '';
+
+        // В будущем можно сохранить в БД
+        // Пока просто подтверждаем
+        const embed = new EmbedBuilder()
+            .setTitle('✅ Настройки сохранены')
+            .setDescription('Ваши настройки профиля обновлены!')
+            .addFields(
+                { name: '📝 О себе', value: bio || 'Не указано', inline: false },
+                { name: '📍 Местоположение', value: location || 'Не указано', inline: false }
+            )
+            .setColor(0x303135)
+            .setTimestamp();
+
+        await interaction.reply({ embeds: [embed], ephemeral: true });
+    } catch (error) {
+        logger.error('Error saving profile settings:', error);
+        await safeReply(interaction, { content: '❌ Ошибка при сохранении настроек.', ephemeral: true });
     }
 }
 
@@ -632,30 +658,45 @@ async function handleDealAction(interaction, action, dealId) {
 // Show auctions menu
 async function showAuctionsMenu(interaction) {
     try {
+        // Defer if it's a button interaction
+        if (interaction.isButton()) {
+            await interaction.deferUpdate();
+        }
+        
         const activeAuctions = await Auction.findActive();
         
         const embed = new EmbedBuilder()
-            .setTitle('🔨 Аукционы')
-            .setDescription('Активные аукционы:')
+            .setTitle('🔨 Активные аукционы')
+            .setDescription(activeAuctions.length > 0 ? 'Выберите аукцион для просмотра или ставки:' : '📭 Активных аукционов нет')
             .setColor(0x303135)
             .setTimestamp();
 
-        if (activeAuctions.length === 0) {
-            embed.setDescription('📭 Активных аукционов нет');
-        } else {
-            activeAuctions.forEach((auctionData, index) => {
+        if (activeAuctions.length > 0) {
+            for (const auctionData of activeAuctions) {
                 const auction = auctionData.auction;
                 const timeRemaining = auction.getTimeRemaining();
                 const timeStr = timeRemaining ? 
-                    `${timeRemaining.days}д ${timeRemaining.hours}ч ${timeRemaining.minutes}м` : 
-                    'Завершен';
+                    `${timeRemaining.hours}ч ${timeRemaining.minutes}м` : 
+                    'Завершён';
+                
+                // Get highest bid
+                const highestBid = await auction.getHighestBid();
+                const currentBid = highestBid ? highestBid.amount : auction.minBid;
+                const bidderInfo = highestBid ? `👤 ${highestBid.bidder_name}` : '❌ Нет ставок';
+                
+                const value = [
+                    `💰 Текущая ставка: ${currentBid} ${process.env.CURRENCY_NAME || 'золото'}`,
+                    `⏰ Осталось: ${timeStr}`,
+                    bidderInfo,
+                    `👤 Продавец: <@${auction.createdBy}>`
+                ].join('\n');
                 
                 embed.addFields({
-                    name: `${index + 1}. ${auctionData.item.title}`,
-                    value: `💰 Мин. ставка: ${auction.minBid} | ⏰ Осталось: ${timeStr}`,
+                    name: `🔨 ${auctionData.item.title}`,
+                    value: value,
                     inline: false
                 });
-            });
+            }
         }
 
         const row = new ActionRowBuilder()
@@ -666,7 +707,11 @@ async function showAuctionsMenu(interaction) {
                     .setStyle(ButtonStyle.Secondary)
             );
 
-        await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
+        if (interaction.deferred) {
+            await interaction.editReply({ embeds: [embed], components: [row] });
+        } else {
+            await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
+        }
         
     } catch (error) {
         logger.error('Error showing auctions menu:', error);
@@ -832,8 +877,85 @@ async function filterItems(interaction, category) {
 }
 
 async function handleProfileAction(interaction, action) {
-    // Здесь будет логика обработки действий профиля
-    logger.info(`Profile action: ${action}`);
+    try {
+        if (action === 'settings') {
+            await showProfileSettings(interaction);
+        } else if (action.startsWith('deals_')) {
+            const userId = action.replace('deals_', '');
+            await showUserDeals(interaction, userId);
+        } else {
+            logger.info(`Unknown profile action: ${action}`);
+        }
+    } catch (error) {
+        logger.error('Error handling profile action:', error);
+        await safeReply(interaction, { content: '❌ Ошибка при обработке действия.', ephemeral: true });
+    }
+}
+
+async function showProfileSettings(interaction) {
+    const { ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
+    
+    const modal = new ModalBuilder()
+        .setCustomId('profile_settings_modal')
+        .setTitle('⚙️ Настройки профиля');
+
+    const bioInput = new TextInputBuilder()
+        .setCustomId('profile_bio')
+        .setLabel('О себе (Bio)')
+        .setStyle(TextInputStyle.Paragraph)
+        .setRequired(false)
+        .setMaxLength(500)
+        .setPlaceholder('Расскажите о себе...');
+
+    const locationInput = new TextInputBuilder()
+        .setCustomId('profile_location')
+        .setLabel('Местоположение')
+        .setStyle(TextInputStyle.Short)
+        .setRequired(false)
+        .setMaxLength(100)
+        .setPlaceholder('Город, страна...');
+
+    modal.addComponents(
+        new ActionRowBuilder().addComponents(bioInput),
+        new ActionRowBuilder().addComponents(locationInput)
+    );
+
+    await interaction.showModal(modal);
+}
+
+async function showUserDeals(interaction, userId) {
+    try {
+        const deals = await Deal.findActiveByUser(userId);
+        const history = await Deal.findHistoryByUser(userId, 5, 0);
+
+        const embed = new EmbedBuilder()
+            .setTitle(`📋 Сделки пользователя`)
+            .setColor(0x303135)
+            .setTimestamp();
+
+        if (deals.length > 0) {
+            const activeDealsText = deals.map(d => 
+                `• **${d.item.title}** - ${d.deal.status}`
+            ).join('\n');
+            embed.addFields({ name: '🔄 Активные', value: activeDealsText || 'Нет' });
+        }
+
+        if (history.length > 0) {
+            const historyText = history.slice(0, 5).map(d => 
+                `• **${d.item.title}** - ${d.deal.status}`
+            ).join('\n');
+            embed.addFields({ name: '📜 История', value: historyText || 'Нет' });
+        }
+
+        if (deals.length === 0 && history.length === 0) {
+            embed.setDescription('📭 Сделок не найдено');
+        }
+
+        await interaction.reply({ embeds: [embed], ephemeral: true });
+    } catch (error) {
+        logger.error('Error showing user deals:', error);
+        await safeReply(interaction, { content: '❌ Ошибка при загрузке сделок.', ephemeral: true });
+    }
 }
 
 async function showAuctionDetails(interaction, auctionId) {
