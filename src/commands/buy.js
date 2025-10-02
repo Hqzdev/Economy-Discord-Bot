@@ -37,9 +37,10 @@ module.exports = {
 
             // Показываем первые 10 лотов в embed
             activeItems.slice(0, 10).forEach((item, index) => {
+                const quantityText = item.quantity > 0 ? `${item.quantity} шт.` : '❌ Нет в наличии';
                 embed.addFields({
                     name: `${index + 1}. ${item.title}`,
-                    value: `💰 **${item.price}** ${process.env.CURRENCY_NAME || 'золото'} | 📦 ${item.quantity} шт. | 👤 <@${item.sellerId}>`,
+                    value: `💰 **${item.price}** ${process.env.CURRENCY_NAME || 'золото'} | 📦 ${quantityText} | 👤 <@${item.sellerId}>`,
                     inline: false
                 });
             });
@@ -51,7 +52,10 @@ module.exports = {
                 .setMinValues(1)
                 .setMaxValues(1);
 
-            activeItems.slice(0, 25).forEach(item => {
+            // Фильтруем только товары с количеством > 0
+            const availableItems = activeItems.filter(item => item.quantity > 0);
+            
+            availableItems.slice(0, 25).forEach(item => {
                 selectMenu.addOptions({
                     label: item.title.substring(0, 100),
                     description: `${item.price} ${process.env.CURRENCY_NAME || 'золото'} | ${item.quantity} шт.`,
@@ -88,7 +92,7 @@ module.exports = {
             console.error('Error showing buy menu:', error);
             await interaction.reply({ 
                 content: '❌ Ошибка при загрузке товаров.', 
-                ephemeral: true 
+                flags: 64 
             });
         }
     }

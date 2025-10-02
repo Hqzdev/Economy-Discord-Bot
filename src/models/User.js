@@ -87,12 +87,21 @@ class User {
 
     async addCash(amount) {
         try {
-            const query = `
-                UPDATE users 
-                SET cash = cash + $1, updated_at = CURRENT_TIMESTAMP 
-                WHERE discord_id = $2
-            `;
-            await dbAdapter.query(query, [amount, this.discordId]);
+            if (USE_SQLITE) {
+                const query = `
+                    UPDATE users 
+                    SET cash = cash + ?, updated_at = CURRENT_TIMESTAMP 
+                    WHERE discord_id = ?
+                `;
+                await dbAdapter.update(query, [amount, this.discordId]);
+            } else {
+                const query = `
+                    UPDATE users 
+                    SET cash = cash + $1, updated_at = CURRENT_TIMESTAMP 
+                    WHERE discord_id = $2
+                `;
+                await dbAdapter.query(query, [amount, this.discordId]);
+            }
             this.cash += amount;
             return this;
         } catch (error) {
@@ -103,12 +112,21 @@ class User {
 
     async addBank(amount) {
         try {
-            const query = `
-                UPDATE users 
-                SET bank = bank + $1, updated_at = CURRENT_TIMESTAMP 
-                WHERE discord_id = $2
-            `;
-            await dbAdapter.query(query, [amount, this.discordId]);
+            if (USE_SQLITE) {
+                const query = `
+                    UPDATE users 
+                    SET bank = bank + ?, updated_at = CURRENT_TIMESTAMP 
+                    WHERE discord_id = ?
+                `;
+                await dbAdapter.update(query, [amount, this.discordId]);
+            } else {
+                const query = `
+                    UPDATE users 
+                    SET bank = bank + $1, updated_at = CURRENT_TIMESTAMP 
+                    WHERE discord_id = $2
+                `;
+                await dbAdapter.query(query, [amount, this.discordId]);
+            }
             this.bank += amount;
             return this;
         } catch (error) {

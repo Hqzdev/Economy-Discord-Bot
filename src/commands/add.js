@@ -30,7 +30,7 @@ module.exports = {
             if (!interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
                 await interaction.reply({ 
                     content: '❌ У вас нет прав для использования этой команды.', 
-                    ephemeral: true 
+                    flags: 64 
                 });
                 return;
             }
@@ -67,7 +67,7 @@ module.exports = {
             console.error('Error executing add command:', error);
             await interaction.reply({ 
                 content: '❌ Ошибка при добавлении средств.', 
-                ephemeral: true 
+                flags: 64 
             });
         }
     }

@@ -72,7 +72,7 @@ module.exports = {
             console.error('Error showing profile:', error);
             await interaction.reply({ 
                 content: '❌ Ошибка при загрузке профиля.', 
-                ephemeral: true 
+                flags: 64 
             });
         }
     }

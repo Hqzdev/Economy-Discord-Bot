@@ -29,7 +29,7 @@ module.exports = {
                     .setColor(0x303135)
                     .setTimestamp();
 
-                await interaction.reply({ embeds: [embed], ephemeral: true });
+                await interaction.reply({ embeds: [embed], flags: 64 });
                 return;
             }
 
@@ -51,7 +51,7 @@ module.exports = {
             console.error('Error executing withdraw command:', error);
             await interaction.reply({ 
                 content: '❌ Ошибка при снятии средств.', 
-                ephemeral: true 
+                flags: 64 
             });
         }
     }

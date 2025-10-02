@@ -49,7 +49,7 @@ class Auction {
                 FROM auctions a
                 JOIN items i ON a.item_id = i.id
                 JOIN users u ON a.created_by = u.discord_id
-                WHERE a.status = 'active' AND a.end_time > NOW()
+                WHERE a.status = 'active' AND a.end_time > datetime('now')
                 ORDER BY a.end_time ASC
             `;
             const result = await db.query(query);

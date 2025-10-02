@@ -24,7 +24,7 @@ module.exports = {
             if (!auction) {
                 await interaction.reply({ 
                     content: '❌ Аукцион не найден.', 
-                    ephemeral: true 
+                    flags: 64 
                 });
                 return;
             }
@@ -33,7 +33,7 @@ module.exports = {
             if (auction.status === 'ended' || auction.status === 'canceled') {
                 await interaction.reply({ 
                     content: `❌ Аукцион уже завершён (статус: ${auction.status}).`, 
-                    ephemeral: true 
+                    flags: 64 
                 });
                 return;
             }
@@ -45,7 +45,7 @@ module.exports = {
             if (!isAdmin && !isCreator) {
                 await interaction.reply({ 
                     content: '❌ У вас нет прав для завершения этого аукциона.', 
-                    ephemeral: true 
+                    flags: 64 
                 });
                 return;
             }
@@ -96,7 +96,7 @@ module.exports = {
             console.error('Error ending auction:', error);
             await interaction.reply({ 
                 content: '❌ Ошибка при завершении аукциона.', 
-                ephemeral: true 
+                flags: 64 
             });
         }
     }

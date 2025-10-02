@@ -72,6 +72,19 @@ CREATE TABLE IF NOT EXISTS bids (
     FOREIGN KEY (bidder_id) REFERENCES users(discord_id)
 );
 
+-- Inventory table
+CREATE TABLE IF NOT EXISTS inventory (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id TEXT NOT NULL,
+    item_id INTEGER NOT NULL,
+    quantity INTEGER NOT NULL DEFAULT 1 CHECK (quantity >= 0),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(discord_id),
+    FOREIGN KEY (item_id) REFERENCES items(id),
+    UNIQUE(user_id, item_id)
+);
+
 -- Audit logs table
 CREATE TABLE IF NOT EXISTS audit_logs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -103,4 +116,8 @@ CREATE INDEX IF NOT EXISTS idx_bids_bidder ON bids(bidder_id);
 
 CREATE INDEX IF NOT EXISTS idx_audit_logs_user ON audit_logs(user_id);
 CREATE INDEX IF NOT EXISTS idx_audit_logs_created_at ON audit_logs(created_at);
+
+CREATE INDEX IF NOT EXISTS idx_inventory_user ON inventory(user_id);
+CREATE INDEX IF NOT EXISTS idx_inventory_item ON inventory(item_id);
+CREATE INDEX IF NOT EXISTS idx_inventory_quantity ON inventory(quantity);
 

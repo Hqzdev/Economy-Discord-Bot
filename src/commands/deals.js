@@ -156,7 +156,7 @@ async function handleDealDetails(interaction, dealId) {
     const deal = memoryStorage.deals.get(parseInt(dealId));
     
     if (!deal) {
-        await interaction.reply({ content: '❌ Сделка не найдена.', ephemeral: true });
+        await interaction.reply({ content: '❌ Сделка не найдена.', flags: 64 });
         return;
     }
 
@@ -164,7 +164,7 @@ async function handleDealDetails(interaction, dealId) {
     const isParticipant = deal.buyerId === userId || deal.sellerId === userId;
     
     if (!isParticipant) {
-        await interaction.reply({ content: '❌ У вас нет прав для просмотра этой сделки.', ephemeral: true });
+        await interaction.reply({ content: '❌ У вас нет прав для просмотра этой сделки.', flags: 64 });
         return;
     }
 
@@ -229,7 +229,7 @@ async function handleDealDetails(interaction, dealId) {
     await interaction.reply({ 
         embeds: [embed], 
         components: [row],
-        ephemeral: true
+        flags: 64
     });
 }
 

@@ -49,7 +49,7 @@ module.exports = {
             console.error('Error executing work command:', error);
             await interaction.reply({ 
                 content: '❌ Ошибка при выполнении работы.', 
-                ephemeral: true 
+                flags: 64 
             });
         }
     }

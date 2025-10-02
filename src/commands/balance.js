@@ -38,7 +38,7 @@ module.exports = {
             console.error('Error executing balance command:', error);
             await interaction.reply({ 
                 content: '❌ Ошибка при получении баланса.', 
-                ephemeral: true 
+                flags: 64 
             });
         }
     }

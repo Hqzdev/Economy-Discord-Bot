@@ -1,46 +1,91 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle } = require('discord.js');
-const Item = require('../models/Item');
-const User = require('../models/User');
+const { SlashCommandBuilder, EmbedBuilder, StringSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const Inventory = require('../models/Inventory');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('sell')
-        .setDescription('Создать новый лот для продажи'),
+        .setDescription('Продать товар из вашего инвентаря'),
     
     async execute(interaction) {
-        const modal = new ModalBuilder()
-            .setCustomId('sell_item_modal')
-            .setTitle('🏪 Создание лота');
+        try {
+            const userId = interaction.user.id;
+            const inventoryItems = await Inventory.findByUser(userId);
 
-        const titleInput = new TextInputBuilder()
-            .setCustomId('item_title')
-            .setLabel('Название лота')
-            .setStyle(TextInputStyle.Short)
-            .setRequired(true)
-            .setMaxLength(200)
-            .setPlaceholder('Например: Магический меч +5');
+            const embed = new EmbedBuilder()
+                .setTitle('🏪 Продажа товаров')
+                .setColor(0x303135)
+                .setTimestamp();
 
-        const priceInput = new TextInputBuilder()
-            .setCustomId('item_price')
-            .setLabel('Цена лота')
-            .setStyle(TextInputStyle.Short)
-            .setRequired(true)
-            .setPlaceholder('1000');
+            if (inventoryItems.length === 0) {
+                embed.setDescription('📭 Ваш инвентарь пуст.\n\nОбратитесь к администратору, чтобы получить товары для продажи.');
+                
+                const row = new ActionRowBuilder()
+                    .addComponents(
+                        new ButtonBuilder()
+                            .setCustomId('refresh_sell_menu')
+                            .setLabel('🔄 Обновить')
+                            .setStyle(ButtonStyle.Secondary)
+                    );
 
-        const quantityInput = new TextInputBuilder()
-            .setCustomId('item_quantity')
-            .setLabel('Количество')
-            .setStyle(TextInputStyle.Short)
-            .setRequired(true)
-            .setValue('1')
-            .setPlaceholder('1');
+                await interaction.reply({ 
+                    embeds: [embed], 
+                    components: [row],
+                    flags: 64
+                });
+                return;
+            }
 
-        modal.addComponents(
-            new ActionRowBuilder().addComponents(titleInput),
-            new ActionRowBuilder().addComponents(priceInput),
-            new ActionRowBuilder().addComponents(quantityInput)
-        );
+            embed.setDescription(`Выберите товар из вашего инвентаря для продажи:`);
+            
+            inventoryItems.forEach((item, index) => {
+                embed.addFields({
+                    name: `${index + 1}. ${item.title}`,
+                    value: `📦 **${item.quantity}** шт. | 💰 Базовая цена: ${item.price} ${process.env.CURRENCY_NAME || 'золото'}`,
+                    inline: false
+                });
+            });
 
-        await interaction.showModal(modal);
+            const selectMenu = new StringSelectMenuBuilder()
+                .setCustomId('sell_item_select')
+                .setPlaceholder('Выберите товар для продажи')
+                .setMinValues(1)
+                .setMaxValues(1);
+
+            inventoryItems.slice(0, 25).forEach(item => {
+                selectMenu.addOptions({
+                    label: item.title.substring(0, 100),
+                    description: `${item.quantity} шт. | ${item.price} ${process.env.CURRENCY_NAME || 'золото'}`,
+                    value: `item_${item.itemId}`,
+                    emoji: '💰'
+                });
+            });
+
+            const row1 = new ActionRowBuilder().addComponents(selectMenu);
+            
+            const row2 = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId('refresh_sell_menu')
+                        .setLabel('🔄 Обновить')
+                        .setStyle(ButtonStyle.Secondary),
+                    new ButtonBuilder()
+                        .setCustomId('view_inventory')
+                        .setLabel('🎒 Инвентарь')
+                        .setStyle(ButtonStyle.Secondary)
+                );
+
+            await interaction.reply({ 
+                embeds: [embed], 
+                components: [row1, row2],
+                flags: 64
+            });
+
+        } catch (error) {
+            console.error('Error showing sell menu:', error);
+            await interaction.reply({ 
+                content: '❌ Ошибка при загрузке инвентаря.', 
+                flags: 64 
+            });
+        }
     }
 };

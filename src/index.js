@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, Collection, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { Client, GatewayIntentBits, Collection, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } = require('discord.js');
 const { dbAdapter: db } = require('./database/dbAdapter');
 const User = require('./models/User');
 const Item = require('./models/Item');
@@ -6,6 +6,7 @@ const Deal = require('./models/Deal');
 const Auction = require('./models/Auction');
 const logger = require('./utils/logger');
 const { safeReply } = require('./utils/interactionHelper');
+const ChannelCleanupService = require('./services/channelCleanup');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
@@ -23,6 +24,9 @@ const client = new Client({
 // Store commands and components
 client.commands = new Collection();
 client.components = new Collection();
+
+// Initialize channel cleanup service
+let channelCleanup;
 
 // Load commands
 const commandsPath = path.join(__dirname, 'commands');
@@ -48,12 +52,30 @@ client.once('ready', async () => {
     // Set bot status
     client.user.setActivity('Рынок ролевого проекта', { type: 'WATCHING' });
     
+    // Initialize channel cleanup service
+    channelCleanup = new ChannelCleanupService(client);
+    logger.info('✅ Channel cleanup service initialized');
+    
     // Initialize database connection
     try {
         await db.query('SELECT 1');
         logger.info('✅ Database connection established');
     } catch (error) {
         logger.error('❌ Database connection failed:', error);
+    }
+});
+
+// Handle messages in deal channels to reset inactivity timer
+client.on('messageCreate', async (message) => {
+    // Ignore bot messages
+    if (message.author.bot) return;
+    
+    // Check if this is a deal channel
+    if (message.channel.name && message.channel.name.startsWith('deal-')) {
+        if (channelCleanup) {
+            channelCleanup.resetTimer(message.channel.id);
+            logger.info(`Reset timer for deal channel ${message.channel.id} due to message activity`);
+        }
     }
 });
 
@@ -71,7 +93,7 @@ client.on('interactionCreate', async (interaction) => {
         }
     } catch (error) {
         logger.error('Error handling interaction:', error);
-        await safeReply(interaction, { content: 'Произошла ошибка при обработке запроса.', ephemeral: true });
+        await safeReply(interaction, { content: 'Произошла ошибка при обработке запроса.', flags: 64 });
     }
 });
 
@@ -84,7 +106,7 @@ async function handleCommand(interaction) {
         await command.execute(interaction);
     } catch (error) {
         logger.error(`Error executing command ${interaction.commandName}:`, error);
-        await safeReply(interaction, { content: 'Произошла ошибка при выполнении команды.', ephemeral: true });
+        await safeReply(interaction, { content: 'Произошла ошибка при выполнении команды.', flags: 64 });
     }
 }
 
@@ -134,6 +156,18 @@ async function handleButton(interaction) {
             case 'sort_by_name':
                 await sortItems(interaction, 'title');
                 break;
+            case 'refresh_inventory':
+                await refreshInventory(interaction);
+                break;
+            case 'sell_from_inventory':
+                await showSellFromInventory(interaction);
+                break;
+            case 'refresh_sell_menu':
+                await refreshSellMenu(interaction);
+                break;
+            case 'view_inventory':
+                await showInventory(interaction);
+                break;
             default:
                 if (buttonId.startsWith('buy_item_')) {
                     const itemId = buttonId.replace('buy_item_', '');
@@ -155,7 +189,7 @@ async function handleButton(interaction) {
         logger.error('Error handling button interaction:', error);
         // Don't reply if modal was shown (it's already acknowledged)
         if (!modalShown) {
-            await safeReply(interaction, { content: '❌ Ошибка при обработке кнопки.', ephemeral: true });
+            await safeReply(interaction, { content: '❌ Ошибка при обработке кнопки.', flags: 64 });
         }
     }
 }
@@ -166,6 +200,11 @@ async function handleModal(interaction) {
         await handleSellItem(interaction);
     } else if (interaction.customId === 'profile_settings_modal') {
         await handleProfileSettingsSave(interaction);
+    } else if (interaction.customId === 'create_item_modal') {
+        await handleCreateItem(interaction);
+    } else if (interaction.customId.startsWith('sell_inventory_modal_')) {
+        const itemId = interaction.customId.replace('sell_inventory_modal_', '');
+        await handleSellInventoryModal(interaction, itemId);
     }
 }
 
@@ -186,61 +225,56 @@ async function handleProfileSettingsSave(interaction) {
             .setColor(0x303135)
             .setTimestamp();
 
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+        await interaction.reply({ embeds: [embed], flags: 64 });
     } catch (error) {
         logger.error('Error saving profile settings:', error);
-        await safeReply(interaction, { content: '❌ Ошибка при сохранении настроек.', ephemeral: true });
+        await safeReply(interaction, { content: '❌ Ошибка при сохранении настроек.', flags: 64 });
+    }
+}
+
+async function handleCreateItem(interaction) {
+    try {
+        const title = interaction.fields.getTextInputValue('item_title');
+        const description = interaction.fields.getTextInputValue('item_description');
+        const price = parseFloat(interaction.fields.getTextInputValue('item_price'));
+        const quantity = parseInt(interaction.fields.getTextInputValue('item_quantity'));
+        const category = interaction.fields.getTextInputValue('item_category');
+
+        if (isNaN(price) || price <= 0) {
+            await interaction.reply({ content: '❌ Неверная цена товара.', flags: 64 });
+            return;
+        }
+
+        if (isNaN(quantity) || quantity <= 0) {
+            await interaction.reply({ content: '❌ Неверное количество товара.', flags: 64 });
+            return;
+        }
+
+        // Create item with admin as seller (system item)
+        const item = await Item.create(interaction.user.id, title, description, price, quantity, category);
+
+        const embed = new EmbedBuilder()
+            .setTitle('✅ Товар создан')
+            .setDescription(`**${item.title}** успешно добавлен в систему!`)
+            .addFields(
+                { name: '💰 Цена', value: `${item.price} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
+                { name: '📦 Количество', value: `${item.quantity}`, inline: true },
+                { name: '📂 Категория', value: item.category || 'Без категории', inline: true }
+            )
+            .setColor(0x00ff00)
+            .setTimestamp();
+
+        await interaction.reply({ embeds: [embed], flags: 64 });
+
+        logger.info(`Admin ${interaction.user.id} created item: ${item.title} (ID: ${item.id})`);
+
+    } catch (error) {
+        logger.error('Error creating item:', error);
+        await safeReply(interaction, { content: '❌ Ошибка при создании товара.', flags: 64 });
     }
 }
 
 // Handle sell item from modal
-async function handleSellItem(interaction) {
-    const title = interaction.fields.getTextInputValue('item_title');
-    const price = parseFloat(interaction.fields.getTextInputValue('item_price'));
-    const quantity = parseInt(interaction.fields.getTextInputValue('item_quantity'));
-
-    // Validation
-    if (!title || price <= 0 || quantity < 1) {
-        await interaction.reply({ content: '❌ Неверные данные. Проверьте заполнение полей.', ephemeral: true });
-        return;
-    }
-
-    try {
-        // Создаем пользователя если не существует
-        await User.create(interaction.user.id, interaction.user.username, []);
-        
-        // Создаем лот в базе данных
-        const item = await Item.create(
-            interaction.user.id,
-            title,
-            null, // description
-            price,
-            quantity,
-            null // category
-        );
-
-        const embed = new EmbedBuilder()
-            .setTitle('✅ Лот создан успешно!')
-            .setDescription(`**${title}**`)
-            .addFields(
-                { name: '💰 Цена', value: `${price} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
-                { name: '📦 Количество', value: quantity.toString(), inline: true },
-                { name: '🆔 ID лота', value: `#${item.id}`, inline: true }
-            )
-            .setColor(0x303135)
-            .setTimestamp();
-
-        await interaction.reply({ embeds: [embed], ephemeral: true });
-        
-        // Log the action
-        logger.info(`User ${interaction.user.username} created item: ${title} (ID: ${item.id})`);
-        
-    } catch (error) {
-        logger.error('Error creating item:', error);
-        await safeReply(interaction, { content: '❌ Ошибка при создании лота.', ephemeral: true });
-    }
-}
-
 // Handle select menu interactions
 async function handleSelectMenu(interaction) {
     const selectId = interaction.customId;
@@ -272,14 +306,28 @@ async function handleSelectMenu(interaction) {
             case 'item_filter':
                 await handleItemFilter(interaction);
                 break;
+            case 'sell_item_select':
+                const selectedSellItem = interaction.values[0];
+                const sellItemId = selectedSellItem.replace('item_', '');
+                await handleSellItemFromInventory(interaction, sellItemId);
+                break;
             default:
-                logger.warn(`Unknown select menu ID: ${selectId}`);
-                await interaction.reply({ content: '❌ Неизвестная команда.', ephemeral: true });
+                if (selectId.startsWith('give_item_')) {
+                    const parts = selectId.split('_');
+                    const targetUserId = parts[2];
+                    const quantity = parseInt(parts[3]);
+                    const selectedItem = interaction.values[0];
+                    const itemId = selectedItem.replace('item_', '');
+                    await handleGiveItem(interaction, targetUserId, itemId, quantity);
+                } else {
+                    logger.warn(`Unknown select menu ID: ${selectId}`);
+                    await interaction.reply({ content: '❌ Неизвестная команда.', flags: 64 });
+                }
                 break;
         }
     } catch (error) {
         logger.error('Error handling select menu interaction:', error);
-        await safeReply(interaction, { content: '❌ Ошибка при обработке выбора.', ephemeral: true });
+        await safeReply(interaction, { content: '❌ Ошибка при обработке выбора.', flags: 64 });
     }
 }
 
@@ -378,14 +426,14 @@ async function showSellModal(interaction) {
 // Handle sell item
 async function handleSellItem(interaction) {
     const title = interaction.fields.getTextInputValue('item_title');
-    const description = null; // Description field removed from modal
+    const description = interaction.fields.getTextInputValue('item_description') || null;
     const price = parseFloat(interaction.fields.getTextInputValue('item_price'));
     const quantity = parseInt(interaction.fields.getTextInputValue('item_quantity'));
-    const category = null; // Category field removed from modal
+    const category = interaction.fields.getTextInputValue('item_category') || null
 
     // Validation
     if (!title || price <= 0 || quantity < 1) {
-        await interaction.reply({ content: '❌ Неверные данные. Проверьте заполнение полей.', ephemeral: true });
+        await interaction.reply({ content: '❌ Неверные данные. Проверьте заполнение полей.', flags: 64 });
         return;
     }
 
@@ -397,7 +445,7 @@ async function handleSellItem(interaction) {
         if (activeLots >= maxLots) {
             await interaction.reply({ 
                 content: `❌ Превышен лимит активных лотов (${maxLots}). Закройте существующие лоты перед созданием новых.`, 
-                ephemeral: true 
+                flags: 64 
             });
             return;
         }
@@ -430,14 +478,14 @@ async function handleSellItem(interaction) {
             embed.addFields({ name: '📝 Описание', value: description });
         }
 
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+        await interaction.reply({ embeds: [embed], flags: 64 });
         
         // Log the action
         logger.info(`User ${interaction.user.username} created item: ${title} (ID: ${item.id})`);
         
     } catch (error) {
         logger.error('Error creating item:', error);
-        await safeReply(interaction, { content: '❌ Ошибка при создании лота.', ephemeral: true });
+        await safeReply(interaction, { content: '❌ Ошибка при создании лота.', flags: 64 });
     }
 }
 
@@ -449,73 +497,36 @@ async function showBuyMenu(interaction) {
             await interaction.deferUpdate();
         }
         
-        const items = await Item.findActive('', '', 'created_at', 'DESC', 10, 0);
-        const categories = await Item.getCategories();
-        
-        const embed = new EmbedBuilder()
-            .setTitle('🛒 Покупка товаров')
-            .setDescription('Выберите товар для покупки:')
-            .setColor(0x303135)
-            .setTimestamp();
-
-        if (items.length === 0) {
-            embed.setDescription('📭 Активных лотов не найдено');
-        } else {
-            items.forEach((item, index) => {
-                embed.addFields({
-                    name: `${index + 1}. ${item.title}`,
-                    value: `💰 ${item.price} ${process.env.CURRENCY_NAME || 'золото'} | 📦 ${item.quantity} шт. | 👤 ${item.sellerId}`,
-                    inline: false
-                });
-            });
-        }
-
-        const row = new ActionRowBuilder();
-        items.forEach((item, index) => {
-            if (index < 5) { // Limit to 5 buttons
-                row.addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`buy_item_${item.id}`)
-                        .setLabel(`${index + 1}. ${item.title.substring(0, 20)}...`)
-                        .setStyle(ButtonStyle.Primary)
-                );
-            }
-        });
-
-        const backButton = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId('back_to_main')
-                    .setLabel('🔙 Назад')
-                    .setStyle(ButtonStyle.Secondary)
-            );
-
-        const components = [row, backButton];
-        if (items.length === 0) components.shift(); // Remove empty row
+        const { embed, components } = await showBuyMenuContent(interaction);
 
         if (interaction.deferred) {
             await interaction.editReply({ embeds: [embed], components });
         } else {
-            await interaction.reply({ embeds: [embed], components, ephemeral: true });
+            await interaction.reply({ embeds: [embed], components, flags: 64 });
         }
         
     } catch (error) {
         logger.error('Error showing buy menu:', error);
-        await safeReply(interaction, { content: '❌ Ошибка при загрузке товаров.', ephemeral: true });
+        await safeReply(interaction, { content: '❌ Ошибка при загрузке товаров.', flags: 64 });
     }
 }
 
 // Handle buy item
 async function handleBuyItem(interaction, itemId) {
     try {
+        // Defer reply immediately to avoid timeout
+        if (!interaction.replied && !interaction.deferred) {
+            await interaction.deferReply({ flags: 64 });
+        }
+        
         const item = await Item.findById(itemId);
         if (!item || item.status !== 'active') {
-            await interaction.reply({ content: '❌ Товар не найден или недоступен.', ephemeral: true });
+            await interaction.editReply({ content: '❌ Товар не найден или недоступен.' });
             return;
         }
 
         if (item.sellerId === interaction.user.id) {
-            await interaction.reply({ content: '❌ Нельзя купить собственный товар.', ephemeral: true });
+            await interaction.editReply({ content: '❌ Нельзя купить собственный товар.' });
             return;
         }
 
@@ -541,13 +552,13 @@ async function handleBuyItem(interaction, itemId) {
             ]
         });
 
-        // Create deal in database
+        // Create deal in database - покупатель может купить только 1 единицу товара
         const deal = await Deal.create(item.id, interaction.user.id, item.sellerId, item.price, 1, channel.id);
 
         // Send deal information to the channel
         const dealEmbed = new EmbedBuilder()
             .setTitle('🤝 Новая сделка')
-            .setDescription(`**Товар:** ${item.title}`)
+            .setDescription(`**Товар:** ${item.title}\n\n**Только покупатель может подтвердить покупку!**`)
             .addFields(
                 { name: '💰 Цена', value: `${item.price} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
                 { name: '📦 Количество', value: '1', inline: true },
@@ -562,16 +573,12 @@ async function handleBuyItem(interaction, itemId) {
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId(`deal_confirm_${deal.id}`)
-                    .setLabel('✅ Подтвердить')
+                    .setLabel('✅ Подтвердить покупку')
                     .setStyle(ButtonStyle.Success),
                 new ButtonBuilder()
                     .setCustomId(`deal_cancel_${deal.id}`)
                     .setLabel('❌ Отменить')
-                    .setStyle(ButtonStyle.Danger),
-                new ButtonBuilder()
-                    .setCustomId(`deal_complete_${deal.id}`)
-                    .setLabel('🏁 Завершить')
-                    .setStyle(ButtonStyle.Primary)
+                    .setStyle(ButtonStyle.Danger)
             );
 
         await channel.send({ 
@@ -579,17 +586,21 @@ async function handleBuyItem(interaction, itemId) {
             embeds: [dealEmbed], 
             components: [dealRow] 
         });
+        
+        // Start inactivity timer for the channel (1 minute)
+        if (channelCleanup) {
+            channelCleanup.startInactivityTimer(channel.id);
+        }
 
-        await interaction.reply({ 
-            content: `✅ Сделка создана! Перейдите в канал ${channel} для завершения.`, 
-            ephemeral: true 
+        await interaction.editReply({ 
+            content: `✅ Сделка создана! Перейдите в канал ${channel} для завершения.\n⏰ Канал будет удалён через 1 минуту без активности.`
         });
 
         logger.info(`Deal created: ${deal.id} for item ${item.id} between ${item.sellerId} and ${interaction.user.id}`);
         
     } catch (error) {
         logger.error('Error handling buy item:', error);
-        await safeReply(interaction, { content: '❌ Ошибка при создании сделки.', ephemeral: true });
+        await safeReply(interaction, { content: '❌ Ошибка при создании сделки.', flags: 64 });
     }
 }
 
@@ -598,60 +609,114 @@ async function handleDealAction(interaction, action, dealId) {
     try {
         const deal = await Deal.findById(dealId);
         if (!deal) {
-            await interaction.reply({ content: '❌ Сделка не найдена.', ephemeral: true });
+            await interaction.reply({ content: '❌ Сделка не найдена.', flags: 64 });
             return;
         }
 
         // Check if user is part of the deal
         if (deal.buyerId !== interaction.user.id && deal.sellerId !== interaction.user.id) {
-            await interaction.reply({ content: '❌ У вас нет прав для выполнения этого действия.', ephemeral: true });
+            await interaction.reply({ content: '❌ У вас нет прав для выполнения этого действия.', flags: 64 });
             return;
         }
 
         switch (action) {
             case 'confirm':
-                await deal.updateStatus('active', 'Подтверждено участником');
-                await interaction.reply({ content: '✅ Сделка подтверждена!', ephemeral: true });
+                // Only buyer can confirm the purchase
+                if (deal.buyerId !== interaction.user.id) {
+                    await interaction.reply({ content: '❌ Только покупатель может подтвердить покупку.', flags: 64 });
+                    return;
+                }
+                
+                await deal.updateStatus('confirmed', 'Подтверждено покупателем');
+                // Reset inactivity timer on activity
+                if (channelCleanup && deal.channelId) {
+                    channelCleanup.resetTimer(deal.channelId);
+                }
+                
+                // Process the purchase immediately after confirmation
+                try {
+                    // Get buyer and seller
+                    const buyer = await User.findByDiscordId(deal.buyerId);
+                    const seller = await User.findByDiscordId(deal.sellerId);
+                    
+                    if (buyer && seller) {
+                        // Check if buyer has enough cash
+                        if (buyer.cash >= deal.price) {
+                            // Transfer money: buyer -> seller
+                            await buyer.addCash(-deal.price);
+                            await seller.addCash(deal.price);
+                            logger.info(`Balance transfer: ${deal.buyerId} paid ${deal.price} to ${deal.sellerId}`);
+                            
+                            // Update item quantity in database and add to buyer's inventory
+                            const item = await Item.findById(deal.itemId);
+                            if (item && item.quantity > 0) {
+                                try {
+                                    await item.decreaseQuantity(deal.quantity);
+                                    
+                                    // Add item to buyer's inventory
+                                    const Inventory = require('./models/Inventory');
+                                    await Inventory.create(deal.buyerId, item.id, deal.quantity);
+                                    
+                                    // Check if item is sold out after purchase
+                                    const updatedItem = await Item.findById(deal.itemId);
+                                    if (updatedItem.quantity <= 0) {
+                                        await item.updateStatus('sold');
+                                        logger.info(`Item ${item.id} sold out and marked as sold`);
+                                    }
+                                } catch (error) {
+                                    logger.error('Error decreasing quantity:', error);
+                                    // If quantity is insufficient, still complete the deal but log the issue
+                                    logger.warn(`Insufficient quantity for item ${item.id}, but deal completed`);
+                                }
+                            }
+                            
+                            await interaction.reply({ content: '✅ Покупка подтверждена! Деньги переведены. Канал будет удалён через 5 секунд.', flags: 64 });
+                            // Schedule channel deletion after 5 seconds
+                            if (channelCleanup && deal.channelId) {
+                                channelCleanup.scheduleDelete(deal.channelId, 5000);
+                            }
+                        } else {
+                            await interaction.reply({ content: '❌ Недостаточно средств для покупки.', flags: 64 });
+                        }
+                    } else {
+                        await interaction.reply({ content: '❌ Ошибка: пользователи не найдены.', flags: 64 });
+                    }
+                } catch (error) {
+                    logger.error('Error processing purchase:', error);
+                    await interaction.reply({ content: '❌ Ошибка при обработке покупки.', flags: 64 });
+                }
                 break;
             case 'cancel':
                 await deal.updateStatus('canceled', 'Отменено участником');
-                await interaction.reply({ content: '❌ Сделка отменена.', ephemeral: true });
-                break;
-            case 'complete':
-                await deal.updateStatus('completed', 'Завершено участником');
-                
-                // Update item quantity in database
-                const item = await Item.findById(deal.itemId);
-                if (item) {
-                    await item.decreaseQuantity(deal.quantity);
-                    if (item.quantity <= 0) {
-                        await item.updateStatus('sold');
-                    }
+                await interaction.reply({ content: '❌ Сделка отменена. Канал будет удалён через 5 секунд.', flags: 64 });
+                // Schedule channel deletion after 5 seconds
+                if (channelCleanup && deal.channelId) {
+                    channelCleanup.scheduleDelete(deal.channelId, 5000);
                 }
-                
-                await interaction.reply({ content: '🏁 Сделка завершена!', ephemeral: true });
                 break;
         }
 
-        // Update the deal message
-        const updatedDeal = await Deal.findById(dealId);
-        const updatedEmbed = new EmbedBuilder()
-            .setTitle('🤝 Сделка обновлена')
-            .setDescription(`**Товар:** ${updatedDeal.item.title}`)
-            .addFields(
-                { name: '💰 Цена', value: `${updatedDeal.price} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
-                { name: '📊 Статус', value: updatedDeal.status, inline: true },
-                { name: '👤 Продавец', value: `<@${updatedDeal.sellerId}>`, inline: true },
-                { name: '🛒 Покупатель', value: `<@${updatedDeal.buyerId}>`, inline: true }
-            )
-            .setColor(updatedDeal.status === 'completed' ? 0x00ff00 : updatedDeal.status === 'canceled' ? 0xff0000 : 0x0099ff)
-            .setTimestamp();
+        // Update the deal message only if not confirmed
+        if (action !== 'confirm') {
+            const item = await Item.findById(deal.itemId);
+            const updatedEmbed = new EmbedBuilder()
+                .setTitle('🤝 Сделка обновлена')
+                .setDescription(`**Товар:** ${item ? item.title : 'Неизвестно'}`)
+                .addFields(
+                    { name: '💰 Цена', value: `${deal.price} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
+                    { name: '📊 Статус', value: deal.status, inline: true },
+                    { name: '👤 Продавец', value: `<@${deal.sellerId}>`, inline: true },
+                    { name: '🛒 Покупатель', value: `<@${deal.buyerId}>`, inline: true }
+                )
+                .setColor(0x303135)
+                .setTimestamp();
 
-        await interaction.message.edit({ embeds: [updatedEmbed] });
+            await interaction.message.edit({ embeds: [updatedEmbed] });
+        }
         
     } catch (error) {
         logger.error('Error handling deal action:', error);
-        await safeReply(interaction, { content: '❌ Ошибка при обработке действия.', ephemeral: true });
+        await safeReply(interaction, { content: '❌ Ошибка при обработке действия.', flags: 64 });
     }
 }
 
@@ -687,7 +752,7 @@ async function showAuctionsMenu(interaction) {
                 const value = [
                     `💰 Текущая ставка: ${currentBid} ${process.env.CURRENCY_NAME || 'золото'}`,
                     `⏰ Осталось: ${timeStr}`,
-                    bidderInfo,
+                    `🏆 Высшая ставка: ${highestBid ? `${highestBid.amount} ${process.env.CURRENCY_NAME || 'золото'} от <@${highestBid.bidder_id}>` : 'Нет ставок'}`,
                     `👤 Продавец: <@${auction.createdBy}>`
                 ].join('\n');
                 
@@ -710,12 +775,12 @@ async function showAuctionsMenu(interaction) {
         if (interaction.deferred) {
             await interaction.editReply({ embeds: [embed], components: [row] });
         } else {
-            await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
+            await interaction.reply({ embeds: [embed], components: [row], flags: 64 });
         }
         
     } catch (error) {
         logger.error('Error showing auctions menu:', error);
-        await safeReply(interaction, { content: '❌ Ошибка при загрузке аукционов.', ephemeral: true });
+        await safeReply(interaction, { content: '❌ Ошибка при загрузке аукционов.', flags: 64 });
     }
 }
 
@@ -760,20 +825,92 @@ async function showDealsMenu(interaction) {
                     .setStyle(ButtonStyle.Secondary)
             );
 
-        await interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
+        await interaction.reply({ embeds: [embed], components: [row], flags: 64 });
         
     } catch (error) {
         logger.error('Error showing deals menu:', error);
-        await safeReply(interaction, { content: '❌ Ошибка при загрузке сделок.', ephemeral: true });
+        await safeReply(interaction, { content: '❌ Ошибка при загрузке сделок.', flags: 64 });
     }
 }
 
 // Additional handler functions
 async function refreshMarket(interaction) {
     await interaction.deferUpdate();
-    // Перезапускаем команду /buy
-    const { execute } = require('./commands/buy');
-    await execute(interaction);
+    // Reload buy menu
+    await showBuyMenuContent(interaction);
+}
+
+async function showBuyMenuContent(interaction) {
+    const items = await Item.findActive('', '', 'created_at', 'DESC', 50, 0);
+    
+    // Фильтруем только товары с количеством > 0
+    const availableItems = items.filter(item => item.quantity > 0);
+    
+    const embed = new EmbedBuilder()
+        .setTitle('🛒 Покупка товаров')
+        .setDescription(availableItems.length > 0 ? 'Выберите товар для покупки:' : '📭 Активных лотов не найдено')
+        .setColor(0x303135)
+        .setTimestamp();
+
+    if (availableItems.length > 0) {
+        availableItems.slice(0, 10).forEach((item, index) => {
+            embed.addFields({
+                name: `${index + 1}. ${item.title}`,
+                value: `💰 ${item.price} ${process.env.CURRENCY_NAME || 'золото'} | 📦 ${item.quantity} шт. | 👤 <@${item.sellerId}>`,
+                inline: false
+            });
+        });
+    }
+
+    const components = [];
+    
+    if (availableItems.length > 0) {
+        const selectMenu = new StringSelectMenuBuilder()
+            .setCustomId('buy_item_select')
+            .setPlaceholder('Выберите товар для покупки')
+            .setMinValues(1)
+            .setMaxValues(1);
+
+        availableItems.slice(0, 25).forEach(item => {
+            selectMenu.addOptions({
+                label: item.title.substring(0, 100),
+                description: `${item.price} ${process.env.CURRENCY_NAME || 'золото'} | ${item.quantity} шт.`,
+                value: `item_${item.id}`,
+                emoji: '🛒'
+            });
+        });
+
+        components.push(new ActionRowBuilder().addComponents(selectMenu));
+        
+        // Add sorting buttons
+        const sortRow = new ActionRowBuilder()
+            .addComponents(
+                new ButtonBuilder()
+                    .setCustomId('refresh_market')
+                    .setLabel('🔄 Обновить')
+                    .setStyle(ButtonStyle.Secondary),
+                new ButtonBuilder()
+                    .setCustomId('sort_by_price')
+                    .setLabel('💰 По цене')
+                    .setStyle(ButtonStyle.Secondary),
+                new ButtonBuilder()
+                    .setCustomId('sort_by_name')
+                    .setLabel('📝 По названию')
+                    .setStyle(ButtonStyle.Secondary)
+            );
+        components.push(sortRow);
+    }
+    
+    // Add back button
+    components.push(new ActionRowBuilder()
+        .addComponents(
+            new ButtonBuilder()
+                .setCustomId('back_to_main')
+                .setLabel('🔙 Назад')
+                .setStyle(ButtonStyle.Secondary)
+        ));
+
+    return { embed, components };
 }
 
 async function sortItems(interaction, sortBy) {
@@ -787,11 +924,14 @@ async function sortItems(interaction, sortBy) {
 
     // Получаем отсортированные лоты
     const sortedItems = await Item.getSortedItems(sortBy, 'ASC', 50);
+    
+    // Фильтруем только товары с количеством > 0
+    const availableItems = sortedItems.filter(item => item.quantity > 0);
 
-    if (sortedItems.length === 0) {
+    if (availableItems.length === 0) {
         embed.setDescription('📭 Активных лотов не найдено');
     } else {
-        sortedItems.slice(0, 10).forEach((item, index) => {
+        availableItems.slice(0, 10).forEach((item, index) => {
             embed.addFields({
                 name: `${index + 1}. ${item.title}`,
                 value: `💰 **${item.price}** ${process.env.CURRENCY_NAME || 'золото'} | 📦 ${item.quantity} шт. | 👤 <@${item.sellerId}>`,
@@ -807,7 +947,7 @@ async function sortItems(interaction, sortBy) {
         .setMinValues(1)
         .setMaxValues(1);
 
-    sortedItems.slice(0, 25).forEach(item => {
+    availableItems.slice(0, 25).forEach(item => {
         selectMenu.addOptions({
             label: item.title.substring(0, 100),
             description: `${item.price} ${process.env.CURRENCY_NAME || 'золото'} | ${item.quantity} шт.`,
@@ -847,7 +987,7 @@ async function showMyAuctions(interaction) {
         .setColor(0x303135)
         .setTimestamp();
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], flags: 64 });
 }
 
 async function showMyBids(interaction) {
@@ -857,7 +997,7 @@ async function showMyBids(interaction) {
         .setColor(0x303135)
         .setTimestamp();
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], flags: 64 });
 }
 
 async function showDealHistory(interaction) {
@@ -867,7 +1007,7 @@ async function showDealHistory(interaction) {
         .setColor(0x303135)
         .setTimestamp();
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], flags: 64 });
 }
 
 async function filterItems(interaction, category) {
@@ -888,7 +1028,7 @@ async function handleProfileAction(interaction, action) {
         }
     } catch (error) {
         logger.error('Error handling profile action:', error);
-        await safeReply(interaction, { content: '❌ Ошибка при обработке действия.', ephemeral: true });
+        await safeReply(interaction, { content: '❌ Ошибка при обработке действия.', flags: 64 });
     }
 }
 
@@ -951,10 +1091,10 @@ async function showUserDeals(interaction, userId) {
             embed.setDescription('📭 Сделок не найдено');
         }
 
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+        await interaction.reply({ embeds: [embed], flags: 64 });
     } catch (error) {
         logger.error('Error showing user deals:', error);
-        await safeReply(interaction, { content: '❌ Ошибка при загрузке сделок.', ephemeral: true });
+        await safeReply(interaction, { content: '❌ Ошибка при загрузке сделок.', flags: 64 });
     }
 }
 
@@ -965,7 +1105,7 @@ async function showAuctionDetails(interaction, auctionId) {
         .setColor(0x303135)
         .setTimestamp();
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], flags: 64 });
 }
 
 async function showDealDetails(interaction, dealId) {
@@ -975,7 +1115,7 @@ async function showDealDetails(interaction, dealId) {
         .setColor(0x303135)
         .setTimestamp();
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed], flags: 64 });
 }
 
 // Error handling
@@ -986,6 +1126,183 @@ client.on('error', (error) => {
 process.on('unhandledRejection', (error) => {
     logger.error('Unhandled promise rejection:', error);
 });
+
+// New inventory and sell handlers
+async function refreshInventory(interaction) {
+    const { execute } = require('./commands/inventory');
+    await execute(interaction);
+}
+
+async function showInventory(interaction) {
+    const { execute } = require('./commands/inventory');
+    await execute(interaction);
+}
+
+async function refreshSellMenu(interaction) {
+    const { execute } = require('./commands/sell');
+    await execute(interaction);
+}
+
+async function showSellFromInventory(interaction) {
+    const { execute } = require('./commands/sell');
+    await execute(interaction);
+}
+
+async function handleSellItemFromInventory(interaction, itemId) {
+    try {
+        if (!interaction.replied && !interaction.deferred) {
+            await interaction.deferReply({ flags: 64 });
+        }
+
+        const userId = interaction.user.id;
+        
+        // Check if user has this item in inventory
+        const Inventory = require('./models/Inventory');
+        const inventoryItem = await Inventory.findByUserAndItem(userId, itemId);
+        
+        if (!inventoryItem) {
+            await interaction.editReply({ content: '❌ У вас нет этого товара в инвентаре.' });
+            return;
+        }
+
+        // Get item details
+        const Item = require('./models/Item');
+        const item = await Item.findById(itemId);
+        
+        if (!item) {
+            await interaction.editReply({ content: '❌ Товар не найден.' });
+            return;
+        }
+
+        // Create modal for selling
+        const modal = new ModalBuilder()
+            .setCustomId(`sell_inventory_modal_${itemId}`)
+            .setTitle('💰 Продажа товара');
+
+        const priceInput = new TextInputBuilder()
+            .setCustomId('sell_price')
+            .setLabel('Цена продажи')
+            .setStyle(TextInputStyle.Short)
+            .setRequired(true)
+            .setPlaceholder(item.price.toString())
+            .setValue(item.price.toString());
+
+        const quantityInput = new TextInputBuilder()
+            .setCustomId('sell_quantity')
+            .setLabel(`Количество (макс: ${inventoryItem.quantity})`)
+            .setStyle(TextInputStyle.Short)
+            .setRequired(true)
+            .setValue('1')
+            .setPlaceholder('1');
+
+        modal.addComponents(
+            new ActionRowBuilder().addComponents(priceInput),
+            new ActionRowBuilder().addComponents(quantityInput)
+        );
+
+        await interaction.showModal(modal);
+
+    } catch (error) {
+        logger.error('Error handling sell from inventory:', error);
+        await safeReply(interaction, { content: '❌ Ошибка при обработке продажи.', flags: 64 });
+    }
+}
+
+async function handleGiveItem(interaction, targetUserId, itemId, quantity) {
+    try {
+        const Inventory = require('./models/Inventory');
+        
+        // Give item to user
+        await Inventory.create(targetUserId, itemId, quantity);
+        
+        const Item = require('./models/Item');
+        const item = await Item.findById(itemId);
+        
+        const embed = new EmbedBuilder()
+            .setTitle('✅ Товар выдан')
+            .setDescription(`**${item.title}** (${quantity} шт.) выдан пользователю <@${targetUserId}>`)
+            .setColor(0x00ff00)
+            .setTimestamp();
+
+        await interaction.reply({ embeds: [embed], flags: 64 });
+        
+        logger.info(`Admin ${interaction.user.id} gave ${quantity}x ${item.title} to user ${targetUserId}`);
+
+    } catch (error) {
+        logger.error('Error giving item:', error);
+        await safeReply(interaction, { content: '❌ Ошибка при выдаче товара.', flags: 64 });
+    }
+}
+
+async function handleSellInventoryModal(interaction, itemId) {
+    try {
+        const sellPrice = parseFloat(interaction.fields.getTextInputValue('sell_price'));
+        const sellQuantity = parseInt(interaction.fields.getTextInputValue('sell_quantity'));
+
+        if (isNaN(sellPrice) || sellPrice <= 0) {
+            await interaction.reply({ content: '❌ Неверная цена товара.', flags: 64 });
+            return;
+        }
+
+        if (isNaN(sellQuantity) || sellQuantity <= 0) {
+            await interaction.reply({ content: '❌ Неверное количество товара.', flags: 64 });
+            return;
+        }
+
+        const userId = interaction.user.id;
+        const Inventory = require('./models/Inventory');
+        const Item = require('./models/Item');
+        
+        // Check if user has enough items
+        const inventoryItem = await Inventory.findByUserAndItem(userId, itemId);
+        
+        if (!inventoryItem || inventoryItem.quantity < sellQuantity) {
+            await interaction.reply({ content: '❌ Недостаточно товара в инвентаре.', flags: 64 });
+            return;
+        }
+
+        // Get item details
+        const item = await Item.findById(itemId);
+        
+        if (!item) {
+            await interaction.reply({ content: '❌ Товар не найден.', flags: 64 });
+            return;
+        }
+
+        // Create new item for sale (copy of the original item with custom price)
+        const newItem = await Item.create(
+            userId, 
+            item.title, 
+            item.description, 
+            sellPrice, 
+            sellQuantity, 
+            item.category, 
+            item.imageUrl
+        );
+
+        // Remove items from inventory
+        await inventoryItem.decreaseQuantity(sellQuantity);
+
+        const embed = new EmbedBuilder()
+            .setTitle('✅ Товар выставлен на продажу')
+            .setDescription(`**${newItem.title}** успешно выставлен на рынок!`)
+            .addFields(
+                { name: '💰 Ваша цена', value: `${newItem.price} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
+                { name: '📦 Количество', value: `${newItem.quantity}`, inline: true },
+                { name: '📂 Категория', value: newItem.category || 'Без категории', inline: true }
+            )
+            .setColor(0x00ff00)
+            .setTimestamp();
+
+        await interaction.reply({ embeds: [embed], flags: 64 });
+
+        logger.info(`User ${userId} listed ${sellQuantity}x ${item.title} for ${sellPrice} each`);
+
+    } catch (error) {
+        logger.error('Error handling sell inventory modal:', error);
+        await safeReply(interaction, { content: '❌ Ошибка при выставлении товара на продажу.', flags: 64 });
+    }
+}
 
 process.on('uncaughtException', (error) => {
     logger.error('Uncaught exception:', error);

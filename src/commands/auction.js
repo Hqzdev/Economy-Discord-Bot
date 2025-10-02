@@ -152,7 +152,7 @@ async function handleAuctionCreate(interaction) {
     if (auctionRoleId && !member.roles.cache.has(auctionRoleId)) {
         await interaction.reply({ 
             content: '❌ У вас нет прав для создания аукционов. Требуется специальная роль.', 
-            ephemeral: true 
+            flags: 64 
         });
         return;
     }
