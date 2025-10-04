@@ -1,65 +1,102 @@
-const Auction = require('../models/Auction');
-const Item = require('../models/Item');
-const Deal = require('../models/Deal');
-const logger = require('../utils/logger');
+import db from '../database/client.js';
+import logger from '../utils/logger.js';
 
-class AuctionService {
-    static async processEndedAuctions() {
-        try {
-            const endedAuctions = await Auction.findEnded();
-            
-            for (const auctionData of endedAuctions) {
-                const auction = auctionData.auction;
-                
-                // End the auction
-                await auction.endAuction();
-                
-                const highestBid = await auction.getHighestBid();
-                
-                if (highestBid) {
-                    // Create a deal for the winner
-                    const item = await Item.findById(auction.itemId);
-                    if (item && item.status === 'active') {
-                        await Deal.create(
-                            auction.itemId,
-                            highestBid.bidder_id,
-                            item.sellerId,
-                            highestBid.amount,
-                            1
-                        );
-                        
-                        // Update item status
-                        await item.updateStatus('sold');
-                        
-                        logger.info(`Auction ${auction.id} ended. Winner: ${highestBid.bidder_id}, Price: ${highestBid.amount}`);
-                    }
-                } else {
-                    // No bids, mark auction as ended without winner
-                    await auction.updateStatus('ended');
-                    logger.info(`Auction ${auction.id} ended without bids`);
-                }
-            }
-            
-            return endedAuctions.length;
-        } catch (error) {
-            logger.error('Error processing ended auctions:', error);
-            throw error;
-        }
+export class AuctionService {
+  async createAuction(creatorId, itemName, startTime, description = null) {
+    try {
+      // Validate start time
+      const startDate = new Date(startTime);
+      if (startDate <= new Date()) {
+        throw new Error('Start time must be in the future');
+      }
+
+      const auction = await db.client.auction.create({
+        data: {
+          creatorId,
+          itemName,
+          startTime: startDate,
+          description,
+          status: 'SCHEDULED',
+        },
+        include: {
+          creator: true,
+        },
+      });
+
+      logger.info(`Created auction ${auction.id} for ${itemName} by user ${creatorId}`);
+      return auction;
+    } catch (error) {
+      logger.error('Error creating auction:', error);
+      throw error;
     }
-    
-    static async startAuctionProcessor() {
-        // Process ended auctions every minute
-        setInterval(async () => {
-            try {
-                const processed = await this.processEndedAuctions();
-                if (processed > 0) {
-                    logger.info(`Processed ${processed} ended auctions`);
-                }
-            } catch (error) {
-                logger.error('Error in auction processor:', error);
-            }
-        }, 60000); // 1 minute
+  }
+
+  async getActiveAuctions() {
+    try {
+      return await db.client.auction.findMany({
+        where: {
+          status: 'SCHEDULED',
+          startTime: {
+            gte: new Date(),
+          },
+        },
+        include: {
+          creator: true,
+        },
+        orderBy: {
+          startTime: 'asc',
+        },
+      });
+    } catch (error) {
+      logger.error('Error getting active auctions:', error);
+      throw error;
     }
+  }
+
+  async getAuctionById(auctionId) {
+    try {
+      return await db.client.auction.findUnique({
+        where: { id: auctionId },
+        include: {
+          creator: true,
+        },
+      });
+    } catch (error) {
+      logger.error('Error getting auction by ID:', error);
+      throw error;
+    }
+  }
+
+  async closeAuction(auctionId) {
+    try {
+      const auction = await db.client.auction.update({
+        where: { id: auctionId },
+        data: { status: 'CLOSED' },
+      });
+
+      logger.info(`Closed auction ${auctionId}`);
+      return auction;
+    } catch (error) {
+      logger.error('Error closing auction:', error);
+      throw error;
+    }
+  }
+
+  async getAuctionStats() {
+    try {
+      const [scheduledCount, closedCount] = await Promise.all([
+        db.client.auction.count({ where: { status: 'SCHEDULED' } }),
+        db.client.auction.count({ where: { status: 'CLOSED' } }),
+      ]);
+
+      return {
+        scheduled: scheduledCount,
+        closed: closedCount,
+        total: scheduledCount + closedCount,
+      };
+    } catch (error) {
+      logger.error('Error getting auction stats:', error);
+      throw error;
+    }
+  }
 }
-
-module.exports = AuctionService;

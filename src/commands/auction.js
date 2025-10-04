@@ -1,198 +1,358 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, StringSelectMenuBuilder } = require('discord.js');
-const memoryStorage = require('../utils/memoryStorage');
+import { SlashCommandBuilder, EmbedBuilder } from 'discord.js';
+import { TEXTS, EMBED_COLORS } from '../utils/constants.js';
+import { AuctionService } from '../services/simpleAuctionService.js';
+import { UserService } from '../services/simpleUserService.js';
+import { AuditService } from '../services/simpleAuditService.js';
+import { config } from '../config/index.js';
 
-module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('auction')
-        .setDescription('Управление аукционами')
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('list')
-                .setDescription('Показать активные аукционы'))
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('create')
-                .setDescription('Создать новый аукцион')
-                .addStringOption(option =>
-                    option.setName('item')
-                        .setDescription('Название товара')
-                        .setRequired(true))
-                .addIntegerOption(option =>
-                    option.setName('min_bid')
-                        .setDescription('Минимальная ставка')
-                        .setRequired(true))
-                .addIntegerOption(option =>
-                    option.setName('duration_hours')
-                        .setDescription('Длительность аукциона в часах')
-                        .setRequired(false)))
-        .addSubcommand(subcommand =>
-            subcommand
-                .setName('bid')
-                .setDescription('Сделать ставку на аукцион')
-                .addStringOption(option =>
-                    option.setName('auction_id')
-                        .setDescription('ID аукциона')
-                        .setRequired(true))
-                .addIntegerOption(option =>
-                    option.setName('amount')
-                        .setDescription('Сумма ставки')
-                        .setRequired(true))),
-    
-    async execute(interaction) {
-        const subcommand = interaction.options.getSubcommand();
+const data = new SlashCommandBuilder()
+  .setName('auction')
+  .setDescription('Управление аукционами')
+  .addSubcommand(subcommand =>
+    subcommand
+      .setName('create')
+      .setDescription('Создать новый аукцион (только для аукционеров)')
+      .addStringOption(option =>
+        option
+          .setName('name')
+          .setDescription('Название товара')
+          .setRequired(true)
+      )
+      .addIntegerOption(option =>
+        option
+          .setName('duration')
+          .setDescription('Длительность аукциона в минутах')
+          .setRequired(true)
+          .setMinValue(1)
+          .setMaxValue(1440) // Максимум 24 часа
+      )
+      .addIntegerOption(option =>
+        option
+          .setName('min_price')
+          .setDescription('Минимальная стоимость (в монетах)')
+          .setRequired(true)
+          .setMinValue(1)
+      )
+      .addStringOption(option =>
+        option
+          .setName('description')
+          .setDescription('Описание аукциона')
+          .setRequired(false)
+      )
+  )
+  .addSubcommand(subcommand =>
+    subcommand
+      .setName('list')
+      .setDescription('Показать активные аукционы')
+  )
+  .addSubcommand(subcommand =>
+    subcommand
+      .setName('bid')
+      .setDescription('Сделать ставку в аукционе')
+      .addStringOption(option =>
+        option
+          .setName('auction_id')
+          .setDescription('ID аукциона')
+          .setRequired(true)
+      )
+      .addIntegerOption(option =>
+        option
+          .setName('amount')
+          .setDescription('Сумма ставки (в монетах)')
+          .setRequired(true)
+          .setMinValue(1)
+      )
+  )
+  .addSubcommand(subcommand =>
+    subcommand
+      .setName('info')
+      .setDescription('Информация об аукционе')
+      .addStringOption(option =>
+        option
+          .setName('auction_id')
+          .setDescription('ID аукциона')
+          .setRequired(true)
+      )
+  );
 
-        switch (subcommand) {
-            case 'list':
-                await handleAuctionList(interaction);
-                break;
-            case 'create':
-                await handleAuctionCreate(interaction);
-                break;
-            case 'bid':
-                await handleAuctionBid(interaction);
-                break;
-        }
-    }
-};
+async function execute(interaction) {
+  try {
+    const auctionService = new AuctionService();
+    const userService = new UserService();
+    const auditService = new AuditService();
 
-async function handleAuctionList(interaction) {
-    const embed = new EmbedBuilder()
-        .setTitle('🔨 Активные аукционы')
-        .setDescription('Выберите аукцион для просмотра или ставки:')
-        .setColor(0x303135)
-        .setTimestamp();
+    const subcommand = interaction.options.getSubcommand();
 
-    // Заглушка данных
-    const mockAuctions = [
-        { 
-            id: 1, 
-            item: 'Легендарный меч', 
-            minBid: 5000, 
-            currentBid: 7500, 
-            bidder: 'Игрок#1234',
-            timeLeft: '2ч 30м',
-            seller: 'Торговец#5678'
-        },
-        { 
-            id: 2, 
-            item: 'Драконья броня', 
-            minBid: 8000, 
-            currentBid: 8000, 
-            bidder: null,
-            timeLeft: '1ч 15м',
-            seller: 'Рыцарь#9999'
-        },
-        { 
-            id: 3, 
-            item: 'Кольцо силы', 
-            minBid: 3000, 
-            currentBid: 4500, 
-            bidder: 'Маг#1111',
-            timeLeft: '45м',
-            seller: 'Алхимик#2222'
-        }
-    ];
-
-    mockAuctions.forEach(auction => {
-        const timeLeft = auction.timeLeft;
-        const currentBidder = auction.bidder ? `👤 ${auction.bidder}` : '❌ Нет ставок';
-        
-        embed.addFields({
-            name: `🔨 ${auction.item}`,
-            value: `💰 **Текущая ставка:** ${auction.currentBid} ${process.env.CURRENCY_NAME || 'золото'}\n⏰ **Осталось:** ${timeLeft}\n${currentBidder}\n👤 **Продавец:** ${auction.seller}`,
-            inline: true
+    if (subcommand === 'create') {
+      // Check if user has auctioneer role
+      const member = interaction.member;
+      if (!member.roles.cache.has(config.discord.auctioneerRoleId)) {
+        return await interaction.reply({
+          content: TEXTS.ERRORS.AUCTIONEER_ONLY,
+          ephemeral: true,
         });
-    });
+      }
 
-    // Select menu для выбора аукциона
-    const selectMenu = new StringSelectMenuBuilder()
-        .setCustomId('auction_select')
-        .setPlaceholder('Выберите аукцион для ставки')
-        .setMinValues(1)
-        .setMaxValues(1);
+      const itemName = interaction.options.getString('name');
+      const duration = interaction.options.getInteger('duration');
+      const minPrice = interaction.options.getInteger('min_price');
+      const description = interaction.options.getString('description');
 
-    mockAuctions.forEach(auction => {
-        selectMenu.addOptions({
-            label: auction.item,
-            description: `Текущая ставка: ${auction.currentBid} | Осталось: ${auction.timeLeft}`,
-            value: `auction_${auction.id}`,
-            emoji: '🔨'
-        });
-    });
+      // Calculate start time (now) and end time
+      const startTime = new Date();
+      const endTime = new Date(startTime.getTime() + duration * 60 * 1000); // duration in minutes
 
-    const row1 = new ActionRowBuilder().addComponents(selectMenu);
-    
-    const row2 = new ActionRowBuilder()
-        .addComponents(
-            new ButtonBuilder()
-                .setCustomId('refresh_auctions')
-                .setLabel('🔄 Обновить')
-                .setStyle(ButtonStyle.Secondary),
-            new ButtonBuilder()
-                .setCustomId('my_auctions')
-                .setLabel('📋 Мои аукционы')
-                .setStyle(ButtonStyle.Primary),
-            new ButtonBuilder()
-                .setCustomId('my_bids')
-                .setLabel('💰 Мои ставки')
-                .setStyle(ButtonStyle.Primary)
+      // Create auction
+      const user = await userService.getOrCreateUser(interaction.user.id);
+      const auction = await auctionService.createAuction(user.id, itemName, startTime, endTime, minPrice, description);
+
+      // Log action
+      await auditService.logAction(interaction.user.id, 'AUCTION_CREATED', {
+        auctionId: auction.id,
+        itemName,
+        duration: duration,
+        minPrice: minPrice,
+        startTime: startTime.toISOString(),
+        endTime: endTime.toISOString(),
+      });
+
+      const embed = new EmbedBuilder()
+        .setTitle('🔨 Аукцион создан')
+        .setColor(EMBED_COLORS.SUCCESS)
+        .addFields(
+          {
+            name: 'ID аукциона',
+            value: `\`${auction.id}\``,
+            inline: false,
+          },
+          {
+            name: 'Товар',
+            value: itemName,
+            inline: true,
+          },
+          {
+            name: 'Длительность',
+            value: `${duration} минут`,
+            inline: true,
+          },
+          {
+            name: 'Мин. стоимость',
+            value: `${minPrice} монет`,
+            inline: true,
+          },
+          {
+            name: 'Завершится',
+            value: `<t:${Math.floor(endTime.getTime() / 1000)}:R>`,
+            inline: true,
+          },
+          {
+            name: 'Статус',
+            value: TEXTS.AUCTION.SCHEDULED,
+            inline: true,
+          }
         );
 
-    await interaction.reply({ 
-        embeds: [embed], 
-        components: [row1, row2] 
-    });
-}
-
-async function handleAuctionCreate(interaction) {
-    // Проверяем права на создание аукциона
-    const auctionRoleId = process.env.AUCTION_ROLE_ID;
-    const member = interaction.member;
-    
-    if (auctionRoleId && !member.roles.cache.has(auctionRoleId)) {
-        await interaction.reply({ 
-            content: '❌ У вас нет прав для создания аукционов. Требуется специальная роль.', 
-            flags: 64 
+      if (description) {
+        embed.addFields({
+          name: 'Описание',
+          value: description,
+          inline: false,
         });
-        return;
+      }
+
+      embed.setTimestamp();
+
+      await interaction.reply({
+        embeds: [embed],
+        ephemeral: false,
+      });
+
+    } else if (subcommand === 'list') {
+      const auctions = await auctionService.getActiveAuctions();
+
+      if (auctions.length === 0) {
+        return await interaction.reply({
+          content: TEXTS.AUCTION.NO_AUCTIONS,
+          ephemeral: true,
+        });
+      }
+
+      const embed = new EmbedBuilder()
+        .setTitle('🔨 Активные аукционы')
+        .setColor(EMBED_COLORS.INFO)
+        .setTimestamp();
+
+      for (const auction of auctions.slice(0, 10)) { // Limit to 10 auctions
+        const timeLeft = Math.max(0, Math.floor((auction.endTime.getTime() - Date.now()) / 1000));
+        
+        // Get current highest bid
+        const bids = await auctionService.getAuctionBids(auction.id);
+        const highestBid = bids.length > 0 ? bids[0] : null;
+        
+        let bidInfo = '**Ставок:** 0';
+        if (highestBid) {
+          bidInfo = `**Текущая ставка:** ${highestBid.amount} монет от <@${highestBid.bidder.discordId}>\n**Всего ставок:** ${bids.length}`;
+        }
+        
+        embed.addFields({
+          name: `${auction.itemName} (ID: ${auction.id})`,
+          value: `**Осталось:** <t:${Math.floor(auction.endTime.getTime() / 1000)}:R>\n**Мин. стоимость:** ${auction.minPrice} монет\n${bidInfo}\n**Создатель:** <@${auction.creator.discordId}>${auction.description ? `\n**Описание:** ${auction.description}` : ''}`,
+          inline: false,
+        });
+      }
+
+      if (auctions.length > 10) {
+        embed.setFooter({ text: `Показано 10 из ${auctions.length} аукционов` });
+      }
+
+      await interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
+
+    } else if (subcommand === 'bid') {
+      const auctionId = interaction.options.getString('auction_id');
+      const amount = interaction.options.getInteger('amount');
+
+      // Make bid
+      const user = await userService.getOrCreateUser(interaction.user.id);
+      const bid = await auctionService.makeBid(auctionId, user.id, amount);
+
+      // Log action
+      await auditService.logAction(interaction.user.id, 'AUCTION_BID', {
+        auctionId,
+        amount,
+        bidId: bid.id,
+      });
+
+      const embed = new EmbedBuilder()
+        .setTitle('💰 Ставка сделана')
+        .setColor(EMBED_COLORS.SUCCESS)
+        .setDescription(`Ставка ${amount} монет сделана в аукционе #${auctionId}`)
+        .addFields(
+          {
+            name: 'Сумма ставки',
+            value: `${amount} монет`,
+            inline: true,
+          },
+          {
+            name: 'ID ставки',
+            value: bid.id,
+            inline: true,
+          }
+        )
+        .setTimestamp();
+
+      await interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
+
+    } else if (subcommand === 'info') {
+      const auctionId = interaction.options.getString('auction_id');
+      
+      // Get auction info
+      const auction = await auctionService.getAuctionInfo(auctionId);
+      const bids = await auctionService.getAuctionBids(auctionId);
+
+      if (!auction) {
+        return await interaction.reply({
+          content: '❌ Аукцион не найден',
+          ephemeral: true,
+        });
+      }
+
+      const embed = new EmbedBuilder()
+        .setTitle(`🔨 Аукцион: ${auction.itemName}`)
+        .setColor(auction.status === 'ACTIVE' ? EMBED_COLORS.SUCCESS : EMBED_COLORS.INFO)
+        .addFields(
+          {
+            name: 'ID аукциона',
+            value: `\`${auction.id}\``,
+            inline: true,
+          },
+          {
+            name: 'Статус',
+            value: auction.status === 'ACTIVE' ? '🟢 Активен' : 
+                   auction.status === 'ENDED' ? '🏁 Завершён' : 
+                   auction.status === 'ENDED_NO_BIDS' ? '❌ Завершён без ставок' : '⏸️ Неизвестно',
+            inline: true,
+          },
+          {
+            name: 'Создатель',
+            value: `<@${auction.creator.discordId}>`,
+            inline: true,
+          },
+          {
+            name: 'Мин. стоимость',
+            value: `${auction.minPrice} монет`,
+            inline: true,
+          },
+          {
+            name: 'Завершится',
+            value: `<t:${Math.floor(new Date(auction.endTime).getTime() / 1000)}:R>`,
+            inline: true,
+          },
+          {
+            name: 'Ставок',
+            value: `${bids.length}`,
+            inline: true,
+          }
+        );
+
+      // Add current highest bid info
+      if (bids.length > 0) {
+        const highestBid = bids[0];
+        embed.addFields({
+          name: '💰 Текущая ставка',
+          value: `${highestBid.amount} монет от <@${highestBid.bidder.discordId}>`,
+          inline: false,
+        });
+      }
+
+      if (auction.winnerId) {
+        const winner = await userService.getUserById(auction.winnerId);
+        embed.addFields({
+          name: '🏆 Победитель',
+          value: `<@${winner.discordId}> - ${auction.winningAmount} монет`,
+          inline: false,
+        });
+      }
+
+      if (bids.length > 0) {
+        const topBids = bids.slice(0, 5).map((bid, index) => 
+          `${index + 1}. <@${bid.bidder.discordId}> - ${bid.amount} монет`
+        ).join('\n');
+        
+        embed.addFields({
+          name: '🏅 Топ ставки',
+          value: topBids,
+          inline: false,
+        });
+      }
+
+      if (auction.description) {
+        embed.addFields({
+          name: 'Описание',
+          value: auction.description,
+          inline: false,
+        });
+      }
+
+      embed.setTimestamp();
+
+      await interaction.reply({
+        embeds: [embed],
+        ephemeral: true,
+      });
     }
-
-    const item = interaction.options.getString('item');
-    const minBid = interaction.options.getInteger('min_bid');
-    const durationHours = interaction.options.getInteger('duration_hours') || 24;
-
-    // Создаем аукцион в памяти
-    const auction = memoryStorage.createAuction(interaction.user.id, item, minBid, durationHours);
-
-    const embed = new EmbedBuilder()
-        .setTitle('✅ Аукцион создан!')
-        .setDescription(`**Товар:** ${item}`)
-        .addFields(
-            { name: '💰 Минимальная ставка', value: `${minBid} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
-            { name: '⏰ Длительность', value: `${durationHours} часов`, inline: true },
-            { name: '👤 Создатель', value: `<@${interaction.user.id}>`, inline: true },
-            { name: '🆔 ID аукциона', value: `#${auction.id}`, inline: true },
-            { name: '⏰ Окончание', value: `<t:${Math.floor(auction.endTime.getTime() / 1000)}:F>`, inline: false }
-        )
-        .setColor(0x303135)
-        .setTimestamp();
-
-    await interaction.reply({ embeds: [embed] });
+  } catch (error) {
+    console.error('Error in auction command:', error);
+    await interaction.reply({
+      content: TEXTS.ERRORS.INTERNAL_ERROR,
+      ephemeral: true,
+    });
+  }
 }
 
-async function handleAuctionBid(interaction) {
-    const auctionId = interaction.options.getString('auction_id');
-    const amount = interaction.options.getInteger('amount');
-
-    const embed = new EmbedBuilder()
-        .setTitle('💰 Ставка сделана!')
-        .setDescription(`Ставка на аукцион #${auctionId}`)
-        .addFields(
-            { name: '💰 Сумма ставки', value: `${amount} ${process.env.CURRENCY_NAME || 'золото'}`, inline: true },
-            { name: '👤 Ставщик', value: `<@${interaction.user.id}>`, inline: true }
-        )
-        .setColor(0x303135)
-        .setTimestamp();
-
-    await interaction.reply({ embeds: [embed] });
-}
+export default { data, execute };

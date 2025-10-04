@@ -1,38 +1,40 @@
 {
-  "name": "economy-discord-bot",
+  "name": "discord-market-bot",
   "version": "1.0.0",
-  "description": "Discord bot for roleplay economy marketplace",
+  "description": "Discord бот для ролевого рынка с лотами, аукционами и сделками",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "deploy": "node deploy-commands.js",
+    "setup": "node scripts/setup.js",
+    "deploy-commands": "node scripts/deploy-commands.js",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:reset": "prisma migrate reset",
+    "db:studio": "prisma studio",
     "test": "jest",
-    "migrate": "node src/database/migrate.js",
-    "seed": "node src/database/seed.js"
+    "test:watch": "jest --watch",
+    "lint": "eslint src/ tests/",
+    "lint:fix": "eslint src/ tests/ --fix"
   },
-  "keywords": [
-    "discord",
-    "bot",
-    "marketplace",
-    "economy",
-    "roleplay"
-  ],
-  "author": "Your Name",
+  "keywords": ["discord", "bot", "market", "economy", "rpg"],
+  "author": "Discord Market Bot",
   "license": "MIT",
   "dependencies": {
-    "cors": "^2.8.5",
     "discord.js": "^14.14.1",
+    "@prisma/client": "^5.7.1",
+    "prisma": "^5.7.1",
+    "better-sqlite3": "^9.2.2",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "pg": "^8.11.3",
-    "redis": "^4.6.10",
-    "sqlite3": "^5.1.7",
     "winston": "^3.11.0"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
     "nodemon": "^3.0.2",
-    "supertest": "^6.3.3"
+    "jest": "^29.7.0",
+    "@jest/globals": "^29.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

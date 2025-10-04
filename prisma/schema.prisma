@@ -1,0 +1,116 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  discordId String   @unique
+  balance   Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  listings     Listing[]
+  dealsAsBuyer Deal[]     @relation("BuyerDeals")
+  dealsAsSeller Deal[]    @relation("SellerDeals")
+  stocks       Stock[]
+  auctions     Auction[]
+  auditLogs    AuditLog[]
+
+  @@map("users")
+}
+
+model Stock {
+  id          String @id @default(cuid())
+  userId      String
+  itemName    String
+  quantityTotal Int
+  
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, itemName])
+  @@map("stocks")
+}
+
+model Listing {
+  id               String      @id @default(cuid())
+  sellerId         String
+  itemName         String
+  price            Int
+  quantityAvailable Int
+  status           String      @default("ACTIVE") // ACTIVE, CLOSED
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  // Relations
+  seller User @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  deals  Deal[]
+
+  @@index([itemName, status])
+  @@map("listings")
+}
+
+model Deal {
+  id        String     @id @default(cuid())
+  listingId String
+  buyerId   String
+  sellerId  String
+  itemName  String
+  price     Int
+  quantity  Int
+  status    String     @default("PENDING") // PENDING, COMPLETED, CANCELLED
+  threadId  String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  // Relations
+  listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  buyer   User    @relation("BuyerDeals", fields: [buyerId], references: [id], onDelete: Cascade)
+  seller  User    @relation("SellerDeals", fields: [sellerId], references: [id], onDelete: Cascade)
+
+  @@index([buyerId, status])
+  @@index([sellerId, status])
+  @@map("deals")
+}
+
+model Auction {
+  id          String        @id @default(cuid())
+  creatorId   String
+  itemName    String
+  startTime   DateTime
+  description String?
+  status      String        @default("SCHEDULED") // SCHEDULED, CLOSED
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  creator User @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@map("auctions")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String
+  action    String
+  payloadJson String
+  createdAt DateTime @default(now())
+
+  // Relations
+  actor User @relation(fields: [actorId], references: [id], onDelete: Cascade)
+
+  @@map("audit_log")
+}
+
+// Enums removed - SQLite doesn't support enums, using strings instead
+// ListingStatus: ACTIVE, CLOSED
+// DealStatus: PENDING, COMPLETED, CANCELLED  
+// AuctionStatus: SCHEDULED, CLOSED
