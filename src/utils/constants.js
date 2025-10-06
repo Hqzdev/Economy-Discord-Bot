@@ -36,6 +36,26 @@ export const UI_CONSTANTS = {
   // Timeouts
   INTERACTION_TIMEOUT: 300000, // 5 minutes
   DEAL_TIMEOUT: 12 * 60 * 60 * 1000, // 12 hours in milliseconds
+
+  // Categories
+  CATEGORIES: [
+    'Оружие',
+    'Снаряжение',
+    'Зелья',
+    'Еда',
+    'Ингредиенты',
+    'Рыба',
+    'Мясо',
+    'Слитки',
+    'Книги',
+    'Драгоценности',
+    'Ювелирные изделия',
+    'Шкуры',
+    'Магическое',
+    'Сосуды',
+    'Алкоголь',
+    'Руда'
+  ],
 };
 
 // Text Constants (Russian)
@@ -141,11 +161,11 @@ export const TEXTS = {
 
 // Embed Colors
 export const EMBED_COLORS = {
-  PRIMARY: 0x3498db,
-  SUCCESS: 0x2ecc71,
-  WARNING: 0xf39c12,
-  ERROR: 0xe74c3c,
-  INFO: 0x9b59b6,
+  PRIMARY: 0x7b9e1e,
+  SUCCESS: 0x7b9e1e,
+  WARNING: 0x7b9e1e,
+  ERROR: 0x7b9e1e,
+  INFO: 0x7b9e1e,
 };
 
 // Rate Limiting

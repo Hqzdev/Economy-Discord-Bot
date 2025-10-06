@@ -1,0 +1,262 @@
+{
+  "users": [
+    [
+      "fyb69i2a6mgbwrkq2",
+      {
+        "id": "fyb69i2a6mgbwrkq2",
+        "discordId": "1268562577080713282",
+        "createdAt": "2025-10-04T06:44:49.706Z",
+        "updatedAt": "2025-10-04T06:44:49.706Z"
+      }
+    ],
+    [
+      "hcxn0bidimgbx9l2e",
+      {
+        "id": "hcxn0bidimgbx9l2e",
+        "discordId": "1420381162509176942",
+        "createdAt": "2025-10-04T06:58:49.958Z",
+        "updatedAt": "2025-10-04T06:58:49.958Z"
+      }
+    ],
+    [
+      "lb46ojtsumgby8tpv",
+      {
+        "id": "lb46ojtsumgby8tpv",
+        "discordId": "fyb69i2a6mgbwrkq2",
+        "createdAt": "2025-10-04T07:26:14.131Z",
+        "updatedAt": "2025-10-04T07:26:14.131Z"
+      }
+    ],
+    [
+      "qzji0h2gemgbyjlls",
+      {
+        "id": "qzji0h2gemgbyjlls",
+        "discordId": "hcxn0bidimgbx9l2e",
+        "createdAt": "2025-10-04T07:34:36.832Z",
+        "updatedAt": "2025-10-04T07:34:36.832Z"
+      }
+    ],
+    [
+      "x9tp3wo1omgc1q2wv",
+      {
+        "id": "x9tp3wo1omgc1q2wv",
+        "discordId": "304915006456332289",
+        "createdAt": "2025-10-04T09:03:38.047Z",
+        "updatedAt": "2025-10-04T09:03:38.047Z"
+      }
+    ],
+    [
+      "8kp7634djmgc1v5el",
+      {
+        "id": "8kp7634djmgc1v5el",
+        "discordId": "x9tp3wo1omgc1q2wv",
+        "createdAt": "2025-10-04T09:07:34.557Z",
+        "updatedAt": "2025-10-04T09:07:34.557Z"
+      }
+    ]
+  ],
+  "stocks": [],
+  "listings": [
+    [
+      "vrhnrzzhomgdx3pqi",
+      {
+        "id": "vrhnrzzhomgdx3pqi",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "Оружие",
+        "price": 1500,
+        "quantityAvailable": 4,
+        "imageUrl": null,
+        "category": "Снаряжение",
+        "status": "ACTIVE",
+        "createdAt": "2025-10-05T16:29:48.426Z",
+        "updatedAt": "2025-10-05T16:30:57.746Z"
+      }
+    ],
+    [
+      "gm77cigapmgdxhwon",
+      {
+        "id": "gm77cigapmgdxhwon",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "мясо",
+        "price": 90,
+        "quantityAvailable": 590,
+        "imageUrl": null,
+        "category": "Еда",
+        "status": "ACTIVE",
+        "createdAt": "2025-10-05T16:40:50.615Z",
+        "updatedAt": "2025-10-05T16:40:50.615Z"
+      }
+    ],
+    [
+      "9prjtcdogmgdxi1em",
+      {
+        "id": "9prjtcdogmgdxi1em",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "мясо",
+        "price": 90,
+        "quantityAvailable": 590,
+        "imageUrl": null,
+        "category": "Еда",
+        "status": "ACTIVE",
+        "createdAt": "2025-10-05T16:40:56.734Z",
+        "updatedAt": "2025-10-05T16:40:56.734Z"
+      }
+    ],
+    [
+      "4v48j4pxhmgdxioxl",
+      {
+        "id": "4v48j4pxhmgdxioxl",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "мясо",
+        "price": 90,
+        "quantityAvailable": 590,
+        "imageUrl": null,
+        "category": "Еда",
+        "status": "ACTIVE",
+        "createdAt": "2025-10-05T16:41:27.225Z",
+        "updatedAt": "2025-10-05T16:41:27.225Z"
+      }
+    ]
+  ],
+  "deals": [
+    [
+      "xh9iwejlzmgdx4st4",
+      {
+        "id": "xh9iwejlzmgdx4st4",
+        "listingId": "vrhnrzzhomgdx3pqi",
+        "buyerId": "x9tp3wo1omgc1q2wv",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "Оружие",
+        "price": 1500,
+        "quantity": 1,
+        "status": "COMPLETED",
+        "buyerConfirmed": true,
+        "sellerConfirmed": true,
+        "threadId": "1424433611574218897",
+        "createdAt": "2025-10-05T16:30:39.064Z",
+        "updatedAt": "2025-10-05T16:30:57.745Z"
+      }
+    ],
+    [
+      "vcc998fijmgdx9xna",
+      {
+        "id": "vcc998fijmgdx9xna",
+        "listingId": "vrhnrzzhomgdx3pqi",
+        "buyerId": "x9tp3wo1omgc1q2wv",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "Оружие",
+        "price": 1500,
+        "quantity": 1,
+        "status": "CANCELLED",
+        "buyerConfirmed": false,
+        "sellerConfirmed": false,
+        "threadId": "1424434617426903141",
+        "createdAt": "2025-10-05T16:34:38.614Z",
+        "updatedAt": "2025-10-05T16:38:43.578Z"
+      }
+    ],
+    [
+      "qd73ndsacmgdxkdvi",
+      {
+        "id": "qd73ndsacmgdxkdvi",
+        "listingId": "4v48j4pxhmgdxioxl",
+        "buyerId": "x9tp3wo1omgc1q2wv",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "мясо",
+        "price": 90,
+        "quantity": 1,
+        "status": "PENDING",
+        "buyerConfirmed": false,
+        "sellerConfirmed": false,
+        "threadId": "1424436660715651104",
+        "createdAt": "2025-10-05T16:42:46.206Z",
+        "updatedAt": "2025-10-05T16:42:46.206Z"
+      }
+    ]
+  ],
+  "auctions": [],
+  "bids": [],
+  "auditLog": [
+    {
+      "id": "nrdazy79xmgdx3pql",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"vrhnrzzhomgdx3pqi\",\"itemName\":\"Оружие\",\"price\":1500,\"quantity\":5}",
+      "createdAt": "2025-10-05T16:29:48.429Z"
+    },
+    {
+      "id": "azkdm7mxxmgdx4st5",
+      "actorId": "304915006456332289",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"xh9iwejlzmgdx4st4\",\"listingId\":\"vrhnrzzhomgdx3pqi\",\"quantity\":1,\"threadId\":\"1424433611574218897\"}",
+      "createdAt": "2025-10-05T16:30:39.065Z"
+    },
+    {
+      "id": "xscpwd5z2mgdx4wv7",
+      "actorId": "1268562577080713282",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"xh9iwejlzmgdx4st4\",\"totalAmount\":1500}",
+      "createdAt": "2025-10-05T16:30:44.323Z"
+    },
+    {
+      "id": "wcd16y0z4mgdx5782",
+      "actorId": "304915006456332289",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"xh9iwejlzmgdx4st4\",\"totalAmount\":1500}",
+      "createdAt": "2025-10-05T16:30:57.746Z"
+    },
+    {
+      "id": "h29n7q89wmgdx9xnc",
+      "actorId": "304915006456332289",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"vcc998fijmgdx9xna\",\"listingId\":\"vrhnrzzhomgdx3pqi\",\"quantity\":1,\"threadId\":\"1424434617426903141\"}",
+      "createdAt": "2025-10-05T16:34:38.616Z"
+    },
+    {
+      "id": "btqb7w7qrmgdxf6nv",
+      "actorId": "1268562577080713282",
+      "action": "DEAL_CANCELLED",
+      "payloadJson": "{\"dealId\":\"vcc998fijmgdx9xna\"}",
+      "createdAt": "2025-10-05T16:38:43.579Z"
+    },
+    {
+      "id": "58s40btismgdxhwop",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"gm77cigapmgdxhwon\",\"itemName\":\"мясо\",\"price\":90,\"quantity\":590}",
+      "createdAt": "2025-10-05T16:40:50.617Z"
+    },
+    {
+      "id": "e42qvxezxmgdxi1eo",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"9prjtcdogmgdxi1em\",\"itemName\":\"мясо\",\"price\":90,\"quantity\":590}",
+      "createdAt": "2025-10-05T16:40:56.736Z"
+    },
+    {
+      "id": "hs3gnhx73mgdxioxn",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"4v48j4pxhmgdxioxl\",\"itemName\":\"мясо\",\"price\":90,\"quantity\":590}",
+      "createdAt": "2025-10-05T16:41:27.227Z"
+    },
+    {
+      "id": "2a9f0dsqbmgdxkdvj",
+      "actorId": "304915006456332289",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"qd73ndsacmgdxkdvi\",\"listingId\":\"4v48j4pxhmgdxioxl\",\"quantity\":1,\"threadId\":\"1424436660715651104\"}",
+      "createdAt": "2025-10-05T16:42:46.207Z"
+    }
+  ],
+  "persistentMessages": [
+    [
+      "market",
+      {
+        "channelId": "1423960996547924009",
+        "messageId": "1424436389725999155",
+        "createdAt": "2025-10-05T16:41:39.999Z",
+        "updatedAt": "2025-10-05T16:41:39.999Z"
+      }
+    ]
+  ]
+}

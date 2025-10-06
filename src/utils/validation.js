@@ -59,7 +59,7 @@ export class Validator {
       throw new ValidationError('Цена должна быть положительным числом', 'price');
     }
 
-    if (numPrice > 1000000) {
+    if (numPrice > 999999) {
       throw new ValidationError('Цена не должна превышать 1,000,000 монет', 'price');
     }
 

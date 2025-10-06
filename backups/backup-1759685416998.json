@@ -1,0 +1,121 @@
+{
+  "users": [
+    [
+      "fyb69i2a6mgbwrkq2",
+      {
+        "id": "fyb69i2a6mgbwrkq2",
+        "discordId": "1268562577080713282",
+        "createdAt": "2025-10-04T06:44:49.706Z",
+        "updatedAt": "2025-10-04T06:44:49.706Z"
+      }
+    ],
+    [
+      "hcxn0bidimgbx9l2e",
+      {
+        "id": "hcxn0bidimgbx9l2e",
+        "discordId": "1420381162509176942",
+        "createdAt": "2025-10-04T06:58:49.958Z",
+        "updatedAt": "2025-10-04T06:58:49.958Z"
+      }
+    ],
+    [
+      "lb46ojtsumgby8tpv",
+      {
+        "id": "lb46ojtsumgby8tpv",
+        "discordId": "fyb69i2a6mgbwrkq2",
+        "createdAt": "2025-10-04T07:26:14.131Z",
+        "updatedAt": "2025-10-04T07:26:14.131Z"
+      }
+    ],
+    [
+      "qzji0h2gemgbyjlls",
+      {
+        "id": "qzji0h2gemgbyjlls",
+        "discordId": "hcxn0bidimgbx9l2e",
+        "createdAt": "2025-10-04T07:34:36.832Z",
+        "updatedAt": "2025-10-04T07:34:36.832Z"
+      }
+    ],
+    [
+      "x9tp3wo1omgc1q2wv",
+      {
+        "id": "x9tp3wo1omgc1q2wv",
+        "discordId": "304915006456332289",
+        "createdAt": "2025-10-04T09:03:38.047Z",
+        "updatedAt": "2025-10-04T09:03:38.047Z"
+      }
+    ],
+    [
+      "8kp7634djmgc1v5el",
+      {
+        "id": "8kp7634djmgc1v5el",
+        "discordId": "x9tp3wo1omgc1q2wv",
+        "createdAt": "2025-10-04T09:07:34.557Z",
+        "updatedAt": "2025-10-04T09:07:34.557Z"
+      }
+    ]
+  ],
+  "stocks": [],
+  "listings": [
+    [
+      "w7awuq1flmgdxng02",
+      {
+        "id": "w7awuq1flmgdxng02",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "алмаз00",
+        "price": 99,
+        "quantityAvailable": 55,
+        "imageUrl": null,
+        "category": "Ингредиенты",
+        "status": "ACTIVE",
+        "createdAt": "2025-10-05T16:45:08.930Z",
+        "updatedAt": "2025-10-05T16:45:08.930Z"
+      }
+    ],
+    [
+      "drzjma9zcmgdyz4h6",
+      {
+        "id": "drzjma9zcmgdyz4h6",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "Бомба",
+        "price": 999,
+        "quantityAvailable": 5,
+        "imageUrl": null,
+        "category": "Ингредиенты",
+        "status": "ACTIVE",
+        "createdAt": "2025-10-05T17:22:13.482Z",
+        "updatedAt": "2025-10-05T17:22:13.482Z"
+      }
+    ]
+  ],
+  "deals": [],
+  "auctions": [],
+  "bids": [],
+  "auditLog": [
+    {
+      "id": "6c11pfjs5mgdxng03",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"w7awuq1flmgdxng02\",\"itemName\":\"алмаз00\",\"price\":99,\"quantity\":55}",
+      "createdAt": "2025-10-05T16:45:08.931Z"
+    },
+    {
+      "id": "jt6fcfvvqmgdyz4h8",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"drzjma9zcmgdyz4h6\",\"itemName\":\"Бомба\",\"price\":999,\"quantity\":5}",
+      "createdAt": "2025-10-05T17:22:13.484Z"
+    }
+  ],
+  "persistentMessages": [
+    [
+      "market",
+      {
+        "channelId": "1424434764231868519",
+        "messageId": "1424448473570214018",
+        "createdAt": "2025-10-05T17:29:41.196Z",
+        "updatedAt": "2025-10-05T17:29:41.196Z"
+      }
+    ]
+  ]
+}

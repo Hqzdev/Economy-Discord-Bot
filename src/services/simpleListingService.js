@@ -5,9 +5,14 @@ import { UserService } from './simpleUserService.js';
 export class ListingService {
   constructor() {
     this.userService = new UserService();
+    this.persistentMarketService = null;
   }
 
-  async createListing(sellerDiscordId, itemName, price, quantity) {
+  setPersistentMarketService(service) {
+    this.persistentMarketService = service;
+  }
+
+  async createListing(sellerDiscordId, itemName, price, quantity, imageUrl = null, category = null) {
     try {
       // Validate inputs
       if (price <= 0) {
@@ -20,8 +25,14 @@ export class ListingService {
       // Get or create user
       const user = await this.userService.getOrCreateUser(sellerDiscordId);
       
-      const listing = db.createListing(user.id, itemName, price, quantity);
+      const listing = db.createListing(user.id, itemName, price, quantity, imageUrl, category);
       logger.info(`Created listing ${listing.id} for ${itemName} by user ${sellerDiscordId}`);
+      
+      // Мгновенное обновление рынка
+      if (this.persistentMarketService) {
+        this.persistentMarketService.delayedUpdate(1000); // Обновление через 1 секунду
+      }
+      
       return listing;
     } catch (error) {
       logger.error('Error creating listing:', error);
@@ -29,9 +40,9 @@ export class ListingService {
     }
   }
 
-  async getActiveListings(searchTerm = '', page = 1, limit = 10) {
+  async getActiveListings(searchTerm = '', page = 1, limit = 10, category = null) {
     try {
-      const listings = db.getActiveListings(searchTerm);
+      const listings = db.getActiveListings(searchTerm, category);
       const startIndex = (page - 1) * limit;
       const endIndex = startIndex + limit;
       const paginatedListings = listings.slice(startIndex, endIndex);
@@ -66,7 +77,14 @@ export class ListingService {
         return this.closeListing(listingId);
       }
 
-      return db.updateListingQuantity(listingId, newQuantity);
+      const result = db.updateListingQuantity(listingId, newQuantity);
+      
+      // Мгновенное обновление рынка
+      if (this.persistentMarketService) {
+        this.persistentMarketService.delayedUpdate(1000);
+      }
+      
+      return result;
     } catch (error) {
       logger.error('Error updating listing quantity:', error);
       throw error;
@@ -84,6 +102,11 @@ export class ListingService {
       // In real implementation, you would return stock to seller
       db.updateListingQuantity(listingId, 0);
       logger.info(`Closed listing ${listingId}`);
+      
+      // Мгновенное обновление рынка
+      if (this.persistentMarketService) {
+        this.persistentMarketService.delayedUpdate(1000);
+      }
     } catch (error) {
       logger.error('Error closing listing:', error);
       throw error;

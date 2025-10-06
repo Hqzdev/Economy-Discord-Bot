@@ -1,4 +1,4 @@
-import { Client, GatewayIntentBits, Collection, Events } from 'discord.js';
+import { Client, GatewayIntentBits, Collection, Events, ActivityType } from 'discord.js';
 import { config } from './config/index.js';
 import { commands } from './commands/index.js';
 import { InteractionHandler } from './handlers/index.js';
@@ -7,6 +7,8 @@ import logger from './utils/logger.js';
 import { DealService } from './services/simpleDealService.js';
 import { AuditService } from './services/simpleAuditService.js';
 import { AuctionManager } from './services/auctionManager.js';
+import { PersistentMarketService } from './services/persistentMarketService.js';
+import { restoreMarketAutoUpdates } from './commands/admin.js';
 
 // Validate configuration
 config.validate();
@@ -37,9 +39,11 @@ for (const command of commands) {
 
 // Create interaction handler
 const interactionHandler = new InteractionHandler();
+interactionHandler.setClient(client);
 const dealService = new DealService();
 const auditService = new AuditService();
 const auctionManager = new AuctionManager(client);
+const persistentMarketService = new PersistentMarketService(client);
 
 // Rate limiting
 const cooldowns = new Map();
@@ -48,11 +52,61 @@ const cooldowns = new Map();
 client.once(Events.ClientReady, async (readyClient) => {
   logger.info(`Бот готов! Вошёл как ${readyClient.user.tag}`);
   
-  // Set bot activity
-  client.user.setActivity('рынок ролевого сервера', { type: 'WATCHING' });
+  // Set bot activity - Playing
+  client.user.setActivity('торговлю на рынке', { type: ActivityType.Playing });
+  logger.info('Статус бота установлен: Играет в торговлю на рынке');
+  
+  // Set bot activity - Streaming (after 30 seconds)
+  setTimeout(() => {
+    client.user.setActivity('торговлю на рынке', { 
+      type: ActivityType.Streaming,
+      url: 'https://www.twitch.tv/discord'
+    });
+    logger.info('Статус бота изменён: Стримит торговлю на рынке');
+  }, 30000);
+
+  // Rotate status every 2 minutes
+  const statuses = [
+    { type: ActivityType.Playing, text: 'торговлю на рынке' },
+    { type: ActivityType.Streaming, text: 'торговлю на рынке', url: 'https://www.twitch.tv/discord' },
+    { type: ActivityType.Watching, text: 'активные аукционы' },
+    { type: ActivityType.Listening, text: 'заявки на покупку' }
+  ];
+
+  let currentStatusIndex = 0;
+  setInterval(() => {
+    const status = statuses[currentStatusIndex];
+    if (status.type === ActivityType.Streaming) {
+      client.user.setActivity(status.text, { 
+        type: status.type,
+        url: status.url
+      });
+    } else {
+      client.user.setActivity(status.text, { type: status.type });
+    }
+    logger.info(`Статус бота изменён: ${status.type} ${status.text}`);
+    currentStatusIndex = (currentStatusIndex + 1) % statuses.length;
+  }, 2 * 60 * 1000); // 2 minutes
 
   // Start auction manager
   auctionManager.start();
+
+  // Start persistent market service
+  await persistentMarketService.setupAutoUpdate();
+
+  // Restore market auto-updates
+  restoreMarketAutoUpdates(readyClient);
+
+  // Связываем сервисы для мгновенного обновления
+  const listingService = new (await import('./services/simpleListingService.js')).ListingService();
+  const auctionService = new (await import('./services/simpleAuctionService.js')).AuctionService();
+  
+  listingService.setPersistentMarketService(persistentMarketService);
+  auctionService.setPersistentMarketService(persistentMarketService);
+  
+  // Сохраняем ссылки на сервисы в client для доступа из других частей
+  readyClient.listingService = listingService;
+  readyClient.auctionService = auctionService;
 
   // Cleanup expired deals every hour
   setInterval(async () => {

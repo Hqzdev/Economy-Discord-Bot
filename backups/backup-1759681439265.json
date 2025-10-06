@@ -1,0 +1,2247 @@
+{
+  "users": [
+    [
+      "fyb69i2a6mgbwrkq2",
+      {
+        "id": "fyb69i2a6mgbwrkq2",
+        "discordId": "1268562577080713282",
+        "createdAt": "2025-10-04T06:44:49.706Z",
+        "updatedAt": "2025-10-04T06:44:49.706Z"
+      }
+    ],
+    [
+      "hcxn0bidimgbx9l2e",
+      {
+        "id": "hcxn0bidimgbx9l2e",
+        "discordId": "1420381162509176942",
+        "createdAt": "2025-10-04T06:58:49.958Z",
+        "updatedAt": "2025-10-04T06:58:49.958Z"
+      }
+    ],
+    [
+      "lb46ojtsumgby8tpv",
+      {
+        "id": "lb46ojtsumgby8tpv",
+        "discordId": "fyb69i2a6mgbwrkq2",
+        "createdAt": "2025-10-04T07:26:14.131Z",
+        "updatedAt": "2025-10-04T07:26:14.131Z"
+      }
+    ],
+    [
+      "qzji0h2gemgbyjlls",
+      {
+        "id": "qzji0h2gemgbyjlls",
+        "discordId": "hcxn0bidimgbx9l2e",
+        "createdAt": "2025-10-04T07:34:36.832Z",
+        "updatedAt": "2025-10-04T07:34:36.832Z"
+      }
+    ],
+    [
+      "x9tp3wo1omgc1q2wv",
+      {
+        "id": "x9tp3wo1omgc1q2wv",
+        "discordId": "304915006456332289",
+        "createdAt": "2025-10-04T09:03:38.047Z",
+        "updatedAt": "2025-10-04T09:03:38.047Z"
+      }
+    ],
+    [
+      "8kp7634djmgc1v5el",
+      {
+        "id": "8kp7634djmgc1v5el",
+        "discordId": "x9tp3wo1omgc1q2wv",
+        "createdAt": "2025-10-04T09:07:34.557Z",
+        "updatedAt": "2025-10-04T09:07:34.557Z"
+      }
+    ]
+  ],
+  "stocks": [],
+  "listings": [
+    [
+      "hxejj0cunmgbwnbfd",
+      {
+        "id": "hxejj0cunmgbwnbfd",
+        "sellerId": "1268562577080713282",
+        "itemName": "тест",
+        "price": 9,
+        "quantityAvailable": 1,
+        "status": "ACTIVE",
+        "createdAt": "2025-10-04T06:41:31.033Z",
+        "updatedAt": "2025-10-04T06:41:31.033Z"
+      }
+    ],
+    [
+      "zllpsupesmgbxw710",
+      {
+        "id": "zllpsupesmgbxw710",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "ТЕСТОВЫЙ ТОВАР",
+        "price": 999,
+        "quantityAvailable": 4,
+        "status": "ACTIVE",
+        "createdAt": "2025-10-04T07:16:24.852Z",
+        "updatedAt": "2025-10-04T07:16:43.825Z"
+      }
+    ],
+    [
+      "friifk6mumgc1r4ys",
+      {
+        "id": "friifk6mumgc1r4ys",
+        "sellerId": "x9tp3wo1omgc1q2wv",
+        "itemName": "123",
+        "price": 333,
+        "quantityAvailable": 555,
+        "status": "ACTIVE",
+        "createdAt": "2025-10-04T09:04:27.364Z",
+        "updatedAt": "2025-10-04T09:04:27.364Z"
+      }
+    ],
+    [
+      "hksv6de6imgc1ye4o",
+      {
+        "id": "hksv6de6imgc1ye4o",
+        "sellerId": "x9tp3wo1omgc1q2wv",
+        "itemName": "Шкуры",
+        "price": 25,
+        "quantityAvailable": 300,
+        "status": "ACTIVE",
+        "createdAt": "2025-10-04T09:10:05.832Z",
+        "updatedAt": "2025-10-04T09:10:05.832Z"
+      }
+    ],
+    [
+      "9dcddmc16mgc57l9m",
+      {
+        "id": "9dcddmc16mgc57l9m",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "тест",
+        "price": 999,
+        "quantityAvailable": 3,
+        "status": "ACTIVE",
+        "createdAt": "2025-10-04T10:41:13.834Z",
+        "updatedAt": "2025-10-04T10:41:13.834Z"
+      }
+    ],
+    [
+      "n3c6ca3ecmgc5es3t",
+      {
+        "id": "n3c6ca3ecmgc5es3t",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "1111111",
+        "price": 125,
+        "quantityAvailable": 6,
+        "status": "ACTIVE",
+        "createdAt": "2025-10-04T10:46:49.289Z",
+        "updatedAt": "2025-10-04T10:46:49.289Z"
+      }
+    ],
+    [
+      "bxgccks7rmgc68oe1",
+      {
+        "id": "bxgccks7rmgc68oe1",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "Оружие",
+        "price": 145,
+        "quantityAvailable": 10,
+        "imageUrl": null,
+        "category": "Оружие",
+        "status": "ACTIVE",
+        "createdAt": "2025-10-04T11:10:04.153Z",
+        "updatedAt": "2025-10-04T11:10:04.153Z"
+      }
+    ],
+    [
+      "1mzgammqxmgc6di38",
+      {
+        "id": "1mzgammqxmgc6di38",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "Снаряжения",
+        "price": 1500,
+        "quantityAvailable": 3,
+        "imageUrl": null,
+        "category": "Снаряжения",
+        "status": "ACTIVE",
+        "createdAt": "2025-10-04T11:13:49.268Z",
+        "updatedAt": "2025-10-04T11:13:49.268Z"
+      }
+    ],
+    [
+      "u0f7gm94kmgc6jz0a",
+      {
+        "id": "u0f7gm94kmgc6jz0a",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "Зелье 1",
+        "price": 555,
+        "quantityAvailable": 5,
+        "imageUrl": null,
+        "category": "Зелья",
+        "status": "ACTIVE",
+        "createdAt": "2025-10-04T11:18:51.130Z",
+        "updatedAt": "2025-10-04T11:18:51.130Z"
+      }
+    ],
+    [
+      "tzasojxtymgc75lei",
+      {
+        "id": "tzasojxtymgc75lei",
+        "sellerId": "fyb69i2a6mgbwrkq2",
+        "itemName": "Еда",
+        "price": 950,
+        "quantityAvailable": 2,
+        "imageUrl": null,
+        "category": "Еда",
+        "status": "ACTIVE",
+        "createdAt": "2025-10-04T11:35:39.930Z",
+        "updatedAt": "2025-10-04T11:35:39.930Z"
+      }
+    ],
+    [
+      "jwex78p4smgc76uce",
+      {
+        "id": "jwex78p4smgc76uce",
+        "sellerId": "x9tp3wo1omgc1q2wv",
+        "itemName": "Идеальное зелье восстановление",
+        "price": 25,
+        "quantityAvailable": 999,
+        "imageUrl": null,
+        "category": "Зелья",
+        "status": "ACTIVE",
+        "createdAt": "2025-10-04T11:36:38.174Z",
+        "updatedAt": "2025-10-04T11:38:54.014Z"
+      }
+    ]
+  ],
+  "deals": [
+    [
+      "gqeyffo3dmgbx9l2g",
+      {
+        "id": "gqeyffo3dmgbx9l2g",
+        "listingId": "hxejj0cunmgbwnbfd",
+        "buyerId": "hcxn0bidimgbx9l2e",
+        "sellerId": "1268562577080713282",
+        "itemName": "тест",
+        "price": 9,
+        "quantity": 1,
+        "status": "PENDING",
+        "buyerConfirmed": false,
+        "sellerConfirmed": false,
+        "threadId": "1423927322238517310",
+        "createdAt": "2025-10-04T06:58:49.960Z",
+        "updatedAt": "2025-10-04T06:58:49.960Z"
+      }
+    ],
+    [
+      "g80kprigkmgbxb3iq",
+      {
+        "id": "g80kprigkmgbxb3iq",
+        "listingId": "hxejj0cunmgbwnbfd",
+        "buyerId": "hcxn0bidimgbx9l2e",
+        "sellerId": "1268562577080713282",
+        "itemName": "тест",
+        "price": 9,
+        "quantity": 1,
+        "status": "PENDING",
+        "buyerConfirmed": false,
+        "sellerConfirmed": false,
+        "threadId": "1423927617555529760",
+        "createdAt": "2025-10-04T07:00:00.530Z",
+        "updatedAt": "2025-10-04T07:00:00.530Z"
+      }
+    ],
+    [
+      "tpe1p47emmgbxedll",
+      {
+        "id": "tpe1p47emmgbxedll",
+        "listingId": "hxejj0cunmgbwnbfd",
+        "buyerId": "hcxn0bidimgbx9l2e",
+        "sellerId": "1268562577080713282",
+        "itemName": "тест",
+        "price": 9,
+        "quantity": 1,
+        "status": "PENDING",
+        "buyerConfirmed": false,
+        "sellerConfirmed": false,
+        "threadId": "1423928260525297724",
+        "createdAt": "2025-10-04T07:02:33.561Z",
+        "updatedAt": "2025-10-04T07:02:33.561Z"
+      }
+    ],
+    [
+      "j1l9llhk2mgbxj2af",
+      {
+        "id": "j1l9llhk2mgbxj2af",
+        "listingId": "hxejj0cunmgbwnbfd",
+        "buyerId": "hcxn0bidimgbx9l2e",
+        "sellerId": "1268562577080713282",
+        "itemName": "тест",
+        "price": 9,
+        "quantity": 1,
+        "status": "PENDING",
+        "buyerConfirmed": true,
+        "sellerConfirmed": false,
+        "threadId": "1423929177307873352",
+        "createdAt": "2025-10-04T07:06:12.183Z",
+        "updatedAt": "2025-10-04T07:06:19.038Z"
+      }
+    ],
+    [
+      "5r6ljuu8gmgbxv2fe",
+      {
+        "id": "5r6ljuu8gmgbxv2fe",
+        "listingId": "hxejj0cunmgbwnbfd",
+        "buyerId": "hcxn0bidimgbx9l2e",
+        "sellerId": "1268562577080713282",
+        "itemName": "тест",
+        "price": 9,
+        "quantity": 1,
+        "status": "PENDING",
+        "buyerConfirmed": true,
+        "sellerConfirmed": false,
+        "threadId": "1423931526097277049",
+        "createdAt": "2025-10-04T07:15:32.234Z",
+        "updatedAt": "2025-10-04T07:15:35.563Z"
+      }
+    ],
+    [
+      "jxdapk4i0mgc1q2wy",
+      {
+        "id": "jxdapk4i0mgc1q2wy",
+        "listingId": "hxejj0cunmgbwnbfd",
+        "buyerId": "x9tp3wo1omgc1q2wv",
+        "sellerId": "1268562577080713282",
+        "itemName": "тест",
+        "price": 9,
+        "quantity": 1,
+        "status": "PENDING",
+        "buyerConfirmed": false,
+        "sellerConfirmed": false,
+        "threadId": "1423958728021119046",
+        "createdAt": "2025-10-04T09:03:38.050Z",
+        "updatedAt": "2025-10-04T09:03:38.050Z"
+      }
+    ]
+  ],
+  "auctions": [
+    [
+      "okqsvlgtrmgby8tpy",
+      {
+        "id": "okqsvlgtrmgby8tpy",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "тестовый",
+        "startTime": "2025-10-04T07:26:14.131Z",
+        "endTime": "2025-10-04T09:26:14.131Z",
+        "description": "тестовый",
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-04T07:26:14.134Z",
+        "updatedAt": "2025-10-04T09:26:14.638Z"
+      }
+    ],
+    [
+      "nmds5w57zmgbygo5m",
+      {
+        "id": "nmds5w57zmgbygo5m",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "тесттт",
+        "startTime": "2025-10-04T07:32:20.170Z",
+        "endTime": "2025-10-04T07:41:20.170Z",
+        "minPrice": 12,
+        "description": "4",
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-04T07:32:20.170Z",
+        "updatedAt": "2025-10-04T07:41:27.304Z"
+      }
+    ],
+    [
+      "fg7wrpkaxmgbyioui",
+      {
+        "id": "fg7wrpkaxmgbyioui",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "o3if3",
+        "startTime": "2025-10-04T07:33:54.378Z",
+        "endTime": "2025-10-04T07:36:54.378Z",
+        "minPrice": 1,
+        "description": "4",
+        "status": "ENDED",
+        "createdAt": "2025-10-04T07:33:54.378Z",
+        "updatedAt": "2025-10-04T07:40:27.301Z",
+        "winnerId": "qzji0h2gemgbyjlls",
+        "winningAmount": 222
+      }
+    ],
+    [
+      "knipv4g9wmgbytptc",
+      {
+        "id": "knipv4g9wmgbytptc",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "1",
+        "startTime": "2025-10-04T07:42:28.848Z",
+        "endTime": "2025-10-04T07:44:28.848Z",
+        "minPrice": 1,
+        "description": "wsd",
+        "status": "ENDED",
+        "createdAt": "2025-10-04T07:42:28.848Z",
+        "updatedAt": "2025-10-04T07:44:57.312Z",
+        "winnerId": "qzji0h2gemgbyjlls",
+        "winningAmount": 1222222
+      }
+    ],
+    [
+      "se8mbntqcmgbz009k",
+      {
+        "id": "se8mbntqcmgbz009k",
+        "creatorId": "qzji0h2gemgbyjlls",
+        "itemName": "хехе",
+        "startTime": "2025-10-04T07:47:22.328Z",
+        "endTime": "2025-10-04T07:49:22.328Z",
+        "minPrice": 444,
+        "description": null,
+        "status": "ENDED",
+        "createdAt": "2025-10-04T07:47:22.328Z",
+        "updatedAt": "2025-10-04T07:49:23.943Z",
+        "winnerId": "qzji0h2gemgbyjlls",
+        "winningAmount": 77777
+      }
+    ],
+    [
+      "ofdbq9ugrmgbz5bfq",
+      {
+        "id": "ofdbq9ugrmgbz5bfq",
+        "creatorId": "qzji0h2gemgbyjlls",
+        "itemName": "хехе",
+        "startTime": "2025-10-04T07:51:30.086Z",
+        "endTime": "2025-10-04T07:53:30.086Z",
+        "minPrice": 444,
+        "description": null,
+        "status": "ENDED",
+        "createdAt": "2025-10-04T07:51:30.087Z",
+        "updatedAt": "2025-10-04T07:53:45.582Z",
+        "winnerId": "qzji0h2gemgbyjlls",
+        "winningAmount": 11111
+      }
+    ],
+    [
+      "g5isnap79mgc1w0nw",
+      {
+        "id": "g5isnap79mgc1w0nw",
+        "creatorId": "qzji0h2gemgbyjlls",
+        "itemName": "123",
+        "startTime": "2025-10-04T09:08:15.067Z",
+        "endTime": "2025-10-04T09:13:15.067Z",
+        "minPrice": 55555,
+        "description": null,
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-04T09:08:15.068Z",
+        "updatedAt": "2025-10-04T09:13:32.627Z"
+      }
+    ],
+    [
+      "5j145tpdcmgc7hkn9",
+      {
+        "id": "5j145tpdcmgc7hkn9",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "снаряжение",
+        "startTime": "2025-10-04T11:44:58.820Z",
+        "endTime": "2025-10-04T11:49:58.820Z",
+        "minPrice": 120,
+        "description": "да",
+        "status": "ENDED",
+        "createdAt": "2025-10-04T11:44:58.821Z",
+        "updatedAt": "2025-10-04T11:50:00.283Z",
+        "winnerId": "lb46ojtsumgby8tpv",
+        "winningAmount": 120000
+      }
+    ],
+    [
+      "zufc0qa0smgc84pch",
+      {
+        "id": "zufc0qa0smgc84pch",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "Снаряжение",
+        "startTime": "2025-10-04T12:02:58.001Z",
+        "endTime": "2025-10-04T12:07:58.001Z",
+        "minPrice": 14000,
+        "description": null,
+        "category": "Снаряжение",
+        "imageUrl": null,
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-04T12:02:58.001Z",
+        "updatedAt": "2025-10-04T12:08:15.853Z"
+      }
+    ],
+    [
+      "f9dfbwz9tmgcafrjz",
+      {
+        "id": "f9dfbwz9tmgcafrjz",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "Алмаз",
+        "startTime": "2025-10-04T13:07:33.310Z",
+        "endTime": "2025-10-04T13:12:33.310Z",
+        "minPrice": 155555,
+        "description": null,
+        "category": "Ювелирные изделия",
+        "imageUrl": null,
+        "status": "ENDED",
+        "createdAt": "2025-10-04T13:07:33.311Z",
+        "updatedAt": "2025-10-04T13:12:34.116Z",
+        "threadId": "1424020120581312543",
+        "winnerId": "lb46ojtsumgby8tpv",
+        "winningAmount": 5000000
+      }
+    ],
+    [
+      "fdn32mnw7mgcaj6cl",
+      {
+        "id": "fdn32mnw7mgcaj6cl",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "123",
+        "startTime": "2025-10-04T13:10:12.453Z",
+        "endTime": "2025-10-04T13:15:12.453Z",
+        "minPrice": 500,
+        "description": null,
+        "category": "Шкуры",
+        "imageUrl": null,
+        "status": "ENDED",
+        "createdAt": "2025-10-04T13:10:12.453Z",
+        "updatedAt": "2025-10-04T13:15:34.110Z",
+        "threadId": "1424020787802931362",
+        "winnerId": "lb46ojtsumgby8tpv",
+        "winningAmount": 500
+      }
+    ],
+    [
+      "8me4sxk3kmgcanuiv",
+      {
+        "id": "8me4sxk3kmgcanuiv",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "123",
+        "startTime": "2025-10-04T13:13:50.407Z",
+        "endTime": "2025-10-04T13:18:50.407Z",
+        "minPrice": 500,
+        "description": null,
+        "category": "Шкуры",
+        "imageUrl": null,
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-04T13:13:50.407Z",
+        "updatedAt": "2025-10-04T13:19:04.119Z",
+        "threadId": "1424021701838245952"
+      }
+    ],
+    [
+      "hdz9pyx4nmgcargxu",
+      {
+        "id": "hdz9pyx4nmgcargxu",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "123",
+        "startTime": "2025-10-04T13:16:39.426Z",
+        "endTime": "2025-10-04T13:21:39.426Z",
+        "minPrice": 500,
+        "description": null,
+        "category": "Шкуры",
+        "imageUrl": null,
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-04T13:16:39.426Z",
+        "updatedAt": "2025-10-04T13:22:04.128Z",
+        "threadId": "1424022410788868169"
+      }
+    ],
+    [
+      "5ehlzw7ikmgcatnch",
+      {
+        "id": "5ehlzw7ikmgcatnch",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "Зелье",
+        "startTime": "2025-10-04T13:18:21.041Z",
+        "endTime": "2025-10-04T13:23:21.041Z",
+        "minPrice": 1500,
+        "description": null,
+        "category": "Зелья",
+        "imageUrl": null,
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-04T13:18:21.041Z",
+        "updatedAt": "2025-10-04T13:23:34.132Z",
+        "threadId": "1424022836917567619"
+      }
+    ],
+    [
+      "7driqfilbmgcaw1vf",
+      {
+        "id": "7driqfilbmgcaw1vf",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "Зелье",
+        "startTime": "2025-10-04T13:20:13.179Z",
+        "endTime": "2025-10-04T13:25:13.179Z",
+        "minPrice": 1500,
+        "description": null,
+        "category": "Зелья",
+        "imageUrl": null,
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-04T13:20:13.179Z",
+        "updatedAt": "2025-10-04T13:25:34.138Z",
+        "threadId": "1424023307539452015"
+      }
+    ],
+    [
+      "4o3i2oaofmgcb0gbv",
+      {
+        "id": "4o3i2oaofmgcb0gbv",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "Зелье",
+        "startTime": "2025-10-04T13:23:38.539Z",
+        "endTime": "2025-10-04T13:28:38.539Z",
+        "minPrice": 1500,
+        "description": null,
+        "category": "Зелья",
+        "imageUrl": null,
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-04T13:23:38.539Z",
+        "updatedAt": "2025-10-04T13:29:04.147Z",
+        "threadId": "1424024168831258725"
+      }
+    ],
+    [
+      "3cqdxvnspmgcc70zt",
+      {
+        "id": "3cqdxvnspmgcc70zt",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "алмаз",
+        "startTime": "2025-10-04T13:56:44.873Z",
+        "endTime": "2025-10-04T14:01:44.873Z",
+        "minPrice": 1000,
+        "description": null,
+        "category": "Драгоценности",
+        "imageUrl": null,
+        "status": "ENDED",
+        "createdAt": "2025-10-04T13:56:44.873Z",
+        "updatedAt": "2025-10-04T14:01:51.778Z",
+        "threadId": "1424032502607249449",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 12000
+      }
+    ],
+    [
+      "zonrj58j2mgccdiyj",
+      {
+        "id": "zonrj58j2mgccdiyj",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "мясо",
+        "startTime": "2025-10-04T14:01:48.091Z",
+        "endTime": "2025-10-04T14:06:48.091Z",
+        "minPrice": 1000,
+        "description": null,
+        "category": "Мясо",
+        "imageUrl": null,
+        "status": "ENDED",
+        "createdAt": "2025-10-04T14:01:48.091Z",
+        "updatedAt": "2025-10-04T15:59:05.643Z",
+        "threadId": "1424033773875499028",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 5000
+      }
+    ],
+    [
+      "bsqv80w2dmgcgyuvd",
+      {
+        "id": "bsqv80w2dmgcgyuvd",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "мясо",
+        "startTime": "2025-10-04T16:10:21.769Z",
+        "endTime": "2025-10-04T16:25:21.769Z",
+        "minPrice": 50,
+        "description": null,
+        "category": "Мясо",
+        "imageUrl": null,
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-04T16:10:21.769Z",
+        "updatedAt": "2025-10-04T16:25:42.202Z"
+      }
+    ],
+    [
+      "p0wp97wsemgch32h2",
+      {
+        "id": "p0wp97wsemgch32h2",
+        "creatorId": "8kp7634djmgc1v5el",
+        "itemName": "Череп королевы",
+        "startTime": "2025-10-04T16:13:38.246Z",
+        "endTime": "2025-10-04T17:41:38.246Z",
+        "minPrice": 1200,
+        "description": null,
+        "category": "Магическое",
+        "imageUrl": null,
+        "status": "ENDED",
+        "createdAt": "2025-10-04T16:13:38.246Z",
+        "updatedAt": "2025-10-04T17:41:51.407Z",
+        "threadId": "1424066956700549131",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 99999
+      }
+    ],
+    [
+      "uify0u7s7mgcked92",
+      {
+        "id": "uify0u7s7mgcked92",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "Ящик",
+        "startTime": "2025-10-04T17:46:24.278Z",
+        "endTime": "2025-10-04T17:51:24.278Z",
+        "minPrice": 150,
+        "description": null,
+        "category": "Снаряжение",
+        "imageUrl": null,
+        "status": "ENDED",
+        "createdAt": "2025-10-04T17:46:24.278Z",
+        "updatedAt": "2025-10-04T17:51:36.713Z",
+        "threadId": "1424090303945506896",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 15000
+      }
+    ],
+    [
+      "obxns3xpnmgckimga",
+      {
+        "id": "obxns3xpnmgckimga",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "123",
+        "startTime": "2025-10-04T17:49:42.825Z",
+        "endTime": "2025-10-04T17:54:42.825Z",
+        "minPrice": 150,
+        "description": null,
+        "category": "Еда",
+        "imageUrl": null,
+        "status": "ENDED",
+        "createdAt": "2025-10-04T17:49:42.826Z",
+        "updatedAt": "2025-10-04T17:55:06.714Z",
+        "threadId": "1424091134392537238",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 150000
+      }
+    ],
+    [
+      "4q7q0jargmgdhs0bf",
+      {
+        "id": "4q7q0jargmgdhs0bf",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "алмаз",
+        "startTime": "2025-10-05T09:20:48.027Z",
+        "endTime": "2025-10-05T09:25:48.027Z",
+        "minPrice": 1500,
+        "description": "дорогой алмазик",
+        "category": "Слитки",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163157180467/56.png?ex=68e24c18&is=68e0fa98&hm=85b93e15cb8a412921217213256a9435e733169aebf2839eafe38bbda548fdae&",
+        "status": "ENDED",
+        "createdAt": "2025-10-05T09:20:48.027Z",
+        "updatedAt": "2025-10-05T09:26:15.956Z",
+        "threadId": "1424325447528878161",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 150000
+      }
+    ],
+    [
+      "ncoh6k4okmgdhyiib",
+      {
+        "id": "ncoh6k4okmgdhyiib",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "алмазик",
+        "startTime": "2025-10-05T09:25:51.539Z",
+        "endTime": "2025-10-05T09:30:51.539Z",
+        "minPrice": 1400,
+        "description": "дорогой",
+        "category": "Драгоценности",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163157180467/56.png?ex=68e24c18&is=68e0fa98&hm=85b93e15cb8a412921217213256a9435e733169aebf2839eafe38bbda548fdae&",
+        "status": "ENDED",
+        "createdAt": "2025-10-05T09:25:51.539Z",
+        "updatedAt": "2025-10-05T09:30:56.423Z",
+        "threadId": "1424326720663588874",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 9999999
+      }
+    ],
+    [
+      "6pyx1kr6xmgdi143x",
+      {
+        "id": "6pyx1kr6xmgdi143x",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "алмаз",
+        "startTime": "2025-10-05T09:27:52.844Z",
+        "endTime": "2025-10-05T09:32:52.844Z",
+        "minPrice": 999,
+        "description": "111",
+        "category": "Драгоценности",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163979264161/5.png?ex=68e24c19&is=68e0fa99&hm=429ef97a6139be1f3805e12d077b950aa055f7e43c431138d4cca342776f5a77&",
+        "status": "ENDED",
+        "createdAt": "2025-10-05T09:27:52.845Z",
+        "updatedAt": "2025-10-05T09:32:56.424Z",
+        "threadId": "1424327230963581090",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 5555555
+      }
+    ],
+    [
+      "0pz69h09vmgdiovmi",
+      {
+        "id": "0pz69h09vmgdiovmi",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "алмаз",
+        "startTime": "2025-10-05T09:46:21.593Z",
+        "endTime": "2025-10-05T09:51:21.593Z",
+        "minPrice": 999,
+        "description": "111",
+        "category": "Драгоценности",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163979264161/5.png?ex=68e24c19&is=68e0fa99&hm=429ef97a6139be1f3805e12d077b950aa055f7e43c431138d4cca342776f5a77&",
+        "status": "ENDED",
+        "createdAt": "2025-10-05T09:46:21.594Z",
+        "updatedAt": "2025-10-05T10:00:48.340Z",
+        "threadId": "1424331880295174155",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 9999
+      }
+    ],
+    [
+      "qzrmgcvr3mgdis1z8",
+      {
+        "id": "qzrmgcvr3mgdis1z8",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "алмаз",
+        "startTime": "2025-10-05T09:48:49.796Z",
+        "endTime": "2025-10-05T09:53:49.796Z",
+        "minPrice": 999,
+        "description": "111",
+        "category": "Драгоценности",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163979264161/5.png?ex=68e24c19&is=68e0fa99&hm=429ef97a6139be1f3805e12d077b950aa055f7e43c431138d4cca342776f5a77&",
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-05T09:48:49.796Z",
+        "updatedAt": "2025-10-05T10:00:48.346Z",
+        "threadId": "1424332502016725072"
+      }
+    ],
+    [
+      "hr31lhtd3mgdisvk7",
+      {
+        "id": "hr31lhtd3mgdisvk7",
+        "creatorId": "lb46ojtsumgby8tpv",
+        "itemName": "алмаз",
+        "startTime": "2025-10-05T09:49:28.135Z",
+        "endTime": "2025-10-05T09:54:28.135Z",
+        "minPrice": 999,
+        "description": "111",
+        "category": "Драгоценности",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163979264161/5.png?ex=68e24c19&is=68e0fa99&hm=429ef97a6139be1f3805e12d077b950aa055f7e43c431138d4cca342776f5a77&",
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-05T09:49:28.135Z",
+        "updatedAt": "2025-10-05T10:00:48.349Z",
+        "threadId": "1424332662343991367"
+      }
+    ],
+    [
+      "7z0a8y91kmgdivj3x",
+      {
+        "id": "7z0a8y91kmgdivj3x",
+        "creatorId": "fyb69i2a6mgbwrkq2",
+        "itemName": "алмаз",
+        "startTime": "2025-10-05T09:51:31.965Z",
+        "endTime": "2025-10-05T09:56:31.965Z",
+        "minPrice": 999,
+        "description": "111",
+        "category": "Драгоценности",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163979264161/5.png?ex=68e24c19&is=68e0fa99&hm=429ef97a6139be1f3805e12d077b950aa055f7e43c431138d4cca342776f5a77&",
+        "status": "ENDED",
+        "createdAt": "2025-10-05T09:51:31.965Z",
+        "updatedAt": "2025-10-05T09:56:47.636Z",
+        "threadId": "1424333182551068733",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 123122312
+      }
+    ],
+    [
+      "t9ct8jq6tmgdj7m93",
+      {
+        "id": "t9ct8jq6tmgdj7m93",
+        "creatorId": "fyb69i2a6mgbwrkq2",
+        "itemName": "алмаз",
+        "startTime": "2025-10-05T10:00:55.911Z",
+        "endTime": "2025-10-05T10:05:55.911Z",
+        "minPrice": 999,
+        "description": "111",
+        "category": "Драгоценности",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163979264161/5.png?ex=68e24c19&is=68e0fa99&hm=429ef97a6139be1f3805e12d077b950aa055f7e43c431138d4cca342776f5a77&",
+        "status": "ENDED",
+        "createdAt": "2025-10-05T10:00:55.911Z",
+        "updatedAt": "2025-10-05T10:06:18.406Z",
+        "threadId": "1424335547601653800",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 99999
+      }
+    ],
+    [
+      "voyzri52gmgdjh78u",
+      {
+        "id": "voyzri52gmgdjh78u",
+        "creatorId": "fyb69i2a6mgbwrkq2",
+        "itemName": "алмаз",
+        "startTime": "2025-10-05T10:08:23.022Z",
+        "endTime": "2025-10-05T10:13:23.022Z",
+        "minPrice": 999,
+        "description": "111",
+        "category": "Драгоценности",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163979264161/5.png?ex=68e24c19&is=68e0fa99&hm=429ef97a6139be1f3805e12d077b950aa055f7e43c431138d4cca342776f5a77&",
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-05T10:08:23.022Z",
+        "updatedAt": "2025-10-05T10:13:38.575Z"
+      }
+    ],
+    [
+      "0rx2t0b2fmgdjhtrs",
+      {
+        "id": "0rx2t0b2fmgdjhtrs",
+        "creatorId": "fyb69i2a6mgbwrkq2",
+        "itemName": "алмаз",
+        "startTime": "2025-10-05T10:08:52.216Z",
+        "endTime": "2025-10-05T10:13:52.216Z",
+        "minPrice": 999,
+        "description": "111",
+        "category": "Драгоценности",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163979264161/5.png?ex=68e24c19&is=68e0fa99&hm=429ef97a6139be1f3805e12d077b950aa055f7e43c431138d4cca342776f5a77&",
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-05T10:08:52.216Z",
+        "updatedAt": "2025-10-05T10:14:08.575Z"
+      }
+    ],
+    [
+      "7eoywtim8mgdjlcxl",
+      {
+        "id": "7eoywtim8mgdjlcxl",
+        "creatorId": "fyb69i2a6mgbwrkq2",
+        "itemName": "алмаз",
+        "startTime": "2025-10-05T10:11:37.017Z",
+        "endTime": "2025-10-05T10:16:37.017Z",
+        "minPrice": 999,
+        "description": "111",
+        "category": "Драгоценности",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163979264161/5.png?ex=68e24c19&is=68e0fa99&hm=429ef97a6139be1f3805e12d077b950aa055f7e43c431138d4cca342776f5a77&",
+        "status": "ENDED",
+        "createdAt": "2025-10-05T10:11:37.017Z",
+        "updatedAt": "2025-10-05T10:16:38.584Z",
+        "threadId": "1424338239459823733",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 9999
+      }
+    ],
+    [
+      "mrp9jv4t2mgdjykj4",
+      {
+        "id": "mrp9jv4t2mgdjykj4",
+        "creatorId": "fyb69i2a6mgbwrkq2",
+        "itemName": "алмаз",
+        "startTime": "2025-10-05T10:21:53.391Z",
+        "endTime": "2025-10-05T10:26:53.391Z",
+        "minPrice": 999,
+        "description": "111",
+        "category": "Драгоценности",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163979264161/5.png?ex=68e24c19&is=68e0fa99&hm=429ef97a6139be1f3805e12d077b950aa055f7e43c431138d4cca342776f5a77&",
+        "status": "ENDED",
+        "createdAt": "2025-10-05T10:21:53.392Z",
+        "updatedAt": "2025-10-05T10:27:12.597Z",
+        "threadId": "1424340822425600071",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 9999
+      }
+    ],
+    [
+      "tmo17ih4hmgdkl4g4",
+      {
+        "id": "tmo17ih4hmgdkl4g4",
+        "creatorId": "fyb69i2a6mgbwrkq2",
+        "itemName": "qkjwn",
+        "startTime": "2025-10-05T10:39:25.636Z",
+        "endTime": "2025-10-05T10:41:25.636Z",
+        "minPrice": 11,
+        "description": "111",
+        "category": "Драгоценности",
+        "imageUrl": null,
+        "status": "ENDED",
+        "createdAt": "2025-10-05T10:39:25.636Z",
+        "updatedAt": "2025-10-05T10:41:35.650Z",
+        "threadId": "1424345234552131584",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 999
+      }
+    ],
+    [
+      "7pvxdspfgmgduqi6e",
+      {
+        "id": "7pvxdspfgmgduqi6e",
+        "creatorId": "x9tp3wo1omgc1q2wv",
+        "itemName": "Меч хладенец",
+        "startTime": "2025-10-05T15:23:32.870Z",
+        "endTime": "2025-10-06T15:23:32.870Z",
+        "minPrice": 1200,
+        "description": null,
+        "category": "Оружие",
+        "imageUrl": null,
+        "status": "ACTIVE",
+        "createdAt": "2025-10-05T15:23:32.870Z",
+        "updatedAt": "2025-10-05T15:23:32.870Z"
+      }
+    ],
+    [
+      "mto33ln2tmgdveel0",
+      {
+        "id": "mto33ln2tmgdveel0",
+        "creatorId": "x9tp3wo1omgc1q2wv",
+        "itemName": "Черный ящик",
+        "startTime": "2025-10-05T15:42:07.956Z",
+        "endTime": "2025-10-06T15:02:07.956Z",
+        "minPrice": 3200,
+        "description": null,
+        "category": "Драгоценности",
+        "imageUrl": null,
+        "status": "ACTIVE",
+        "createdAt": "2025-10-05T15:42:07.956Z",
+        "updatedAt": "2025-10-05T15:42:07.956Z"
+      }
+    ],
+    [
+      "obf7x5jaemgdvgoit",
+      {
+        "id": "obf7x5jaemgdvgoit",
+        "creatorId": "x9tp3wo1omgc1q2wv",
+        "itemName": "Бочка",
+        "startTime": "2025-10-05T15:43:54.149Z",
+        "endTime": "2025-10-06T08:23:54.149Z",
+        "minPrice": 400000,
+        "description": null,
+        "category": "Зелья",
+        "imageUrl": null,
+        "status": "ACTIVE",
+        "createdAt": "2025-10-05T15:43:54.149Z",
+        "updatedAt": "2025-10-05T15:43:54.149Z",
+        "threadId": "1424421859213967450"
+      }
+    ],
+    [
+      "7524dc37lmgdvhcs0",
+      {
+        "id": "7524dc37lmgdvhcs0",
+        "creatorId": "fyb69i2a6mgbwrkq2",
+        "itemName": "Алмаз",
+        "startTime": "2025-10-05T15:44:25.584Z",
+        "endTime": "2025-10-05T15:47:25.584Z",
+        "minPrice": 111,
+        "description": "алмазик",
+        "category": "Драгоценности",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163157180467/56.png?ex=68e24c18&is=68e0fa98&hm=85b93e15cb8a412921217213256a9435e733169aebf2839eafe38bbda548fdae&",
+        "status": "ENDED",
+        "createdAt": "2025-10-05T15:44:25.584Z",
+        "updatedAt": "2025-10-05T15:47:40.210Z",
+        "threadId": "1424421990277841036",
+        "winnerId": "x9tp3wo1omgc1q2wv",
+        "winningAmount": 666666
+      }
+    ],
+    [
+      "iaqstn7wwmgdvlok1",
+      {
+        "id": "iaqstn7wwmgdvlok1",
+        "creatorId": "x9tp3wo1omgc1q2wv",
+        "itemName": "44",
+        "startTime": "2025-10-05T15:47:47.473Z",
+        "endTime": "2025-10-05T15:50:47.473Z",
+        "minPrice": 1,
+        "description": null,
+        "category": "Книги",
+        "imageUrl": null,
+        "status": "ENDED",
+        "createdAt": "2025-10-05T15:47:47.473Z",
+        "updatedAt": "2025-10-05T15:51:10.214Z",
+        "threadId": "1424422839020421212",
+        "winnerId": "fyb69i2a6mgbwrkq2",
+        "winningAmount": 66
+      }
+    ],
+    [
+      "mkidzc0anmgdvmtkj",
+      {
+        "id": "mkidzc0anmgdvmtkj",
+        "creatorId": "x9tp3wo1omgc1q2wv",
+        "itemName": "222",
+        "startTime": "2025-10-05T15:48:40.627Z",
+        "endTime": "2025-10-05T16:10:40.627Z",
+        "minPrice": 22,
+        "description": null,
+        "category": "Слитки",
+        "imageUrl": null,
+        "status": "ENDED_NO_BIDS",
+        "createdAt": "2025-10-05T15:48:40.627Z",
+        "updatedAt": "2025-10-05T16:14:14.976Z",
+        "threadId": "1424423061179994154"
+      }
+    ],
+    [
+      "wc3wn74bamgdvss9s",
+      {
+        "id": "wc3wn74bamgdvss9s",
+        "creatorId": "x9tp3wo1omgc1q2wv",
+        "itemName": "111",
+        "startTime": "2025-10-05T15:53:18.880Z",
+        "endTime": "2025-10-05T21:26:18.880Z",
+        "minPrice": 1,
+        "description": null,
+        "category": "Мясо",
+        "imageUrl": "https://cdn.discordapp.com/attachments/1423960996547924009/1423984163157180467/56.png?ex=68e39d98&is=68e24c18&hm=8649a20da5bb10201000d0e8adb14614a1389cc825c900df46a4fe8d3ea30ddb&",
+        "status": "ACTIVE",
+        "createdAt": "2025-10-05T15:53:18.880Z",
+        "updatedAt": "2025-10-05T15:53:18.880Z",
+        "threadId": "1424424230753140759"
+      }
+    ]
+  ],
+  "bids": [
+    [
+      "b8h09wnmlmgbyj2wc",
+      {
+        "id": "b8h09wnmlmgbyj2wc",
+        "auctionId": "fg7wrpkaxmgbyioui",
+        "bidderId": "lb46ojtsumgby8tpv",
+        "amount": 13,
+        "createdAt": "2025-10-04T07:34:12.588Z",
+        "updatedAt": "2025-10-04T07:34:12.588Z"
+      }
+    ],
+    [
+      "2ekh6iu2nmgbyjllv",
+      {
+        "id": "2ekh6iu2nmgbyjllv",
+        "auctionId": "fg7wrpkaxmgbyioui",
+        "bidderId": "qzji0h2gemgbyjlls",
+        "amount": 222,
+        "createdAt": "2025-10-04T07:34:36.835Z",
+        "updatedAt": "2025-10-04T07:34:36.835Z"
+      }
+    ],
+    [
+      "6sjrkg9ixmgbyu5m5",
+      {
+        "id": "6sjrkg9ixmgbyu5m5",
+        "auctionId": "knipv4g9wmgbytptc",
+        "bidderId": "qzji0h2gemgbyjlls",
+        "amount": 1222222,
+        "createdAt": "2025-10-04T07:42:49.325Z",
+        "updatedAt": "2025-10-04T07:42:49.325Z"
+      }
+    ],
+    [
+      "8mkqk2waemgbz0b5c",
+      {
+        "id": "8mkqk2waemgbz0b5c",
+        "auctionId": "se8mbntqcmgbz009k",
+        "bidderId": "qzji0h2gemgbyjlls",
+        "amount": 77777,
+        "createdAt": "2025-10-04T07:47:36.432Z",
+        "updatedAt": "2025-10-04T07:47:36.432Z"
+      }
+    ],
+    [
+      "xg48iifanmgbz0vy2",
+      {
+        "id": "xg48iifanmgbz0vy2",
+        "auctionId": "se8mbntqcmgbz009k",
+        "bidderId": "lb46ojtsumgby8tpv",
+        "amount": 9999,
+        "createdAt": "2025-10-04T07:48:03.386Z",
+        "updatedAt": "2025-10-04T07:48:03.386Z"
+      }
+    ],
+    [
+      "85dj1l189mgbz5lzd",
+      {
+        "id": "85dj1l189mgbz5lzd",
+        "auctionId": "ofdbq9ugrmgbz5bfq",
+        "bidderId": "qzji0h2gemgbyjlls",
+        "amount": 11111,
+        "createdAt": "2025-10-04T07:51:43.753Z",
+        "updatedAt": "2025-10-04T07:51:43.753Z"
+      }
+    ],
+    [
+      "5vkxswnz8mgc7i3qg",
+      {
+        "id": "5vkxswnz8mgc7i3qg",
+        "auctionId": "5j145tpdcmgc7hkn9",
+        "bidderId": "lb46ojtsumgby8tpv",
+        "amount": 120000,
+        "createdAt": "2025-10-04T11:45:23.560Z",
+        "updatedAt": "2025-10-04T11:45:23.560Z"
+      }
+    ],
+    [
+      "ojw8elc6omgcag764",
+      {
+        "id": "ojw8elc6omgcag764",
+        "auctionId": "f9dfbwz9tmgcafrjz",
+        "bidderId": "lb46ojtsumgby8tpv",
+        "amount": 5000000,
+        "createdAt": "2025-10-04T13:07:53.548Z",
+        "updatedAt": "2025-10-04T13:07:53.548Z"
+      }
+    ],
+    [
+      "pjausefu9mgcajqzl",
+      {
+        "id": "pjausefu9mgcajqzl",
+        "auctionId": "fdn32mnw7mgcaj6cl",
+        "bidderId": "lb46ojtsumgby8tpv",
+        "amount": 500,
+        "createdAt": "2025-10-04T13:10:39.201Z",
+        "updatedAt": "2025-10-04T13:10:39.201Z"
+      }
+    ],
+    [
+      "q158zio8cmgcc79oq",
+      {
+        "id": "q158zio8cmgcc79oq",
+        "auctionId": "3cqdxvnspmgcc70zt",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 12000,
+        "createdAt": "2025-10-04T13:56:56.138Z",
+        "updatedAt": "2025-10-04T13:56:56.138Z"
+      }
+    ],
+    [
+      "yzeegc5bymgccdqav",
+      {
+        "id": "yzeegc5bymgccdqav",
+        "auctionId": "zonrj58j2mgccdiyj",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 5000,
+        "createdAt": "2025-10-04T14:01:57.607Z",
+        "updatedAt": "2025-10-04T14:01:57.607Z"
+      }
+    ],
+    [
+      "2cglwylzvmgch7qsx",
+      {
+        "id": "2cglwylzvmgch7qsx",
+        "auctionId": "p0wp97wsemgch32h2",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 99999,
+        "createdAt": "2025-10-04T16:17:16.401Z",
+        "updatedAt": "2025-10-04T16:17:16.401Z"
+      }
+    ],
+    [
+      "0ydjcwssrmgchtikl",
+      {
+        "id": "0ydjcwssrmgchtikl",
+        "auctionId": "p0wp97wsemgch32h2",
+        "bidderId": "x9tp3wo1omgc1q2wv",
+        "amount": 1400,
+        "createdAt": "2025-10-04T16:34:12.165Z",
+        "updatedAt": "2025-10-04T16:34:12.165Z"
+      }
+    ],
+    [
+      "lkrqkyxacmgcketal",
+      {
+        "id": "lkrqkyxacmgcketal",
+        "auctionId": "uify0u7s7mgcked92",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 15000,
+        "createdAt": "2025-10-04T17:46:45.069Z",
+        "updatedAt": "2025-10-04T17:46:45.069Z"
+      }
+    ],
+    [
+      "iexs4q1iymgckiwet",
+      {
+        "id": "iexs4q1iymgckiwet",
+        "auctionId": "obxns3xpnmgckimga",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 150000,
+        "createdAt": "2025-10-04T17:49:55.733Z",
+        "updatedAt": "2025-10-04T17:49:55.733Z"
+      }
+    ],
+    [
+      "aqmrpqpuhmgckj1gm",
+      {
+        "id": "aqmrpqpuhmgckj1gm",
+        "auctionId": "uify0u7s7mgcked92",
+        "bidderId": "x9tp3wo1omgc1q2wv",
+        "amount": 160,
+        "createdAt": "2025-10-04T17:50:02.278Z",
+        "updatedAt": "2025-10-04T17:50:02.278Z"
+      }
+    ],
+    [
+      "j6g6ucozlmgdhsjs8",
+      {
+        "id": "j6g6ucozlmgdhsjs8",
+        "auctionId": "4q7q0jargmgdhs0bf",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 150000,
+        "createdAt": "2025-10-05T09:21:13.256Z",
+        "updatedAt": "2025-10-05T09:21:13.256Z"
+      }
+    ],
+    [
+      "58ezzpys5mgdhywb6",
+      {
+        "id": "58ezzpys5mgdhywb6",
+        "auctionId": "ncoh6k4okmgdhyiib",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 9999999,
+        "createdAt": "2025-10-05T09:26:09.426Z",
+        "updatedAt": "2025-10-05T09:26:09.426Z",
+        "timestamp": "2025-10-05T09:26:31.516Z"
+      }
+    ],
+    [
+      "yd9n9onhnmgdi1ef3",
+      {
+        "id": "yd9n9onhnmgdi1ef3",
+        "auctionId": "6pyx1kr6xmgdi143x",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 5555555,
+        "createdAt": "2025-10-05T09:28:06.207Z",
+        "updatedAt": "2025-10-05T09:28:06.207Z",
+        "timestamp": "2025-10-05T09:28:29.183Z"
+      }
+    ],
+    [
+      "82tf5iifzmgdipd4r",
+      {
+        "id": "82tf5iifzmgdipd4r",
+        "auctionId": "0pz69h09vmgdiovmi",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 9999,
+        "createdAt": "2025-10-05T09:46:44.283Z",
+        "updatedAt": "2025-10-05T09:46:44.283Z"
+      }
+    ],
+    [
+      "6no3lxo8emgdivy8c",
+      {
+        "id": "6no3lxo8emgdivy8c",
+        "auctionId": "7z0a8y91kmgdivj3x",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 123122312,
+        "createdAt": "2025-10-05T09:51:51.564Z",
+        "updatedAt": "2025-10-05T09:51:51.564Z",
+        "timestamp": "2025-10-05T09:52:04.467Z"
+      }
+    ],
+    [
+      "nxrkmmirhmgdj7w16",
+      {
+        "id": "nxrkmmirhmgdj7w16",
+        "auctionId": "t9ct8jq6tmgdj7m93",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 99999,
+        "createdAt": "2025-10-05T10:01:08.586Z",
+        "updatedAt": "2025-10-05T10:01:08.586Z"
+      }
+    ],
+    [
+      "bpcdh0jvpmgdjm70b",
+      {
+        "id": "bpcdh0jvpmgdjm70b",
+        "auctionId": "7eoywtim8mgdjlcxl",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 9999,
+        "createdAt": "2025-10-05T10:12:15.995Z",
+        "updatedAt": "2025-10-05T10:12:15.995Z"
+      }
+    ],
+    [
+      "sic485b1fmgdk0xj0",
+      {
+        "id": "sic485b1fmgdk0xj0",
+        "auctionId": "mrp9jv4t2mgdjykj4",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 9999,
+        "createdAt": "2025-10-05T10:23:43.548Z",
+        "updatedAt": "2025-10-05T10:23:43.548Z"
+      }
+    ],
+    [
+      "aeettiruwmgdklcin",
+      {
+        "id": "aeettiruwmgdklcin",
+        "auctionId": "tmo17ih4hmgdkl4g4",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 999,
+        "createdAt": "2025-10-05T10:39:36.095Z",
+        "updatedAt": "2025-10-05T10:39:36.095Z"
+      }
+    ],
+    [
+      "xzohwpc8nmgdvhlrd",
+      {
+        "id": "xzohwpc8nmgdvhlrd",
+        "auctionId": "obf7x5jaemgdvgoit",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 500000,
+        "createdAt": "2025-10-05T15:44:37.225Z",
+        "updatedAt": "2025-10-05T15:44:37.225Z"
+      }
+    ],
+    [
+      "wzv6ocv9ymgdvhu5t",
+      {
+        "id": "wzv6ocv9ymgdvhu5t",
+        "auctionId": "7524dc37lmgdvhcs0",
+        "bidderId": "x9tp3wo1omgc1q2wv",
+        "amount": 666666,
+        "createdAt": "2025-10-05T15:44:48.113Z",
+        "updatedAt": "2025-10-05T15:44:48.113Z",
+        "timestamp": "2025-10-05T15:45:20.705Z"
+      }
+    ],
+    [
+      "rez8jthoqmgdvhvoz",
+      {
+        "id": "rez8jthoqmgdvhvoz",
+        "auctionId": "7524dc37lmgdvhcs0",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 2222,
+        "createdAt": "2025-10-05T15:44:50.100Z",
+        "updatedAt": "2025-10-05T15:44:50.100Z"
+      }
+    ],
+    [
+      "yswc8h63gmgdvm0f5",
+      {
+        "id": "yswc8h63gmgdvm0f5",
+        "auctionId": "iaqstn7wwmgdvlok1",
+        "bidderId": "fyb69i2a6mgbwrkq2",
+        "amount": 66,
+        "createdAt": "2025-10-05T15:48:02.849Z",
+        "updatedAt": "2025-10-05T15:48:02.849Z"
+      }
+    ]
+  ],
+  "auditLog": [
+    {
+      "id": "pdiu5dj37mgbwnbff",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"hxejj0cunmgbwnbfd\",\"itemName\":\"тест\",\"price\":9,\"quantity\":1}",
+      "createdAt": "2025-10-04T06:41:31.035Z"
+    },
+    {
+      "id": "fmzoo68admgbwrkq4",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"q3qjlf3vcmgbwrkq3\",\"itemName\":\"тест\",\"price\":1200,\"quantity\":2}",
+      "createdAt": "2025-10-04T06:44:49.708Z"
+    },
+    {
+      "id": "uxj8ga4wpmgbx9l2h",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"gqeyffo3dmgbx9l2g\",\"listingId\":\"hxejj0cunmgbwnbfd\",\"quantity\":1,\"threadId\":\"1423927322238517310\"}",
+      "createdAt": "2025-10-04T06:58:49.961Z"
+    },
+    {
+      "id": "219wowavimgbxb3is",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"g80kprigkmgbxb3iq\",\"listingId\":\"hxejj0cunmgbwnbfd\",\"quantity\":1,\"threadId\":\"1423927617555529760\"}",
+      "createdAt": "2025-10-04T07:00:00.532Z"
+    },
+    {
+      "id": "bl6vmh58vmgbxedlm",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"tpe1p47emmgbxedll\",\"listingId\":\"hxejj0cunmgbwnbfd\",\"quantity\":1,\"threadId\":\"1423928260525297724\"}",
+      "createdAt": "2025-10-04T07:02:33.562Z"
+    },
+    {
+      "id": "6n5c2tdwsmgbxj2ai",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"j1l9llhk2mgbxj2af\",\"listingId\":\"hxejj0cunmgbwnbfd\",\"quantity\":1,\"threadId\":\"1423929177307873352\"}",
+      "createdAt": "2025-10-04T07:06:12.186Z"
+    },
+    {
+      "id": "drw87zapvmgbxj7kw",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"j1l9llhk2mgbxj2af\",\"totalAmount\":9}",
+      "createdAt": "2025-10-04T07:06:19.040Z"
+    },
+    {
+      "id": "lntyq9x9jmgbxpdka",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"uq00pyjfzmgbxpdk6\",\"listingId\":\"q3qjlf3vcmgbwrkq3\",\"quantity\":1,\"threadId\":\"1423930410005430353\"}",
+      "createdAt": "2025-10-04T07:11:06.730Z"
+    },
+    {
+      "id": "nk24m2uo5mgbxpgd7",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"uq00pyjfzmgbxpdk6\",\"totalAmount\":1200}",
+      "createdAt": "2025-10-04T07:11:10.363Z"
+    },
+    {
+      "id": "0nol29697mgbxpwg2",
+      "actorId": "1268562577080713282",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"uq00pyjfzmgbxpdk6\",\"totalAmount\":1200}",
+      "createdAt": "2025-10-04T07:11:31.202Z"
+    },
+    {
+      "id": "cjp5lb6dvmgbxsqyd",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"jlop42zjzmgbxsqyb\",\"listingId\":\"q3qjlf3vcmgbwrkq3\",\"quantity\":1,\"threadId\":\"1423931072084840489\"}",
+      "createdAt": "2025-10-04T07:13:44.053Z"
+    },
+    {
+      "id": "iw9fto703mgbxstjq",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"jlop42zjzmgbxsqyb\",\"totalAmount\":1200}",
+      "createdAt": "2025-10-04T07:13:47.414Z"
+    },
+    {
+      "id": "va871fjnkmgbxt0n4",
+      "actorId": "1268562577080713282",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"jlop42zjzmgbxsqyb\",\"totalAmount\":1200}",
+      "createdAt": "2025-10-04T07:13:56.608Z"
+    },
+    {
+      "id": "p2wmc578bmgbxv2fh",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"5r6ljuu8gmgbxv2fe\",\"listingId\":\"hxejj0cunmgbwnbfd\",\"quantity\":1,\"threadId\":\"1423931526097277049\"}",
+      "createdAt": "2025-10-04T07:15:32.237Z"
+    },
+    {
+      "id": "ggtd4f3yhmgbxv4zx",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"5r6ljuu8gmgbxv2fe\",\"totalAmount\":9}",
+      "createdAt": "2025-10-04T07:15:35.565Z"
+    },
+    {
+      "id": "5alb4nidqmgbxw711",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"zllpsupesmgbxw710\",\"itemName\":\"ТЕСТОВЫЙ ТОВАР\",\"price\":999,\"quantity\":5}",
+      "createdAt": "2025-10-04T07:16:24.853Z"
+    },
+    {
+      "id": "wsknfr8cymgbxwfhf",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"03zadxk2emgbxwfhd\",\"listingId\":\"zllpsupesmgbxw710\",\"quantity\":1,\"threadId\":\"1423931792196374539\"}",
+      "createdAt": "2025-10-04T07:16:35.811Z"
+    },
+    {
+      "id": "vz2i5qkexmgbxwiaz",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"03zadxk2emgbxwfhd\",\"totalAmount\":999}",
+      "createdAt": "2025-10-04T07:16:39.468Z"
+    },
+    {
+      "id": "g0cfk1uwomgbxwlo2",
+      "actorId": "1268562577080713282",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"03zadxk2emgbxwfhd\",\"totalAmount\":999}",
+      "createdAt": "2025-10-04T07:16:43.826Z"
+    },
+    {
+      "id": "bss3lhvydmgby8tpz",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"okqsvlgtrmgby8tpy\",\"itemName\":\"тестовый\",\"duration\":120,\"startTime\":\"2025-10-04T07:26:14.131Z\",\"endTime\":\"2025-10-04T09:26:14.131Z\"}",
+      "createdAt": "2025-10-04T07:26:14.135Z"
+    },
+    {
+      "id": "2a91l3eblmgbygo5o",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"nmds5w57zmgbygo5m\",\"itemName\":\"тесттт\",\"duration\":9,\"minPrice\":12,\"startTime\":\"2025-10-04T07:32:20.170Z\",\"endTime\":\"2025-10-04T07:41:20.170Z\"}",
+      "createdAt": "2025-10-04T07:32:20.172Z"
+    },
+    {
+      "id": "3kqm1v5yfmgbyiouk",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"fg7wrpkaxmgbyioui\",\"itemName\":\"o3if3\",\"duration\":3,\"minPrice\":1,\"startTime\":\"2025-10-04T07:33:54.378Z\",\"endTime\":\"2025-10-04T07:36:54.378Z\"}",
+      "createdAt": "2025-10-04T07:33:54.380Z"
+    },
+    {
+      "id": "lptmz1h7jmgbyj2wf",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"fg7wrpkaxmgbyioui\",\"amount\":13,\"bidId\":\"b8h09wnmlmgbyj2wc\"}",
+      "createdAt": "2025-10-04T07:34:12.591Z"
+    },
+    {
+      "id": "ryvenla7zmgbyjllw",
+      "actorId": "1420381162509176942",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"fg7wrpkaxmgbyioui\",\"amount\":222,\"bidId\":\"2ekh6iu2nmgbyjllv\"}",
+      "createdAt": "2025-10-04T07:34:36.836Z"
+    },
+    {
+      "id": "5emyt6nn7mgbytptf",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"knipv4g9wmgbytptc\",\"itemName\":\"1\",\"duration\":2,\"minPrice\":1,\"startTime\":\"2025-10-04T07:42:28.848Z\",\"endTime\":\"2025-10-04T07:44:28.848Z\"}",
+      "createdAt": "2025-10-04T07:42:28.851Z"
+    },
+    {
+      "id": "ga1h41pfwmgbyu5m7",
+      "actorId": "1420381162509176942",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"knipv4g9wmgbytptc\",\"amount\":1222222,\"bidId\":\"6sjrkg9ixmgbyu5m5\"}",
+      "createdAt": "2025-10-04T07:42:49.327Z"
+    },
+    {
+      "id": "2nv1qtczzmgbz009n",
+      "actorId": "1420381162509176942",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"se8mbntqcmgbz009k\",\"itemName\":\"хехе\",\"duration\":2,\"minPrice\":444,\"startTime\":\"2025-10-04T07:47:22.328Z\",\"endTime\":\"2025-10-04T07:49:22.328Z\"}",
+      "createdAt": "2025-10-04T07:47:22.331Z"
+    },
+    {
+      "id": "smz5sar3cmgbz0b5g",
+      "actorId": "1420381162509176942",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"se8mbntqcmgbz009k\",\"amount\":77777,\"bidId\":\"8mkqk2waemgbz0b5c\"}",
+      "createdAt": "2025-10-04T07:47:36.436Z"
+    },
+    {
+      "id": "1gx1saxwjmgbz0vy4",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"se8mbntqcmgbz009k\",\"amount\":9999,\"bidId\":\"xg48iifanmgbz0vy2\"}",
+      "createdAt": "2025-10-04T07:48:03.388Z"
+    },
+    {
+      "id": "mc2ecvp0wmgbz5bft",
+      "actorId": "1420381162509176942",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"ofdbq9ugrmgbz5bfq\",\"itemName\":\"хехе\",\"duration\":2,\"minPrice\":444,\"startTime\":\"2025-10-04T07:51:30.086Z\",\"endTime\":\"2025-10-04T07:53:30.086Z\"}",
+      "createdAt": "2025-10-04T07:51:30.089Z"
+    },
+    {
+      "id": "7mfuvcjy6mgbz5lzg",
+      "actorId": "1420381162509176942",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"ofdbq9ugrmgbz5bfq\",\"amount\":11111,\"bidId\":\"85dj1l189mgbz5lzd\"}",
+      "createdAt": "2025-10-04T07:51:43.756Z"
+    },
+    {
+      "id": "lqgfxoulimgc1q2wz",
+      "actorId": "304915006456332289",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"jxdapk4i0mgc1q2wy\",\"listingId\":\"hxejj0cunmgbwnbfd\",\"quantity\":1,\"threadId\":\"1423958728021119046\"}",
+      "createdAt": "2025-10-04T09:03:38.051Z"
+    },
+    {
+      "id": "ttg6xvi8omgc1r4yu",
+      "actorId": "304915006456332289",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"friifk6mumgc1r4ys\",\"itemName\":\"123\",\"price\":333,\"quantity\":555}",
+      "createdAt": "2025-10-04T09:04:27.366Z"
+    },
+    {
+      "id": "vx2fx7noimgc1sri8",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"afo3pnvoumgc1sri5\",\"listingId\":\"friifk6mumgc1r4ys\",\"quantity\":1,\"threadId\":\"1423959254007677010\"}",
+      "createdAt": "2025-10-04T09:05:43.232Z"
+    },
+    {
+      "id": "r706bl1oemgc1sujw",
+      "actorId": "1420381162509176942",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"afo3pnvoumgc1sri5\",\"totalAmount\":333}",
+      "createdAt": "2025-10-04T09:05:47.180Z"
+    },
+    {
+      "id": "cajyzi5xsmgc1tv4m",
+      "actorId": "304915006456332289",
+      "action": "DEAL_CANCELLED",
+      "payloadJson": "{\"dealId\":\"afo3pnvoumgc1sri5\"}",
+      "createdAt": "2025-10-04T09:06:34.582Z"
+    },
+    {
+      "id": "yys6c9vnmmgc1w0ny",
+      "actorId": "1420381162509176942",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"g5isnap79mgc1w0nw\",\"itemName\":\"123\",\"duration\":5,\"minPrice\":55555,\"startTime\":\"2025-10-04T09:08:15.067Z\",\"endTime\":\"2025-10-04T09:13:15.067Z\"}",
+      "createdAt": "2025-10-04T09:08:15.070Z"
+    },
+    {
+      "id": "kpm23nblzmgc1ye4q",
+      "actorId": "304915006456332289",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"hksv6de6imgc1ye4o\",\"itemName\":\"Шкуры\",\"price\":25,\"quantity\":300}",
+      "createdAt": "2025-10-04T09:10:05.834Z"
+    },
+    {
+      "id": "8zp9kw4ommgc57l9n",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"9dcddmc16mgc57l9m\",\"itemName\":\"тест\",\"price\":999,\"quantity\":3}",
+      "createdAt": "2025-10-04T10:41:13.835Z"
+    },
+    {
+      "id": "r0bnf9a3cmgc5es3w",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"n3c6ca3ecmgc5es3t\",\"itemName\":\"1111111\",\"price\":125,\"quantity\":6}",
+      "createdAt": "2025-10-04T10:46:49.292Z"
+    },
+    {
+      "id": "fw3wgoblrmgc68oe4",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"bxgccks7rmgc68oe1\",\"itemName\":\"Оружие\",\"price\":145,\"quantity\":10}",
+      "createdAt": "2025-10-04T11:10:04.156Z"
+    },
+    {
+      "id": "tlxiwix73mgc6di3c",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"1mzgammqxmgc6di38\",\"itemName\":\"Снаряжения\",\"price\":1500,\"quantity\":3}",
+      "createdAt": "2025-10-04T11:13:49.272Z"
+    },
+    {
+      "id": "4hf9xkp0gmgc6fgww",
+      "actorId": "304915006456332289",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"2rqxd23l7mgc6fgwv\",\"listingId\":\"bxgccks7rmgc68oe1\",\"quantity\":1,\"threadId\":\"1423991875823472681\"}",
+      "createdAt": "2025-10-04T11:15:21.056Z"
+    },
+    {
+      "id": "3ble1aim1mgc6fzzt",
+      "actorId": "1268562577080713282",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"2rqxd23l7mgc6fgwv\",\"totalAmount\":145}",
+      "createdAt": "2025-10-04T11:15:45.785Z"
+    },
+    {
+      "id": "8xvqh7vrlmgc6jixb",
+      "actorId": "304915006456332289",
+      "action": "DEAL_CANCELLED",
+      "payloadJson": "{\"dealId\":\"2rqxd23l7mgc6fgwv\"}",
+      "createdAt": "2025-10-04T11:18:30.287Z"
+    },
+    {
+      "id": "210kb2pn4mgc6jz0b",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"u0f7gm94kmgc6jz0a\",\"itemName\":\"Зелье 1\",\"price\":555,\"quantity\":5}",
+      "createdAt": "2025-10-04T11:18:51.131Z"
+    },
+    {
+      "id": "nalcnxq8omgc75len",
+      "actorId": "1268562577080713282",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"tzasojxtymgc75lei\",\"itemName\":\"Еда\",\"price\":950,\"quantity\":2}",
+      "createdAt": "2025-10-04T11:35:39.935Z"
+    },
+    {
+      "id": "f3s949agfmgc76ucg",
+      "actorId": "304915006456332289",
+      "action": "LISTING_CREATED",
+      "payloadJson": "{\"listingId\":\"jwex78p4smgc76uce\",\"itemName\":\"Идеальное зелье восстановление\",\"price\":25,\"quantity\":1000}",
+      "createdAt": "2025-10-04T11:36:38.176Z"
+    },
+    {
+      "id": "u0374vo2jmgc79dm5",
+      "actorId": "1268562577080713282",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"27rfrtj0rmgc79dm3\",\"listingId\":\"jwex78p4smgc76uce\",\"quantity\":1,\"threadId\":\"1423997728987545630\"}",
+      "createdAt": "2025-10-04T11:38:36.461Z"
+    },
+    {
+      "id": "sea3402pimgc79itl",
+      "actorId": "1268562577080713282",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"27rfrtj0rmgc79dm3\",\"totalAmount\":25}",
+      "createdAt": "2025-10-04T11:38:43.209Z"
+    },
+    {
+      "id": "u1pxqlaiemgc79r5r",
+      "actorId": "304915006456332289",
+      "action": "DEAL_CONFIRMED",
+      "payloadJson": "{\"dealId\":\"27rfrtj0rmgc79dm3\",\"totalAmount\":25}",
+      "createdAt": "2025-10-04T11:38:54.015Z"
+    },
+    {
+      "id": "odzj55mqkmgc7hknb",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"5j145tpdcmgc7hkn9\",\"itemName\":\"снаряжение\",\"duration\":5,\"minPrice\":120,\"startTime\":\"2025-10-04T11:44:58.820Z\",\"endTime\":\"2025-10-04T11:49:58.820Z\"}",
+      "createdAt": "2025-10-04T11:44:58.823Z"
+    },
+    {
+      "id": "goylfidv9mgc7i3qi",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"5j145tpdcmgc7hkn9\",\"amount\":120000,\"bidId\":\"5vkxswnz8mgc7i3qg\"}",
+      "createdAt": "2025-10-04T11:45:23.562Z"
+    },
+    {
+      "id": "obnc8yp1vmgc84pck",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"zufc0qa0smgc84pch\",\"itemName\":\"Снаряжение\",\"duration\":5,\"minPrice\":14000,\"startTime\":\"2025-10-04T12:02:58.001Z\",\"endTime\":\"2025-10-04T12:07:58.001Z\"}",
+      "createdAt": "2025-10-04T12:02:58.004Z"
+    },
+    {
+      "id": "6zi09hxximgcafrzv",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"f9dfbwz9tmgcafrjz\",\"itemName\":\"Алмаз\",\"duration\":5,\"minPrice\":155555,\"startTime\":\"2025-10-04T13:07:33.310Z\",\"endTime\":\"2025-10-04T13:12:33.310Z\"}",
+      "createdAt": "2025-10-04T13:07:33.883Z"
+    },
+    {
+      "id": "te5xerwvbmgcag767",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"f9dfbwz9tmgcafrjz\",\"amount\":5000000,\"bidId\":\"ojw8elc6omgcag764\"}",
+      "createdAt": "2025-10-04T13:07:53.551Z"
+    },
+    {
+      "id": "r7m074hy5mgcaj6qo",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"fdn32mnw7mgcaj6cl\",\"itemName\":\"123\",\"duration\":5,\"minPrice\":500,\"startTime\":\"2025-10-04T13:10:12.453Z\",\"endTime\":\"2025-10-04T13:15:12.453Z\"}",
+      "createdAt": "2025-10-04T13:10:12.960Z"
+    },
+    {
+      "id": "xtqq41f2zmgcajqzo",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"fdn32mnw7mgcaj6cl\",\"amount\":500,\"bidId\":\"pjausefu9mgcajqzl\"}",
+      "createdAt": "2025-10-04T13:10:39.204Z"
+    },
+    {
+      "id": "swc1hj6fbmgcanuxs",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"8me4sxk3kmgcanuiv\",\"itemName\":\"123\",\"duration\":5,\"minPrice\":500,\"startTime\":\"2025-10-04T13:13:50.407Z\",\"endTime\":\"2025-10-04T13:18:50.407Z\"}",
+      "createdAt": "2025-10-04T13:13:50.944Z"
+    },
+    {
+      "id": "u05lyzznqmgcarhaj",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"hdz9pyx4nmgcargxu\",\"itemName\":\"123\",\"duration\":5,\"minPrice\":500,\"startTime\":\"2025-10-04T13:16:39.426Z\",\"endTime\":\"2025-10-04T13:21:39.426Z\"}",
+      "createdAt": "2025-10-04T13:16:39.883Z"
+    },
+    {
+      "id": "cjaflgf5lmgcatnso",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"5ehlzw7ikmgcatnch\",\"itemName\":\"Зелье\",\"duration\":5,\"minPrice\":1500,\"startTime\":\"2025-10-04T13:18:21.041Z\",\"endTime\":\"2025-10-04T13:23:21.041Z\"}",
+      "createdAt": "2025-10-04T13:18:21.624Z"
+    },
+    {
+      "id": "up6k0orndmgcaw2bn",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"7driqfilbmgcaw1vf\",\"itemName\":\"Зелье\",\"duration\":5,\"minPrice\":1500,\"startTime\":\"2025-10-04T13:20:13.179Z\",\"endTime\":\"2025-10-04T13:25:13.179Z\"}",
+      "createdAt": "2025-10-04T13:20:13.763Z"
+    },
+    {
+      "id": "eh800ax4smgcb0grp",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"4o3i2oaofmgcb0gbv\",\"itemName\":\"Зелье\",\"duration\":5,\"minPrice\":1500,\"startTime\":\"2025-10-04T13:23:38.539Z\",\"endTime\":\"2025-10-04T13:28:38.539Z\"}",
+      "createdAt": "2025-10-04T13:23:39.109Z"
+    },
+    {
+      "id": "0t3rgqocfmgcc70zv",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"3cqdxvnspmgcc70zt\",\"itemName\":\"алмаз\",\"duration\":5,\"minPrice\":1000,\"startTime\":\"2025-10-04T13:56:44.873Z\",\"endTime\":\"2025-10-04T14:01:44.873Z\"}",
+      "createdAt": "2025-10-04T13:56:44.876Z"
+    },
+    {
+      "id": "6pkufrh9pmgcc79ov",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"3cqdxvnspmgcc70zt\",\"amount\":12000,\"bidId\":\"q158zio8cmgcc79oq\"}",
+      "createdAt": "2025-10-04T13:56:56.143Z"
+    },
+    {
+      "id": "rypzashvlmgccdiyl",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"zonrj58j2mgccdiyj\",\"itemName\":\"мясо\",\"duration\":5,\"minPrice\":1000,\"startTime\":\"2025-10-04T14:01:48.091Z\",\"endTime\":\"2025-10-04T14:06:48.091Z\"}",
+      "createdAt": "2025-10-04T14:01:48.093Z"
+    },
+    {
+      "id": "hv2714mslmgccdqay",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"zonrj58j2mgccdiyj\",\"amount\":5000,\"bidId\":\"yzeegc5bymgccdqav\"}",
+      "createdAt": "2025-10-04T14:01:57.610Z"
+    },
+    {
+      "id": "bnk3tal4zmgcgo763",
+      "actorId": "304915006456332289",
+      "action": "DEAL_CREATED",
+      "payloadJson": "{\"dealId\":\"1zb6cf51cmgcgo761\",\"listingId\":\"bxgccks7rmgc68oe1\",\"quantity\":1,\"threadId\":\"1424064027184595065\"}",
+      "createdAt": "2025-10-04T16:02:04.491Z"
+    },
+    {
+      "id": "zfl3156o5mgcgw6ik",
+      "actorId": "304915006456332289",
+      "action": "DEAL_CANCELLED",
+      "payloadJson": "{\"dealId\":\"1zb6cf51cmgcgo761\"}",
+      "createdAt": "2025-10-04T16:08:16.892Z"
+    },
+    {
+      "id": "8v7dibi4qmgcgyuve",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"bsqv80w2dmgcgyuvd\",\"itemName\":\"мясо\",\"duration\":15,\"minPrice\":50,\"startTime\":\"2025-10-04T16:10:21.769Z\",\"endTime\":\"2025-10-04T16:25:21.769Z\"}",
+      "createdAt": "2025-10-04T16:10:21.770Z"
+    },
+    {
+      "id": "wgva90hbfmgch32h3",
+      "actorId": "304915006456332289",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"p0wp97wsemgch32h2\",\"itemName\":\"Череп королевы\",\"duration\":88,\"minPrice\":1200,\"startTime\":\"2025-10-04T16:13:38.246Z\",\"endTime\":\"2025-10-04T17:41:38.246Z\"}",
+      "createdAt": "2025-10-04T16:13:38.247Z"
+    },
+    {
+      "id": "t4gdsukyymgch7qt0",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"p0wp97wsemgch32h2\",\"amount\":99999,\"bidId\":\"2cglwylzvmgch7qsx\"}",
+      "createdAt": "2025-10-04T16:17:16.404Z"
+    },
+    {
+      "id": "1bprgd70omgchtikn",
+      "actorId": "304915006456332289",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"p0wp97wsemgch32h2\",\"amount\":1400,\"bidId\":\"0ydjcwssrmgchtikl\"}",
+      "createdAt": "2025-10-04T16:34:12.167Z"
+    },
+    {
+      "id": "j4a88t1ecmgcked96",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"uify0u7s7mgcked92\",\"itemName\":\"Ящик\",\"duration\":5,\"minPrice\":150,\"startTime\":\"2025-10-04T17:46:24.278Z\",\"endTime\":\"2025-10-04T17:51:24.278Z\"}",
+      "createdAt": "2025-10-04T17:46:24.282Z"
+    },
+    {
+      "id": "24dyvefi5mgcketao",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"uify0u7s7mgcked92\",\"amount\":15000,\"bidId\":\"lkrqkyxacmgcketal\"}",
+      "createdAt": "2025-10-04T17:46:45.072Z"
+    },
+    {
+      "id": "c2ubga59lmgckimgb",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"obxns3xpnmgckimga\",\"itemName\":\"123\",\"duration\":5,\"minPrice\":150,\"startTime\":\"2025-10-04T17:49:42.825Z\",\"endTime\":\"2025-10-04T17:54:42.825Z\"}",
+      "createdAt": "2025-10-04T17:49:42.827Z"
+    },
+    {
+      "id": "4gjl88dxqmgckiwex",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"obxns3xpnmgckimga\",\"amount\":150000,\"bidId\":\"iexs4q1iymgckiwet\"}",
+      "createdAt": "2025-10-04T17:49:55.737Z"
+    },
+    {
+      "id": "aebrzgkrpmgckj1go",
+      "actorId": "304915006456332289",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"uify0u7s7mgcked92\",\"amount\":160,\"bidId\":\"aqmrpqpuhmgckj1gm\"}",
+      "createdAt": "2025-10-04T17:50:02.280Z"
+    },
+    {
+      "id": "dbqcnj1n1mgdhs0bh",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"4q7q0jargmgdhs0bf\",\"itemName\":\"алмаз\",\"duration\":5,\"minPrice\":1500,\"startTime\":\"2025-10-05T09:20:48.027Z\",\"endTime\":\"2025-10-05T09:25:48.027Z\"}",
+      "createdAt": "2025-10-05T09:20:48.029Z"
+    },
+    {
+      "id": "qf7a31qgemgdhsjsb",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"4q7q0jargmgdhs0bf\",\"amount\":150000,\"bidId\":\"j6g6ucozlmgdhsjs8\"}",
+      "createdAt": "2025-10-05T09:21:13.259Z"
+    },
+    {
+      "id": "ehmppatmbmgdhyiid",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"ncoh6k4okmgdhyiib\",\"itemName\":\"алмазик\",\"duration\":5,\"minPrice\":1400,\"startTime\":\"2025-10-05T09:25:51.539Z\",\"endTime\":\"2025-10-05T09:30:51.539Z\"}",
+      "createdAt": "2025-10-05T09:25:51.541Z"
+    },
+    {
+      "id": "fexje9x4emgdhywbc",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"ncoh6k4okmgdhyiib\",\"amount\":99999,\"bidId\":\"58ezzpys5mgdhywb6\"}",
+      "createdAt": "2025-10-05T09:26:09.432Z"
+    },
+    {
+      "id": "eyunvr9l5mgdhzdcw",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"ncoh6k4okmgdhyiib\",\"amount\":9999999,\"bidId\":\"58ezzpys5mgdhywb6\"}",
+      "createdAt": "2025-10-05T09:26:31.520Z"
+    },
+    {
+      "id": "9fn968eb2mgdi143y",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"6pyx1kr6xmgdi143x\",\"itemName\":\"алмаз\",\"duration\":5,\"minPrice\":999,\"startTime\":\"2025-10-05T09:27:52.844Z\",\"endTime\":\"2025-10-05T09:32:52.844Z\"}",
+      "createdAt": "2025-10-05T09:27:52.846Z"
+    },
+    {
+      "id": "qyrp0a5j4mgdi1fj6",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"6pyx1kr6xmgdi143x\",\"amount\":1211212,\"bidId\":\"yd9n9onhnmgdi1ef3\"}",
+      "createdAt": "2025-10-05T09:28:07.650Z"
+    },
+    {
+      "id": "oboddryh4mgdi1xbc",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"6pyx1kr6xmgdi143x\",\"amount\":5555555,\"bidId\":\"yd9n9onhnmgdi1ef3\"}",
+      "createdAt": "2025-10-05T09:28:30.696Z"
+    },
+    {
+      "id": "ghd3xgpqsmgdiovmj",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"0pz69h09vmgdiovmi\",\"itemName\":\"алмаз\",\"duration\":5,\"minPrice\":999,\"startTime\":\"2025-10-05T09:46:21.593Z\",\"endTime\":\"2025-10-05T09:51:21.593Z\"}",
+      "createdAt": "2025-10-05T09:46:21.595Z"
+    },
+    {
+      "id": "38vqx5hzkmgdipe08",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"0pz69h09vmgdiovmi\",\"amount\":9999,\"bidId\":\"82tf5iifzmgdipd4r\"}",
+      "createdAt": "2025-10-05T09:46:45.416Z"
+    },
+    {
+      "id": "v2ftwyv5umgdis1za",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"qzrmgcvr3mgdis1z8\",\"itemName\":\"алмаз\",\"duration\":5,\"minPrice\":999,\"startTime\":\"2025-10-05T09:48:49.796Z\",\"endTime\":\"2025-10-05T09:53:49.796Z\"}",
+      "createdAt": "2025-10-05T09:48:49.798Z"
+    },
+    {
+      "id": "t9uj832lrmgdisvk9",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"hr31lhtd3mgdisvk7\",\"itemName\":\"алмаз\",\"duration\":5,\"minPrice\":999,\"startTime\":\"2025-10-05T09:49:28.135Z\",\"endTime\":\"2025-10-05T09:54:28.135Z\"}",
+      "createdAt": "2025-10-05T09:49:28.137Z"
+    },
+    {
+      "id": "ge1e75wwkmgdivj3z",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"7z0a8y91kmgdivj3x\",\"itemName\":\"алмаз\",\"duration\":5,\"minPrice\":999,\"startTime\":\"2025-10-05T09:51:31.965Z\",\"endTime\":\"2025-10-05T09:56:31.965Z\"}",
+      "createdAt": "2025-10-05T09:51:31.967Z"
+    },
+    {
+      "id": "05fpf0sxvmgdivzgf",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"7z0a8y91kmgdivj3x\",\"amount\":888888,\"bidId\":\"6no3lxo8emgdivy8c\"}",
+      "createdAt": "2025-10-05T09:51:53.151Z"
+    },
+    {
+      "id": "wrosqnhvhmgdiw9bo",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"7z0a8y91kmgdivj3x\",\"amount\":123122312,\"bidId\":\"6no3lxo8emgdivy8c\"}",
+      "createdAt": "2025-10-05T09:52:05.940Z"
+    },
+    {
+      "id": "puxyqxv2hmgdj7m94",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"t9ct8jq6tmgdj7m93\",\"itemName\":\"алмаз\",\"duration\":5,\"minPrice\":999,\"startTime\":\"2025-10-05T10:00:55.911Z\",\"endTime\":\"2025-10-05T10:05:55.911Z\"}",
+      "createdAt": "2025-10-05T10:00:55.912Z"
+    },
+    {
+      "id": "5qxobp6khmgdj7x94",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"t9ct8jq6tmgdj7m93\",\"amount\":99999,\"bidId\":\"nxrkmmirhmgdj7w16\"}",
+      "createdAt": "2025-10-05T10:01:10.168Z"
+    },
+    {
+      "id": "484gurmqfmgdjh78y",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"voyzri52gmgdjh78u\",\"itemName\":\"алмаз\",\"duration\":5,\"minPrice\":999,\"startTime\":\"2025-10-05T10:08:23.022Z\",\"endTime\":\"2025-10-05T10:13:23.022Z\"}",
+      "createdAt": "2025-10-05T10:08:23.026Z"
+    },
+    {
+      "id": "gxdf0jwkwmgdjhtru",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"0rx2t0b2fmgdjhtrs\",\"itemName\":\"алмаз\",\"duration\":5,\"minPrice\":999,\"startTime\":\"2025-10-05T10:08:52.216Z\",\"endTime\":\"2025-10-05T10:13:52.216Z\"}",
+      "createdAt": "2025-10-05T10:08:52.218Z"
+    },
+    {
+      "id": "idmsopa5hmgdjlcxo",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"7eoywtim8mgdjlcxl\",\"itemName\":\"алмаз\",\"duration\":5,\"minPrice\":999,\"startTime\":\"2025-10-05T10:11:37.017Z\",\"endTime\":\"2025-10-05T10:16:37.017Z\"}",
+      "createdAt": "2025-10-05T10:11:37.020Z"
+    },
+    {
+      "id": "fgtfyaus5mgdjm802",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"7eoywtim8mgdjlcxl\",\"amount\":9999,\"bidId\":\"bpcdh0jvpmgdjm70b\"}",
+      "createdAt": "2025-10-05T10:12:17.282Z"
+    },
+    {
+      "id": "eyt3sor7kmgdjykj6",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"mrp9jv4t2mgdjykj4\",\"itemName\":\"алмаз\",\"duration\":5,\"minPrice\":999,\"startTime\":\"2025-10-05T10:21:53.391Z\",\"endTime\":\"2025-10-05T10:26:53.391Z\"}",
+      "createdAt": "2025-10-05T10:21:53.394Z"
+    },
+    {
+      "id": "qtqovi785mgdk0ybm",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"mrp9jv4t2mgdjykj4\",\"amount\":9999,\"bidId\":\"sic485b1fmgdk0xj0\"}",
+      "createdAt": "2025-10-05T10:23:44.578Z"
+    },
+    {
+      "id": "76oh55t5gmgdkl4g6",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"tmo17ih4hmgdkl4g4\",\"itemName\":\"qkjwn\",\"duration\":2,\"minPrice\":11,\"startTime\":\"2025-10-05T10:39:25.636Z\",\"endTime\":\"2025-10-05T10:41:25.636Z\"}",
+      "createdAt": "2025-10-05T10:39:25.638Z"
+    },
+    {
+      "id": "oh85a2qqlmgdkldhu",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"tmo17ih4hmgdkl4g4\",\"amount\":999,\"bidId\":\"aeettiruwmgdklcin\"}",
+      "createdAt": "2025-10-05T10:39:37.362Z"
+    },
+    {
+      "id": "nz65i41n3mgduqi6i",
+      "actorId": "304915006456332289",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"7pvxdspfgmgduqi6e\",\"itemName\":\"Меч хладенец\",\"duration\":1440,\"minPrice\":1200,\"startTime\":\"2025-10-05T15:23:32.870Z\",\"endTime\":\"2025-10-06T15:23:32.870Z\"}",
+      "createdAt": "2025-10-05T15:23:32.874Z"
+    },
+    {
+      "id": "37486q6g8mgdveel4",
+      "actorId": "304915006456332289",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"mto33ln2tmgdveel0\",\"itemName\":\"Черный ящик\",\"duration\":1400,\"minPrice\":3200,\"startTime\":\"2025-10-05T15:42:07.956Z\",\"endTime\":\"2025-10-06T15:02:07.956Z\"}",
+      "createdAt": "2025-10-05T15:42:07.960Z"
+    },
+    {
+      "id": "j2ezmns2pmgdvgoiv",
+      "actorId": "304915006456332289",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"obf7x5jaemgdvgoit\",\"itemName\":\"Бочка\",\"duration\":1000,\"minPrice\":400000,\"startTime\":\"2025-10-05T15:43:54.149Z\",\"endTime\":\"2025-10-06T08:23:54.149Z\"}",
+      "createdAt": "2025-10-05T15:43:54.151Z"
+    },
+    {
+      "id": "usfei9yydmgdvhcs2",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"7524dc37lmgdvhcs0\",\"itemName\":\"Алмаз\",\"duration\":3,\"minPrice\":111,\"startTime\":\"2025-10-05T15:44:25.584Z\",\"endTime\":\"2025-10-05T15:47:25.584Z\"}",
+      "createdAt": "2025-10-05T15:44:25.586Z"
+    },
+    {
+      "id": "nzejd2tkimgdvhmxq",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"obf7x5jaemgdvgoit\",\"amount\":500000,\"bidId\":\"xzohwpc8nmgdvhlrd\"}",
+      "createdAt": "2025-10-05T15:44:38.750Z"
+    },
+    {
+      "id": "foaevhi95mgdvhv3o",
+      "actorId": "304915006456332289",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"7524dc37lmgdvhcs0\",\"amount\":200,\"bidId\":\"wzv6ocv9ymgdvhu5t\"}",
+      "createdAt": "2025-10-05T15:44:49.332Z"
+    },
+    {
+      "id": "15fg35e9qmgdvhwsq",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"7524dc37lmgdvhcs0\",\"amount\":2222,\"bidId\":\"rez8jthoqmgdvhvoz\"}",
+      "createdAt": "2025-10-05T15:44:51.530Z"
+    },
+    {
+      "id": "e13xnxi74mgdvi8qu",
+      "actorId": "304915006456332289",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"7524dc37lmgdvhcs0\",\"amount\":555,\"bidId\":\"wzv6ocv9ymgdvhu5t\"}",
+      "createdAt": "2025-10-05T15:45:07.014Z"
+    },
+    {
+      "id": "gpql018sxmgdvikjv",
+      "actorId": "304915006456332289",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"7524dc37lmgdvhcs0\",\"amount\":666666,\"bidId\":\"wzv6ocv9ymgdvhu5t\"}",
+      "createdAt": "2025-10-05T15:45:22.315Z"
+    },
+    {
+      "id": "9lr1byabcmgdvlok4",
+      "actorId": "304915006456332289",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"iaqstn7wwmgdvlok1\",\"itemName\":\"44\",\"duration\":3,\"minPrice\":1,\"startTime\":\"2025-10-05T15:47:47.473Z\",\"endTime\":\"2025-10-05T15:50:47.473Z\"}",
+      "createdAt": "2025-10-05T15:47:47.476Z"
+    },
+    {
+      "id": "ulhpyrpf0mgdvm1c3",
+      "actorId": "1268562577080713282",
+      "action": "AUCTION_BID",
+      "payloadJson": "{\"auctionId\":\"iaqstn7wwmgdvlok1\",\"amount\":66,\"bidId\":\"yswc8h63gmgdvm0f5\"}",
+      "createdAt": "2025-10-05T15:48:04.035Z"
+    },
+    {
+      "id": "flh4qr7gzmgdvmtkl",
+      "actorId": "304915006456332289",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"mkidzc0anmgdvmtkj\",\"itemName\":\"222\",\"duration\":22,\"minPrice\":22,\"startTime\":\"2025-10-05T15:48:40.627Z\",\"endTime\":\"2025-10-05T16:10:40.627Z\"}",
+      "createdAt": "2025-10-05T15:48:40.629Z"
+    },
+    {
+      "id": "4fimabtubmgdvss9v",
+      "actorId": "304915006456332289",
+      "action": "AUCTION_CREATED",
+      "payloadJson": "{\"auctionId\":\"wc3wn74bamgdvss9s\",\"itemName\":\"111\",\"duration\":333,\"minPrice\":1,\"startTime\":\"2025-10-05T15:53:18.880Z\",\"endTime\":\"2025-10-05T21:26:18.880Z\"}",
+      "createdAt": "2025-10-05T15:53:18.883Z"
+    }
+  ],
+  "persistentMessages": [
+    [
+      "market",
+      {
+        "channelId": "1423960996547924009",
+        "messageId": "1424431281269244125",
+        "createdAt": "2025-10-05T16:21:22.250Z",
+        "updatedAt": "2025-10-05T16:21:22.250Z"
+      }
+    ]
+  ]
+}

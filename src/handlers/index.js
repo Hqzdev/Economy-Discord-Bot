@@ -9,6 +9,10 @@ export class InteractionHandler {
     this.selectHandler = new SelectHandler();
   }
 
+  setClient(client) {
+    this.modalHandler.setClient(client);
+  }
+
   async handle(interaction) {
     try {
       if (interaction.isButton()) {

@@ -4,8 +4,15 @@ import { ListingService } from '../services/simpleListingService.js';
 import { DealService } from '../services/simpleDealService.js';
 import { AuditService } from '../services/simpleAuditService.js';
 import { UserService } from '../services/simpleUserService.js';
-import { createDealControlButtons, createDealEmbed, createDealThreadEmbed } from '../ui/components.js';
+import { createDealControlButtons, createDealEmbed, createDealThreadEmbed, createCategorySelectMenu, createListingSelectMenu, createPaginationButtons, createSellModal } from '../ui/components.js';
 import logger from '../utils/logger.js';
+import { 
+  handleCleanup, 
+  handleListingsDelete, 
+  handleAuctionsDelete, 
+  showListingsList, 
+  showAuctionsList 
+} from '../commands/admin.js';
 
 export class SelectHandler {
   constructor() {
@@ -15,12 +22,29 @@ export class SelectHandler {
     this.userService = new UserService();
   }
 
+  setClient(client) {
+    // Используем связанные сервисы если доступны
+    if (client.listingService) {
+      this.listingService = client.listingService;
+    }
+  }
+
   async handle(interaction) {
     try {
       const { customId } = interaction;
 
       if (customId === UI_CONSTANTS.SELECT_IDS.LISTING_SELECT) {
         await this.handleListingSelect(interaction);
+      } else if (customId === 'category_filter') {
+        await this.handleCategoryFilter(interaction);
+      } else if (customId === 'sell_category_selection') {
+        await this.handleSellCategorySelect(interaction);
+      } else if (customId === 'admin_cleanup_select') {
+        await this.handleAdminCleanupSelect(interaction);
+      } else if (customId === 'admin_listings_select') {
+        await this.handleAdminListingsSelect(interaction);
+      } else if (customId === 'admin_auctions_select') {
+        await this.handleAdminAuctionsSelect(interaction);
       }
 
     } catch (error) {
@@ -142,6 +166,110 @@ export class SelectHandler {
       } else {
         throw error;
       }
+    }
+  }
+
+  async handleCategoryFilter(interaction) {
+    const category = interaction.values[0];
+    const page = 1;
+    
+    const { listings, total, totalPages } = await this.listingService.getActiveListings('', page, 10, category);
+
+    const embed = new EmbedBuilder()
+      .setColor(0x7b9e1e)
+      .setDescription(`\`\`\` ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ПОКУПКА ТОВАРОВ ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\`\`\`
+
+Категория: **${category === 'all' ? 'Все категории' : category}**
+Найдено ${total} активных лотов. Страница ${page} из ${totalPages}`)
+      .setTimestamp()
+      .setFooter({ 
+        text: `Пользователь: ${interaction.user.username}`,
+        iconURL: interaction.user.displayAvatarURL()
+      });
+
+    const components = [];
+    
+    // Add category filter
+    components.push(createCategorySelectMenu());
+    
+    if (listings.length > 0) {
+      components.push(createListingSelectMenu(listings));
+    }
+
+    const paginationRow = createPaginationButtons(page, totalPages, 'listing');
+    if (paginationRow) {
+      components.push(paginationRow);
+    }
+
+    await interaction.update({
+      embeds: [embed],
+      components: components,
+    });
+  }
+
+  async handleSellCategorySelect(interaction) {
+    try {
+      const selectedCategory = interaction.values[0];
+      
+      // Создаем модальное окно с выбранной категорией
+      const modal = createSellModal(selectedCategory);
+      
+      await interaction.showModal(modal);
+    } catch (error) {
+      console.error('Error showing sell modal after category selection:', error);
+      await interaction.reply({
+        content: '❌ Ошибка при открытии формы продажи',
+        ephemeral: true,
+      });
+    }
+  }
+
+  async handleAdminCleanupSelect(interaction) {
+    try {
+      const cleanupType = interaction.values[0];
+      await handleCleanup(interaction, cleanupType);
+    } catch (error) {
+      console.error('Error handling admin cleanup select:', error);
+      await interaction.reply({
+        content: '❌ Ошибка при выполнении очистки',
+        ephemeral: true,
+      });
+    }
+  }
+
+  async handleAdminListingsSelect(interaction) {
+    try {
+      const action = interaction.values[0];
+      
+      if (action === 'delete_all' || action === 'delete_inactive') {
+        await handleListingsDelete(interaction, action);
+      } else if (action === 'show_all') {
+        await showListingsList(interaction);
+      }
+    } catch (error) {
+      console.error('Error handling admin listings select:', error);
+      await interaction.reply({
+        content: '❌ Ошибка при обработке выбора товаров',
+        ephemeral: true,
+      });
+    }
+  }
+
+  async handleAdminAuctionsSelect(interaction) {
+    try {
+      const action = interaction.values[0];
+      
+      if (action === 'delete_all' || action === 'delete_completed') {
+        await handleAuctionsDelete(interaction, action);
+      } else if (action === 'show_all') {
+        await showAuctionsList(interaction);
+      }
+    } catch (error) {
+      console.error('Error handling admin auctions select:', error);
+      await interaction.reply({
+        content: '❌ Ошибка при обработке выбора аукционов',
+        ephemeral: true,
+      });
     }
   }
 

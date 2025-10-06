@@ -15,7 +15,8 @@ class JsonDatabase {
       deals: new Map(),
       auctions: new Map(),
       bids: new Map(),
-      auditLog: []
+      auditLog: [],
+      persistentMessages: new Map()
     };
     this.load();
   }
@@ -34,6 +35,7 @@ class JsonDatabase {
         this.data.auctions = new Map(rawData.auctions || []);
         this.data.bids = new Map(rawData.bids || []);
         this.data.auditLog = rawData.auditLog || [];
+        this.data.persistentMessages = new Map(rawData.persistentMessages || []);
       }
     } catch (error) {
       console.error('Error loading database:', error);
@@ -55,7 +57,8 @@ class JsonDatabase {
         deals: Array.from(this.data.deals.entries()),
         auctions: Array.from(this.data.auctions.entries()),
         bids: Array.from(this.data.bids.entries()),
-        auditLog: this.data.auditLog
+        auditLog: this.data.auditLog,
+        persistentMessages: Array.from(this.data.persistentMessages.entries())
       };
 
       fs.writeFileSync(this.dbPath, JSON.stringify(dataToSave, null, 2));
@@ -126,13 +129,15 @@ class JsonDatabase {
   }
 
   // Listing operations
-  createListing(sellerId, itemName, price, quantity) {
+  createListing(sellerId, itemName, price, quantity, imageUrl = null, category = null) {
     const listing = {
       id: this.generateId(),
       sellerId,
       itemName,
       price,
       quantityAvailable: quantity,
+      imageUrl,
+      category,
       status: 'ACTIVE',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
@@ -145,11 +150,15 @@ class JsonDatabase {
     };
   }
 
-  getActiveListings(searchTerm = '') {
-    const listings = Array.from(this.data.listings.values())
+  getActiveListings(searchTerm = '', category = null) {
+    let listings = Array.from(this.data.listings.values())
       .filter(listing => listing.status === 'ACTIVE')
       .filter(listing => !searchTerm || listing.itemName.toLowerCase().includes(searchTerm.toLowerCase()))
       .sort((a, b) => a.itemName.localeCompare(b.itemName));
+
+    if (category && category !== 'all') {
+      listings = listings.filter(listing => listing.category === category);
+    }
     
     return listings.map(listing => {
       // Try to find user by internal ID first, then by Discord ID
@@ -357,7 +366,7 @@ class JsonDatabase {
   }
 
   // Auction operations
-  createAuction(creatorId, itemName, startTime, endTime, minPrice, description = null) {
+  createAuction(creatorId, itemName, startTime, endTime, minPrice, description = null, category = null, imageUrl = null) {
     const auction = {
       id: this.generateId(),
       creatorId,
@@ -366,6 +375,8 @@ class JsonDatabase {
       endTime: endTime.toISOString(),
       minPrice,
       description,
+      category,
+      imageUrl,
       status: 'ACTIVE',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
@@ -389,10 +400,11 @@ class JsonDatabase {
       .filter(auction => auction.status === 'ACTIVE' && new Date(auction.endTime) > new Date())
       .sort((a, b) => new Date(a.endTime) - new Date(b.endTime))
       .map(auction => {
-        // Try to find user by internal ID first, then by Discord ID
-        let creator = this.data.users.get(auction.creatorId);
+        // Get creator - сначала по Discord ID, потом по внутреннему ID
+        let creator = this.getUserByDiscordId(auction.creatorId);
         if (!creator) {
-          creator = this.getUserByDiscordId(auction.creatorId);
+          // Fallback: попробуем найти по внутреннему ID
+          creator = this.data.users.get(auction.creatorId);
         }
         
         return {
@@ -405,21 +417,29 @@ class JsonDatabase {
   }
 
   createBid(auctionId, bidderId, amount) {
+    console.log(`[DATABASE] createBid called with auctionId: ${auctionId}, bidderId: ${bidderId}, amount: ${amount}`);
+    
     // Check if auction exists and is active
     const auction = this.data.auctions.get(auctionId);
+    console.log(`[DATABASE] Auction found:`, { id: auction?.id, status: auction?.status, endTime: auction?.endTime, minPrice: auction?.minPrice });
+    
     if (!auction) {
+      console.error(`[DATABASE] Auction not found for ID: ${auctionId}`);
       throw new Error('Auction not found');
     }
 
     if (auction.status !== 'ACTIVE') {
+      console.error(`[DATABASE] Auction is not active. Status: ${auction.status}`);
       throw new Error('Auction is not active');
     }
 
     if (new Date(auction.endTime) <= new Date()) {
+      console.error(`[DATABASE] Auction has ended. End time: ${auction.endTime}, Current time: ${new Date().toISOString()}`);
       throw new Error('Auction has ended');
     }
 
     if (amount < auction.minPrice) {
+      console.error(`[DATABASE] Bid amount ${amount} is less than minimum price ${auction.minPrice}`);
       throw new Error(`Bid must be at least ${auction.minPrice} coins`);
     }
 
@@ -427,8 +447,26 @@ class JsonDatabase {
     const existingBid = Array.from(this.data.bids.values())
       .find(bid => bid.auctionId === auctionId && bid.bidderId === bidderId);
 
+    console.log(`[DATABASE] Existing bid check:`, { existingBid: existingBid?.id, bidderId, auctionId });
+
     if (existingBid) {
-      throw new Error('You already have a bid for this auction');
+      console.log(`[DATABASE] Updating existing bid ${existingBid.id} with new amount ${amount}`);
+      // Update existing bid instead of creating new one
+      existingBid.amount = amount;
+      existingBid.timestamp = new Date().toISOString();
+      this.save();
+      
+      // Return updated bid with bidder info
+      let bidder = this.data.users.get(bidderId);
+      if (!bidder) {
+        bidder = this.getUserByDiscordId(bidderId);
+      }
+      
+      console.log(`[DATABASE] Returning updated bid:`, { bidId: existingBid.id, amount: existingBid.amount, bidder: bidder?.discordId });
+      return {
+        ...existingBid,
+        bidder
+      };
     }
 
     const bid = {
@@ -440,6 +478,8 @@ class JsonDatabase {
       updatedAt: new Date().toISOString()
     };
 
+    console.log(`[DATABASE] Creating new bid:`, { bidId: bid.id, auctionId: bid.auctionId, bidderId: bid.bidderId, amount: bid.amount });
+
     this.data.bids.set(bid.id, bid);
     this.save();
 
@@ -449,6 +489,9 @@ class JsonDatabase {
       bidder = this.getUserByDiscordId(bidderId);
     }
     
+    console.log(`[DATABASE] Bidder found:`, { id: bidder?.id, discordId: bidder?.discordId, username: bidder?.username });
+    console.log(`[DATABASE] Returning new bid:`, { bidId: bid.id, amount: bid.amount, bidder: bidder?.discordId });
+    
     return {
       ...bid,
       bidder
@@ -456,21 +499,33 @@ class JsonDatabase {
   }
 
   getAuctionBids(auctionId) {
-    return Array.from(this.data.bids.values())
-      .filter(bid => bid.auctionId === auctionId)
-      .sort((a, b) => b.amount - a.amount) // Sort by amount descending
-      .map(bid => {
-        // Try to find user by internal ID first, then by Discord ID
-        let bidder = this.data.users.get(bid.bidderId);
-        if (!bidder) {
-          bidder = this.getUserByDiscordId(bid.bidderId);
-        }
-        
-        return {
-          ...bid,
-          bidder
-        };
-      });
+    console.log(`[DATABASE] getAuctionBids called for auction ${auctionId}`);
+    const allBids = Array.from(this.data.bids.values());
+    console.log(`[DATABASE] Total bids in database: ${allBids.length}`);
+    
+    const auctionBids = allBids.filter(bid => bid.auctionId === auctionId);
+    console.log(`[DATABASE] Bids for auction ${auctionId}: ${auctionBids.length}`);
+    
+    const sortedBids = auctionBids.sort((a, b) => b.amount - a.amount); // Sort by amount descending
+    console.log(`[DATABASE] Sorted bids:`, sortedBids.map(b => ({ id: b.id, amount: b.amount, bidderId: b.bidderId })));
+    
+    const bidsWithBidders = sortedBids.map(bid => {
+      // Try to find user by internal ID first, then by Discord ID
+      let bidder = this.data.users.get(bid.bidderId);
+      if (!bidder) {
+        bidder = this.getUserByDiscordId(bid.bidderId);
+      }
+      
+      console.log(`[DATABASE] Bidder for bid ${bid.id}:`, { bidderId: bid.bidderId, found: !!bidder, discordId: bidder?.discordId });
+      
+      return {
+        ...bid,
+        bidder
+      };
+    });
+    
+    console.log(`[DATABASE] Returning ${bidsWithBidders.length} bids with bidder info`);
+    return bidsWithBidders;
   }
 
   updateAuctionStatus(auctionId, status) {
@@ -503,6 +558,42 @@ class JsonDatabase {
     };
     this.data.auditLog.push(logEntry);
     this.save();
+  }
+
+  // Persistent message operations
+  setPersistentMessage(type, channelId, messageId) {
+    this.data.persistentMessages.set(type, {
+      channelId,
+      messageId,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    });
+    this.save();
+  }
+
+  getPersistentMessage(type) {
+    return this.data.persistentMessages.get(type);
+  }
+
+  removePersistentMessage(type) {
+    const result = this.data.persistentMessages.delete(type);
+    this.save();
+    return result;
+  }
+
+  getAllPersistentMessages() {
+    return Array.from(this.data.persistentMessages.entries());
+  }
+
+  updatePersistentMessage(type, messageId) {
+    const message = this.data.persistentMessages.get(type);
+    if (message) {
+      message.messageId = messageId;
+      message.updatedAt = new Date().toISOString();
+      this.save();
+      return true;
+    }
+    return false;
   }
 }
 
